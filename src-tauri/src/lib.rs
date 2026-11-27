@@ -59,6 +59,81 @@ fn open_cloudflare_speed_test(app: tauri::AppHandle) -> Result<(), String> {
         .open("https://speed.cloudflare.com/", None)
         .map_err(|error| error.to_string())
 }
+
+/// Start downloading a new installer. Returns at once; the dialog polls `update_download_status`.
+#[tauri::command]
+fn update_download_start(
+    app: tauri::AppHandle,
+    state: State<'_, update_download::UpdateDownloadState>,
+    version: String,
+    url: String,
+    sha256: String,
+    size: u64,
+) -> Result<(), String> {
+    let request = update_download::validate_request(&version, &url, &sha256, size)
+        .map_err(|error| error.message().to_string())?;
+    let directory = app
+        .path()
+        .download_dir()
+        .map_err(|_| update_download::UpdateError::Disk.message().to_string())?;
+    state
+        .begin(&request)
+        .map_err(|error| error.message().to_string())?;
+    let handle = app.clone();
+    std::thread::spawn(move || {
+        let state = handle.state::<update_download::UpdateDownloadState>();
+        let total = request.size;
+        let result = update_download::download_installer(
+            &request,
+            &directory,
+            state.cancel_flag(),
+            |received| state.progress(&request.version, received, total),
+        );
+        state.finish(&request.version, result);
+    });
+    Ok(())
+}
+
+#[tauri::command]
+fn update_download_status(
+    state: State<'_, update_download::UpdateDownloadState>,
+) -> update_download::UpdateStatus {
+    state.status()
+}
+
+#[tauri::command]
+fn update_download_cancel(state: State<'_, update_download::UpdateDownloadState>) {
+    state.cancel();
+}
+
+/// Open (`reveal` false) or show in Finder (`reveal` true) the installer this app downloaded and verified.
+/// The path comes from the download state, never from the webview.
+#[tauri::command]
+fn update_installer_open(
+    state: State<'_, update_download::UpdateDownloadState>,
+    reveal: bool,
+) -> Result<(), String> {
+    let path = state
+        .ready_path()
+        .ok_or_else(|| "There is no verified installer to open.".to_string())?;
+    #[cfg(target_os = "macos")]
+    {
+        let mut command = std::process::Command::new("/usr/bin/open");
+        if reveal {
+            command.arg("-R");
+        }
+        return command
+            .arg(&path)
+            .spawn()
+            .map(|_| ())
+            .map_err(|_| "OfficeKit could not open the installer.".to_string());
+    }
+    #[cfg(not(target_os = "macos"))]
+    {
+        let _ = (path, reveal);
+        Err("Opening the installer is only supported on macOS.".to_string())
+    }
+}
 #[cfg(target_os = "macos")]
 use whisper_rs::{FullParams, SamplingStrategy, WhisperContext, WhisperContextParameters};
 
@@ -234,6 +309,7 @@ mod system_hardware;
 mod system_sensors;
 #[cfg(test)]
 mod test_keys;
+mod update_download;
 mod window_manager;
 mod window_runtime;
 mod workspace_native;
@@ -5790,6 +5866,7 @@ pub fn run() {
             ergonomics::start(app.handle());
         }
         app.manage(WindowSnapState::default());
+        app.manage(update_download::UpdateDownloadState::new());
         app.manage(global_desktop::GlobalDesktopRuntime::default());
         app.manage(menu_stats::MenuStatsRuntime::default());
         menu_stats::restore(app.handle());
@@ -5946,6 +6023,10 @@ pub fn run() {
                 check_backend_status,
                 open_network_settings,
                 open_cloudflare_speed_test,
+                update_download_start,
+                update_download_status,
+                update_download_cancel,
+                update_installer_open,
                 officekit_api_token,
                 officekit_api_origin,
                 file_intake_pending,
@@ -6083,6 +6164,10 @@ pub fn run() {
                 check_backend_status,
                 open_network_settings,
                 open_cloudflare_speed_test,
+                update_download_start,
+                update_download_status,
+                update_download_cancel,
+                update_installer_open,
                 officekit_api_token,
                 officekit_api_origin,
                 file_intake_pending,

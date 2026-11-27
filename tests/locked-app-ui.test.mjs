@@ -482,7 +482,9 @@ test('checkAppUpdates does nothing while the app is not active and fetches once 
   const app = loadLockApp({ extra: source });
   const requests = [];
   app.context.officekitApiUrl = path => path;
-  app.context.alert = () => {};
+  // The dialog itself is covered by update-dialog-ui.test.mjs; here only the licence gate and the request matter.
+  for (const name of ['officekitUpdateShowChecking', 'officekitUpdateShowUnavailable', 'officekitUpdateShowCurrent', 'officekitUpdateShowAvailable', 'officekitUpdateShowStatus', 'officekitUpdateStartPolling']) app.context[name] = () => {};
+  app.context.officekitUpdateInvoke = async () => ({ state: 'idle' });
   app.context.fetch = async path => { requests.push(path); return { ok: true, json: async () => ({ status: 'ok', update_available: false }) }; };
   for (const state of ['checking', 'locked', 'expired', 'revoked']) {
     app.context.officekitSetLicenseState(state);

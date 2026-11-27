@@ -30,7 +30,7 @@
         "img-src": "'self' asset: http://asset.localhost blob: data:",
         "object-src": "'none'",
         "frame-src": "'self' blob:",
-        "script-src": "'self' 'sha256-XQpTlMl9RgGDH+vMCEqu/Uw7+tQvXgPrLsvRqfVKD5k=' 'sha256-l8SWuTbzRjCKlFLmnWpsb04jb2Nun+o3HERu8+XZHsI=' 'sha256-jAFnZ0gjM/L8Ed4gcw3YtdewHSx64ILVAfdL12Crnqc='",
+        "script-src": "'self' 'sha256-XQpTlMl9RgGDH+vMCEqu/Uw7+tQvXgPrLsvRqfVKD5k=' 'sha256-l8SWuTbzRjCKlFLmnWpsb04jb2Nun+o3HERu8+XZHsI=' 'sha256-v5wgdVV0wWAWaHPzS3dxUydzhnGicK7P/0Iv/zJK58w='",
         "style-src": "'self' 'unsafe-inline'"
       }
     }

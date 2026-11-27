@@ -7325,6 +7325,7 @@ Asia/Tokyo</textarea></label></div><datalist id="calc-time-zones-list"></datalis
             'switchCalc', 'switchTab', 'syncPasswordLength', 'toggleDictationHotkey', 'toggleSttOverlay', 'downloadMeetingMarkdown',
             'applyWindowSnap', 'toggleWindowSnapShortcutEditor', 'recordWindowSnapShortcut', 'resetWindowSnapShortcuts',
 'requestDictationMicrophone', 'refreshDictationPermission', 'refreshDictationModelInventory', 'deleteDictationModel', 'confirmDeleteDictationModel', 'retryNativeDictationEvents', 'runCompoundCalc', 'runEmiCalc', 'runFreelanceCalc', 'runVatCalc',
+            'closeUpdateDialog', 'startUpdateDownload', 'cancelUpdateDownload', 'openUpdateInstaller',
             'saveMeetingNotes', 'setAudioToolView', 'setVoiceToolPanel', 'setPasswordMode', 'setToolGalleryView', 'submitLicenseActivation', 'submitSupportTicket',
             'switchCalc', 'switchTab', 'setConverterMode', 'syncPasswordLength', 'toggleDictationHotkey', 'toggleSttOverlay', 'downloadMeetingMarkdown',
             'toggleMeetingRecording', 'handleMeetingAudioSourceChange', 'requestMeetingSystemAudioPermission',
@@ -16211,6 +16212,7 @@ Asia/Tokyo</textarea></label></div><datalist id="calc-time-zones-list"></datalis
                 closeGlobalSearchModal();
                 closeSupportModal();
                 closeCrashModal();
+                closeUpdateDialog();
                 closeLicenseModal();
                 closeResultExport();
                 closeSttOverlay();
@@ -16224,24 +16226,261 @@ Asia/Tokyo</textarea></label></div><datalist id="calc-time-zones-list"></datalis
         // ==========================================
         // In-App Auto-Update Checker
         // ==========================================
+        // The window does not show browser alert boxes, so every result is drawn in #update-dialog. At launch
+        // the check only lights the green dot; clicking the refresh button opens the dialog.
+        const OFFICEKIT_UPDATE_POLL_MS = 500;
+        let officekitUpdateInfo = null;
+        let officekitUpdatePoll = null;
+        let officekitUpdateReturnFocus = null;
+
+        function officekitUpdateInvoke(command, args) {
+            const core = window.__TAURI__ && window.__TAURI__.core;
+            if (!core || typeof core.invoke !== 'function') return Promise.reject(new Error('Downloads work in the desktop app.'));
+            return core.invoke(command, args);
+        }
+
+        function officekitUpdateMegabytes(bytes) {
+            return `${Math.max(1, Math.round(Number(bytes) / 1000000))} MB`;
+        }
+
+        function officekitUpdateElement(tag, className, text) {
+            const node = document.createElement(tag);
+            if (className) node.className = className;
+            if (text !== undefined) node.textContent = text;
+            return node;
+        }
+
+        // view: { tone?, title, subtitle?, notes?, hint?, progress?: {received, total}, link?: {label, action}, actions: [{label, action, primary?}] }
+        function officekitUpdateRender(view) {
+            const dialog = document.getElementById('update-dialog');
+            const body = document.getElementById('update-dialog-body');
+            if (!dialog || !body) return;
+            body.replaceChildren();
+            if (view.tone) {
+                const marks = { ok: ['✓', 'text-emerald-600'], warn: ['!', 'text-amber-600'], error: ['!', 'text-rose-600'] };
+                const [mark, color] = marks[view.tone];
+                body.append(officekitUpdateElement('div', `text-2xl font-bold ${color}`, mark));
+            }
+            const title = officekitUpdateElement('h3', 'text-base font-bold text-slate-900', view.title);
+            title.id = 'update-dialog-title';
+            body.append(title);
+            if (view.subtitle) body.append(officekitUpdateElement('p', 'text-sm text-slate-600', view.subtitle));
+            if (view.notes) body.append(officekitUpdateElement('div', 'max-h-28 overflow-auto whitespace-pre-wrap rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600', view.notes));
+            if (view.progress) {
+                const total = Math.max(1, Number(view.progress.total) || 1);
+                const percent = Math.min(100, Math.floor((Number(view.progress.received) / total) * 100));
+                const track = officekitUpdateElement('div', 'h-2 overflow-hidden rounded-full border border-slate-200 bg-slate-100');
+                track.setAttribute('role', 'progressbar');
+                track.setAttribute('aria-label', 'Download progress');
+                track.setAttribute('aria-valuemin', '0');
+                track.setAttribute('aria-valuemax', '100');
+                track.setAttribute('aria-valuenow', String(percent));
+                const fill = officekitUpdateElement('div', 'h-full bg-sky-500');
+                fill.style.width = `${percent}%`;
+                track.append(fill);
+                const meter = officekitUpdateElement('div', 'flex justify-between text-xs text-slate-500');
+                meter.append(
+                    officekitUpdateElement('span', '', `${officekitUpdateMegabytes(view.progress.received)} of ${officekitUpdateMegabytes(view.progress.total)}`),
+                    officekitUpdateElement('span', '', `${percent}%`)
+                );
+                body.append(track, meter);
+            }
+            if (view.hint || view.link) {
+                const hint = officekitUpdateElement('p', 'text-xs text-slate-500', view.hint ? `${view.hint} ` : '');
+                if (view.link) {
+                    const link = officekitUpdateElement('button', 'ok-text-link text-xs text-sky-600 underline', view.link.label);
+                    link.type = 'button';
+                    link.setAttribute('data-officekit-click', view.link.action);
+                    hint.append(link);
+                }
+                body.append(hint);
+            }
+            const actions = officekitUpdateElement('div', 'flex justify-end gap-2 pt-1');
+            for (const item of view.actions) {
+                const button = officekitUpdateElement('button', item.primary ? 'btn btn-sm btn-primary' : 'btn btn-sm', item.label);
+                button.type = 'button';
+                button.setAttribute('data-officekit-click', item.action);
+                actions.append(button);
+            }
+            body.append(actions);
+            if (dialog.classList.contains('hidden')) {
+                officekitUpdateReturnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+                dialog.classList.remove('hidden');
+            }
+            (actions.lastElementChild || title).focus?.();
+        }
+
+        const OFFICEKIT_UPDATE_CLOSE = { label: 'Close', action: 'closeUpdateDialog()' };
+
+        function officekitUpdateShowChecking() {
+            officekitUpdateRender({ title: 'Checking for updates…', actions: [OFFICEKIT_UPDATE_CLOSE] });
+        }
+
+        function officekitUpdateShowUnavailable() {
+            officekitUpdateRender({
+                tone: 'warn',
+                title: "Couldn't check for updates",
+                subtitle: "OfficeKit couldn't reach the update server. Everything else keeps working offline. Try again later.",
+                actions: [{ ...OFFICEKIT_UPDATE_CLOSE, primary: true }]
+            });
+        }
+
+        function officekitUpdateShowCurrent(version) {
+            officekitUpdateRender({
+                tone: 'ok',
+                title: "You're up to date",
+                subtitle: `OfficeKit ${version} is the latest release.`,
+                actions: [{ ...OFFICEKIT_UPDATE_CLOSE, primary: true }]
+            });
+        }
+
+        function officekitUpdateShowAvailable(info) {
+            const canDownload = Boolean(info.download_sha256 && info.download_size);
+            const size = canDownload ? ` Download size: ${officekitUpdateMegabytes(info.download_size)}.` : '';
+            officekitUpdateRender({
+                title: `OfficeKit ${info.latest_version} is available`,
+                subtitle: `You have ${info.current_version}.${size}`,
+                notes: info.release_notes,
+                hint: canDownload
+                    ? 'The download happens here and is checked before you install it. Your data and settings stay.'
+                    : 'This release is not set up for in-app download yet. Get it from officekit.app.',
+                actions: canDownload
+                    ? [{ label: 'Not now', action: 'closeUpdateDialog()' }, { label: 'Download update', action: 'startUpdateDownload()', primary: true }]
+                    : [{ ...OFFICEKIT_UPDATE_CLOSE, primary: true }]
+            });
+        }
+
+        function officekitUpdateShowStatus(status) {
+            if (status.state === 'downloading') {
+                officekitUpdateRender({
+                    title: `Downloading OfficeKit ${status.version}`,
+                    progress: { received: status.received, total: status.total },
+                    hint: 'You can keep working. Close this and the download continues; click the refresh button to see it again.',
+                    actions: [{ label: 'Cancel download', action: 'cancelUpdateDownload()' }]
+                });
+            } else if (status.state === 'ready') {
+                officekitUpdateRender({
+                    tone: 'ok',
+                    title: `OfficeKit ${status.version} is ready to install`,
+                    subtitle: 'Downloaded to your Downloads folder and checked against the published checksum.',
+                    hint: 'Open the installer, quit OfficeKit, then drag OfficeKit to Applications to replace this version.',
+                    link: { label: 'Show in Finder', action: 'openUpdateInstaller(true)' },
+                    actions: [OFFICEKIT_UPDATE_CLOSE, { label: 'Open installer', action: 'openUpdateInstaller(false)', primary: true }]
+                });
+            } else if (status.state === 'failed') {
+                officekitUpdateRender({
+                    tone: 'error',
+                    title: "The download didn't finish",
+                    subtitle: `${status.message || 'The download failed.'} Nothing was installed.`,
+                    actions: [OFFICEKIT_UPDATE_CLOSE, { label: 'Try again', action: 'startUpdateDownload()', primary: true }]
+                });
+            }
+        }
+
+        function officekitUpdateStopPolling() {
+            if (officekitUpdatePoll !== null) clearInterval(officekitUpdatePoll);
+            officekitUpdatePoll = null;
+        }
+
+        async function officekitUpdateRefresh() {
+            const dialog = document.getElementById('update-dialog');
+            if (!dialog || dialog.classList.contains('hidden')) { officekitUpdateStopPolling(); return; }
+            let status;
+            try {
+                status = await officekitUpdateInvoke('update_download_status');
+            } catch (error) {
+                officekitUpdateStopPolling();
+                return;
+            }
+            if (status.state === 'downloading') { officekitUpdateShowStatus(status); return; }
+            officekitUpdateStopPolling();
+            if (status.state === 'idle') {
+                if (officekitUpdateInfo) officekitUpdateShowAvailable(officekitUpdateInfo); else closeUpdateDialog();
+                return;
+            }
+            officekitUpdateShowStatus(status);
+        }
+
+        function officekitUpdateStartPolling() {
+            officekitUpdateStopPolling();
+            officekitUpdatePoll = setInterval(officekitUpdateRefresh, OFFICEKIT_UPDATE_POLL_MS);
+            void officekitUpdateRefresh();
+        }
+
+        function closeUpdateDialog(event) {
+            // A click on the dark backdrop closes it; a click inside the dialog does not.
+            if (event && event.target !== this) return;
+            const dialog = document.getElementById('update-dialog');
+            if (!dialog || dialog.classList.contains('hidden')) return;
+            dialog.classList.add('hidden');
+            officekitUpdateStopPolling();
+            officekitUpdateReturnFocus?.focus?.();
+            officekitUpdateReturnFocus = null;
+        }
+
+        async function startUpdateDownload() {
+            const info = officekitUpdateInfo;
+            if (!info || !info.download_sha256 || !info.download_size) return;
+            try {
+                await officekitUpdateInvoke('update_download_start', {
+                    version: info.latest_version,
+                    url: info.download_url,
+                    sha256: info.download_sha256,
+                    size: info.download_size
+                });
+            } catch (error) {
+                officekitUpdateShowStatus({ state: 'failed', message: typeof error === 'string' ? error : 'The download could not start.' });
+                return;
+            }
+            officekitUpdateShowStatus({ state: 'downloading', version: info.latest_version, received: 0, total: info.download_size });
+            officekitUpdateStartPolling();
+        }
+
+        async function cancelUpdateDownload() {
+            try { await officekitUpdateInvoke('update_download_cancel'); } catch (error) { /* the next poll shows the real state */ }
+            officekitUpdateStartPolling();
+        }
+
+        async function openUpdateInstaller(reveal) {
+            try {
+                await officekitUpdateInvoke('update_installer_open', { reveal: reveal === true });
+            } catch (error) {
+                officekitUpdateShowStatus({ state: 'failed', message: typeof error === 'string' ? error : 'OfficeKit could not open the installer.' });
+            }
+        }
+
         async function checkAppUpdates(isManual = false) {
             if (!officekitLicenseUnlocked()) return;
+            if (isManual) {
+                officekitUpdateShowChecking();
+                // A download that is running or finished is shown as it is, without a new check.
+                try {
+                    const status = await officekitUpdateInvoke('update_download_status');
+                    if (status.state === 'downloading' || status.state === 'ready') {
+                        officekitUpdateShowStatus(status);
+                        if (status.state === 'downloading') officekitUpdateStartPolling();
+                        return;
+                    }
+                } catch (error) { /* not in the desktop shell: just check */ }
+            }
             try {
                 const res = await fetch(officekitApiUrl('/api/system/check-update'));
                 if (!res.ok) throw new Error('Update information is unavailable.');
                 const data = await res.json();
                 if (data.status === 'unavailable') {
-                    if (isManual) alert(data.release_notes || 'Update information is unavailable. OfficeKit will keep working offline.');
+                    if (isManual) officekitUpdateShowUnavailable();
                     return;
                 }
                 if (data.update_available) {
-                    document.getElementById('update-badge-dot').classList.remove('hidden');
-                    alert(`Update Available: Version ${data.latest_version}\n\n${data.release_notes}\n\nDownload: ${data.download_url}`);
+                    officekitUpdateInfo = data;
+                    const dot = document.getElementById('update-badge-dot');
+                    if (isManual) { dot?.classList.add('hidden'); officekitUpdateShowAvailable(data); }
+                    else dot?.classList.remove('hidden');
                 } else if (isManual) {
-                    alert(`You're up to date! OfficeKit v${data.current_version} is the latest release.`);
+                    officekitUpdateShowCurrent(data.current_version);
                 }
             } catch (e) {
-                if (isManual) alert("Could not reach update server. Running in offline mode.");
+                if (isManual) officekitUpdateShowUnavailable();
             }
         }
 
@@ -16870,6 +17109,10 @@ Asia/Tokyo</textarea></label></div><datalist id="calc-time-zones-list"></datalis
     </script>
 
     <!-- Apple-style Diagnostic Crash Reporter Modal Dialog -->
+    <div id="update-dialog" data-officekit-click="closeUpdateDialog(event)" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="update-dialog-title">
+        <div id="update-dialog-body" aria-live="polite" class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-3"></div>
+    </div>
+
     <div id="crash-modal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-md flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="crash-title">
         <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 space-y-4">
             <!-- Header matching macOS Problem Reporter -->

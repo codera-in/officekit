@@ -2304,3 +2304,6 @@
 | 2026-11-27 | docs/TESTING.md | 1.12.417 → 1.12.418 | Hosted licensing test notes moved to the private repository. |
 | 2026-11-27 | docs/MACOS-SIGNING.md | 1.0.0 → 2.0.0 | Rewritten as a short public page; the signing pipeline is private. |
 | 2026-11-27 | BUILDING.md, CONTRIBUTING.md, README.md | — | Document OFFICEKIT_DEV_UNLOCK, OFFICEKIT_DEV_NOAUTH and the loopback Host check for source builds. |
+| 2026-11-27 | API-CONTRACT.md | 1.98.0 → 1.99.0 | Update check returns `download_sha256` and `download_size`; native `update_download_*` and `update_installer_open` commands download and verify the installer in place. |
+| 2026-11-27 | DESIGN_SYSTEM.md | 1.9.24 → 1.9.25 | Update dialog replaces the silent browser alerts: update found, downloading, ready, failed, up to date, cannot check (approved mock `update-check-dialog`). |
+| 2026-11-27 | docs/TESTING.md | 1.12.418 → 1.12.419 | Tests for the update dialog, the in-place download and the manifest checksum. |

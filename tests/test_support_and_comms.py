@@ -102,11 +102,49 @@ def test_update_check_compares_manifest_version_and_uses_release_metadata(monkey
         "update_available": True,
         "release_notes": manifest["release_notes"],
         "download_url": manifest["download_url"],
+        "download_sha256": None,
+        "download_size": None,
     }
     open_manifest.assert_called_once()
     request = open_manifest.call_args.args[0]
     assert request.full_url == "https://officekit.app/releases/latest.json"
     assert open_manifest.call_args.kwargs == {"timeout": 3}
+
+
+def test_update_check_passes_on_the_installer_checksum_and_size_only_when_both_are_valid(monkeypatch):
+    import io
+    import json
+    from unittest.mock import patch
+
+    from officekit.engines.engine_comms import CommsEngine
+
+    good_sha = "827F4A0365E4656AB9997B3CF917195379EA43455767437DC20FEA82D7374920"
+    base = {
+        "version": "1.0.1",
+        "release_notes": "Notes",
+        "download_url": "https://officekit.app/get",
+    }
+    cases = [
+        ({"sha256": good_sha, "size": 247904819}, (good_sha.lower(), 247904819)),
+        ({"sha256": good_sha}, (None, None)),
+        ({"size": 247904819}, (None, None)),
+        ({"sha256": "abc", "size": 10}, (None, None)),
+        ({"sha256": "g" * 64, "size": 10}, (None, None)),
+        ({"sha256": good_sha, "size": 0}, (None, None)),
+        ({"sha256": good_sha, "size": -5}, (None, None)),
+        ({"sha256": good_sha, "size": True}, (None, None)),
+        ({"sha256": good_sha, "size": "10"}, (None, None)),
+        ({"sha256": good_sha, "size": 1_500_000_001}, (None, None)),
+        ({"sha256": 12345, "size": 10}, (None, None)),
+    ]
+    monkeypatch.setenv("OFFICEKIT_APP_VERSION", "1.0.0")
+    monkeypatch.setenv("OFFICEKIT_RELEASE_MANIFEST_URL", "https://officekit.app/releases/latest.json")
+    for extra, (sha, size) in cases:
+        body = json.dumps({**base, **extra}).encode("utf-8")
+        with patch("officekit.engines.engine_comms.urlopen", return_value=io.BytesIO(body)):
+            result = CommsEngine.check_for_updates()
+        assert result["status"] == "update_available", extra
+        assert (result["download_sha256"], result["download_size"]) == (sha, size), extra
 
 
 def test_update_check_never_calls_a_non_officekit_or_non_https_manifest(monkeypatch):

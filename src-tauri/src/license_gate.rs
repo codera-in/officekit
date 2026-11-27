@@ -665,6 +665,11 @@ pub const COMMAND_CLASSES: &[(&str, CommandClass)] = &[
     // native helpers that open the system settings pane and the speed-test page are paid too.
     ("open_network_settings", Paid),
     ("open_cloudflare_speed_test", Paid),
+    // The in-app update dialog (it is only reachable once the app is unlocked).
+    ("update_download_start", Paid),
+    ("update_download_status", Paid),
+    ("update_download_cancel", Paid),
+    ("update_installer_open", Paid),
     // Added on main after the licence work was written; all belong to paid features.
     ("coach_workspace_clear", Paid),
     ("coach_workspace_open_apple_intelligence", Paid),
