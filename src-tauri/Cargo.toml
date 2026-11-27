@@ -1,6 +1,6 @@
 [package]
 name = "officekit"
-version = "1.0.123"
+version = "1.0.124"
 description = "OfficeKit — The Everyday Toolbox for your Computer"
 authors = ["OfficeKit Team <support@officekit.app>"]
 edition = "2021"
