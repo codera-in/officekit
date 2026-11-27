@@ -1,0 +1,1148 @@
+[
+  {
+    "id": "p01",
+    "code": "P01",
+    "name": "Bank statement extraction",
+    "category": "PDF & Documents",
+    "tab": "statement",
+    "desc": "Text PDF/images/CSV/TSV; OCR fallback; explicit mapping/correction; reconciliation; currency/date co",
+    "icon": "fa-file-pdf",
+    "alias": "bank_statement"
+  },
+  {
+    "id": "p02",
+    "code": "P02",
+    "name": "Merge PDFs",
+    "category": "PDF & Documents",
+    "tab": "statement",
+    "desc": "Reorder source files, preview page totals, preserve supported structure and originals; batch safe ou",
+    "icon": "fa-file-pdf",
+    "alias": "pdf_merge"
+  },
+  {
+    "id": "p03",
+    "code": "P03",
+    "name": "Split/extract pages",
+    "category": "PDF & Documents",
+    "tab": "statement",
+    "desc": "Ranges, every-page/selected-group outputs, naming and ZIP; explicit requested order/duplicate policy",
+    "icon": "fa-file-pdf",
+    "alias": "pdf_split"
+  },
+  {
+    "id": "p04",
+    "code": "P04",
+    "name": "Delete pages",
+    "category": "PDF & Documents",
+    "tab": "statement",
+    "desc": "Visual selection and review before creating a new PDF",
+    "icon": "fa-file-pdf"
+  },
+  {
+    "id": "p05",
+    "code": "P05",
+    "name": "Reorder pages",
+    "category": "PDF & Documents",
+    "tab": "statement",
+    "desc": "Thumbnail and keyboard reorder; mixed page sizes",
+    "icon": "fa-file-pdf"
+  },
+  {
+    "id": "p06",
+    "code": "P06",
+    "name": "Rotate pages",
+    "category": "PDF & Documents",
+    "tab": "statement",
+    "desc": "Selected/all pages; 90/180/270 degrees; preview",
+    "icon": "fa-file-pdf"
+  },
+  {
+    "id": "p07",
+    "code": "P07",
+    "name": "Compress PDF",
+    "category": "PDF & Documents",
+    "tab": "statement",
+    "desc": "Real documented presets, measured actual size/fidelity, expansion reported honestly",
+    "icon": "fa-file-pdf",
+    "alias": "pdf_compress"
+  },
+  {
+    "id": "p08",
+    "code": "P08",
+    "name": "Images\u2192PDF",
+    "category": "PDF & Documents",
+    "tab": "statement",
+    "desc": "Ordered batch, page size/orientation/margins, image fitting",
+    "icon": "fa-file-pdf"
+  },
+  {
+    "id": "p09",
+    "code": "P09",
+    "name": "PDF\u2192images",
+    "category": "PDF & Documents",
+    "tab": "statement",
+    "desc": "Selected pages, PNG/JPEG, DPI/resolution, batch/ZIP",
+    "icon": "fa-file-pdf"
+  },
+  {
+    "id": "p10",
+    "code": "P10",
+    "name": "PDF metadata inspection",
+    "category": "PDF & Documents",
+    "tab": "statement",
+    "desc": "Readable standard fields and supported XMP, absent fields distinguished",
+    "icon": "fa-file-pdf"
+  },
+  {
+    "id": "p11",
+    "code": "P11",
+    "name": "PDF metadata removal",
+    "category": "PDF & Documents",
+    "tab": "statement",
+    "desc": "Before/after inspection, explicit removal limits",
+    "icon": "fa-file-pdf",
+    "alias": "pdf_metadata_strip"
+  },
+  {
+    "id": "p12",
+    "code": "P12",
+    "name": "Watermark PDF",
+    "category": "PDF & Documents",
+    "tab": "statement",
+    "desc": "Text/image position/opacity, page ranges, preview",
+    "icon": "fa-file-pdf"
+  },
+  {
+    "id": "p13",
+    "code": "P13",
+    "name": "Page numbering",
+    "category": "PDF & Documents",
+    "tab": "statement",
+    "desc": "Format, start number, position, page range and margins",
+    "icon": "fa-file-pdf"
+  },
+  {
+    "id": "p14",
+    "code": "P14",
+    "name": "Crop PDF",
+    "category": "PDF & Documents",
+    "tab": "statement",
+    "desc": "Visual crop per page/all; explain content is not securely removed",
+    "icon": "fa-file-pdf"
+  },
+  {
+    "id": "p15",
+    "code": "P15",
+    "name": "Resize PDF pages",
+    "category": "PDF & Documents",
+    "tab": "statement",
+    "desc": "Standard/custom dimensions and explicit scale-versus-canvas choice",
+    "icon": "fa-file-pdf"
+  },
+  {
+    "id": "p16",
+    "code": "P16",
+    "name": "Grayscale PDF",
+    "category": "PDF & Documents",
+    "tab": "statement",
+    "desc": "Actual images/graphics/text behavior, fidelity warning if rasterized",
+    "icon": "fa-file-pdf"
+  },
+  {
+    "id": "p17",
+    "code": "P17",
+    "name": "Flatten forms/annotations",
+    "category": "PDF & Documents",
+    "tab": "statement",
+    "desc": "Preview/reversibility warning; preserve visual appearance",
+    "icon": "fa-file-pdf"
+  },
+  {
+    "id": "p18",
+    "code": "P18",
+    "name": "Protect PDF",
+    "category": "PDF & Documents",
+    "tab": "unlocker",
+    "desc": "Supported encryption, password confirmation, safe handling, encrypt PDF document with password",
+    "icon": "fa-file-shield",
+    "alias": "pdf_protect",
+    "keywords": [
+      "pdf password",
+      "encrypt pdf",
+      "password protect",
+      "lock pdf",
+      "secure pdf"
+    ]
+  },
+  {
+    "id": "p19",
+    "code": "P19",
+    "name": "Unlock PDF",
+    "category": "PDF & Documents",
+    "tab": "unlocker",
+    "desc": "Known-password authorization path, clear failure, batch, remove PDF password, decrypt PDF",
+    "icon": "fa-unlock",
+    "alias": "pdf_unlock",
+    "keywords": [
+      "pdf password",
+      "unlock pdf",
+      "remove password",
+      "decrypt pdf",
+      "pdf password remover",
+      "pdf decrypt"
+    ]
+  },
+  {
+    "id": "p20",
+    "code": "P20",
+    "name": "PDF\u2192text",
+    "category": "PDF & Documents",
+    "tab": "statement",
+    "desc": "Select pages, meaningful order, encoding; scanned detection",
+    "icon": "fa-file-pdf"
+  },
+  {
+    "id": "i01",
+    "code": "I01",
+    "name": "Common image conversion",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "JPEG/PNG/WebP/BMP/TIFF/ICO as supported; direction/codec availability explicit; batch",
+    "icon": "fa-image",
+    "alias": "image_converter"
+  },
+  {
+    "id": "i02",
+    "code": "I02",
+    "name": "Resize images",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "Dimensions/percentage, lock ratio, upscale policy, batch presets",
+    "icon": "fa-image",
+    "alias": "image_resize"
+  },
+  {
+    "id": "i03",
+    "code": "I03",
+    "name": "Compress images",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "Quality presets, actual bytes and preview, batch",
+    "icon": "fa-image"
+  },
+  {
+    "id": "i04",
+    "code": "I04",
+    "name": "Target-size attempt",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "Bounded iterative sizing, quality/min-dimension limits, best-effort disclosure",
+    "icon": "fa-image"
+  },
+  {
+    "id": "i05",
+    "code": "I05",
+    "name": "Crop images",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "Visual/keyboard crop, ratio presets, non-destructive preview",
+    "icon": "fa-image"
+  },
+  {
+    "id": "i06",
+    "code": "I06",
+    "name": "Rotate/flip images",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "Direction/axis explicit; EXIF normalized",
+    "icon": "fa-image"
+  },
+  {
+    "id": "i07",
+    "code": "I07",
+    "name": "EXIF inspection",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "Date/camera/location fields with missing/unsupported states",
+    "icon": "fa-image"
+  },
+  {
+    "id": "i08",
+    "code": "I08",
+    "name": "Remove image metadata",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "Chosen metadata policy; output read-back verification",
+    "icon": "fa-image",
+    "alias": "image_exif_strip"
+  },
+  {
+    "id": "i09",
+    "code": "I09",
+    "name": "Image watermark",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "Text/logo, positions/opacity, batch",
+    "icon": "fa-image"
+  },
+  {
+    "id": "i10",
+    "code": "I10",
+    "name": "DPI/PPI metadata",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "Edit density without inventing pixels; units explained",
+    "icon": "fa-image"
+  },
+  {
+    "id": "i11",
+    "code": "I11",
+    "name": "Grayscale images",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "Consistent preview and export, preserve alpha if supported",
+    "icon": "fa-image"
+  },
+  {
+    "id": "i12",
+    "code": "I12",
+    "name": "Color adjustments",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "Brightness/contrast/saturation with reset and preview",
+    "icon": "fa-image"
+  },
+  {
+    "id": "i13",
+    "code": "I13",
+    "name": "Blur images",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "Radius/region controls where offered; no secure-redaction claim",
+    "icon": "fa-image"
+  },
+  {
+    "id": "i14",
+    "code": "I14",
+    "name": "Borders/rounded corners",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "Canvas/fill/alpha choices, dimension preview",
+    "icon": "fa-image"
+  },
+  {
+    "id": "i15",
+    "code": "I15",
+    "name": "Dominant colors",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "Reproducible swatches/HEX/RGB, sample transparency policy",
+    "icon": "fa-image"
+  },
+  {
+    "id": "i16",
+    "code": "I16",
+    "name": "Image\u2194Base64/data URI",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "Binary-safe import/export, MIME and size bounds",
+    "icon": "fa-image"
+  },
+  {
+    "id": "i17",
+    "code": "I17",
+    "name": "Favicon/app-icon pack",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "One tool generates reviewed size bundles, platform support explicit",
+    "icon": "fa-image"
+  },
+  {
+    "id": "i18",
+    "code": "I18",
+    "name": "Collage/merge images",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "Layout/gaps/background and ordered batch",
+    "icon": "fa-image"
+  },
+  {
+    "id": "i19",
+    "code": "I19",
+    "name": "Contact sheet",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "Thumbnails, filenames optionally, page/grid sizing",
+    "icon": "fa-image"
+  },
+  {
+    "id": "i20",
+    "code": "I20",
+    "name": "Visual image comparison",
+    "category": "Images",
+    "tab": "converter",
+    "desc": "Side-by-side/overlay/difference, scale alignment, honest thresholds",
+    "icon": "fa-image"
+  },
+  {
+    "id": "c01",
+    "code": "C01",
+    "name": "Scientific expression calculator",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Defined precedence, constants/functions, radians/degrees; bounded evaluation",
+    "icon": "fa-calculator",
+    "alias": "math_eval"
+  },
+  {
+    "id": "c02",
+    "code": "C02",
+    "name": "Percentage",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Part/whole/percent with explicit solved variable",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c03",
+    "code": "C03",
+    "name": "Percentage change",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Signed increase/decrease, original/new labels",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c04",
+    "code": "C04",
+    "name": "Discount",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Multiple discounts/tax order only if explicitly supported, savings/net",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c05",
+    "code": "C05",
+    "name": "Margin/markup",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Distinguish denominators; solve cost/revenue/target where offered",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c06",
+    "code": "C06",
+    "name": "Average/weighted average",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "List/pasted table, weights, missing-value policy",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c07",
+    "code": "C07",
+    "name": "Fractions/ratios",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Exact rational simplification and arithmetic",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c08",
+    "code": "C08",
+    "name": "Loan/EMI",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Fixed-rate monthly payments, **complete** schedule, explicit currency/fees assumptions",
+    "icon": "fa-calculator",
+    "alias": "loan_emi"
+  },
+  {
+    "id": "c09",
+    "code": "C09",
+    "name": "Compound growth",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Correct compounding frequency, contribution timing, fractional durations",
+    "icon": "fa-calculator",
+    "alias": "compound_interest"
+  },
+  {
+    "id": "c10",
+    "code": "C10",
+    "name": "Simple interest",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Principal/rate/time units and exact assumptions",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c11",
+    "code": "C11",
+    "name": "VAT/sales tax",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Forward/reverse arithmetic with supplied rate, no jurisdiction claim",
+    "icon": "fa-calculator",
+    "alias": "vat_salestax"
+  },
+  {
+    "id": "c12",
+    "code": "C12",
+    "name": "Freelance rate",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Take-home/expense/tax/work-time assumptions, scenarios",
+    "icon": "fa-calculator",
+    "alias": "freelance_rate"
+  },
+  {
+    "id": "c13",
+    "code": "C13",
+    "name": "Break-even",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Contribution margin, ceil for indivisible units, optional fractional-unit policy",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c14",
+    "code": "C14",
+    "name": "Depreciation",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Straight-line and explicitly supported methods; book-value schedule",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c15",
+    "code": "C15",
+    "name": "ROI",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Gains/costs/time assumptions and nonannualized label",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c16",
+    "code": "C16",
+    "name": "CAGR",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Start/end/period and domain assumptions",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c17",
+    "code": "C17",
+    "name": "Date difference",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Days/months/years semantics, inclusive option",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c18",
+    "code": "C18",
+    "name": "Age",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "As-of date, years/months/days, date-only semantics",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c19",
+    "code": "C19",
+    "name": "Business days",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Workweek and explicit local holiday list/import, no claimed global holiday service",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c20",
+    "code": "C20",
+    "name": "Work hours/duration",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Overnight shifts, breaks, weekly totals",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c21",
+    "code": "C21",
+    "name": "Time-zone converter",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Date-specific zone offsets and DST ambiguity",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c22",
+    "code": "C22",
+    "name": "Quadratic solver",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Real/complex roots, degeneracy and precision",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c23",
+    "code": "C23",
+    "name": "GCD/LCM",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Integer lists, defined zero/negative behavior",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c24",
+    "code": "C24",
+    "name": "Descriptive statistics",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Mean/median/mode/range/variance/stddev; sample/population choice",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "c25",
+    "code": "C25",
+    "name": "Geometry",
+    "category": "Calculators",
+    "tab": "calculators",
+    "desc": "Coherent 2D/3D shape workbench; labeled inputs/units/formulas",
+    "icon": "fa-calculator"
+  },
+  {
+    "id": "u01",
+    "code": "U01",
+    "name": "Length",
+    "category": "Unit Converters",
+    "tab": "calculators",
+    "desc": "Canonical SI/customary units, aliases and swap",
+    "icon": "fa-arrows-left-right",
+    "alias": "units_convert"
+  },
+  {
+    "id": "u02",
+    "code": "U02",
+    "name": "Area",
+    "category": "Unit Converters",
+    "tab": "calculators",
+    "desc": "Squared units, hectares/acres",
+    "icon": "fa-arrows-left-right"
+  },
+  {
+    "id": "u03",
+    "code": "U03",
+    "name": "Volume",
+    "category": "Unit Converters",
+    "tab": "calculators",
+    "desc": "Metric and named US/Imperial distinctions",
+    "icon": "fa-arrows-left-right"
+  },
+  {
+    "id": "u04",
+    "code": "U04",
+    "name": "Mass",
+    "category": "Unit Converters",
+    "tab": "calculators",
+    "desc": "SI/customary, tonne/US/UK ton distinction",
+    "icon": "fa-arrows-left-right"
+  },
+  {
+    "id": "u05",
+    "code": "U05",
+    "name": "Temperature",
+    "category": "Unit Converters",
+    "tab": "calculators",
+    "desc": "Offset formulas and absolute-zero policy",
+    "icon": "fa-arrows-left-right"
+  },
+  {
+    "id": "u06",
+    "code": "U06",
+    "name": "Speed",
+    "category": "Unit Converters",
+    "tab": "calculators",
+    "desc": "Distance/time dimensions",
+    "icon": "fa-arrows-left-right"
+  },
+  {
+    "id": "u07",
+    "code": "U07",
+    "name": "Time duration",
+    "category": "Unit Converters",
+    "tab": "calculators",
+    "desc": "Fixed durations separate from calendar months/years",
+    "icon": "fa-arrows-left-right"
+  },
+  {
+    "id": "u08",
+    "code": "U08",
+    "name": "Digital storage",
+    "category": "Unit Converters",
+    "tab": "calculators",
+    "desc": "Bits/bytes, SI/IEC, case-sensitive ambiguities resolved",
+    "icon": "fa-arrows-left-right"
+  },
+  {
+    "id": "u09",
+    "code": "U09",
+    "name": "Energy",
+    "category": "Unit Converters",
+    "tab": "calculators",
+    "desc": "J/cal/kWh/BTU and variant definitions",
+    "icon": "fa-arrows-left-right"
+  },
+  {
+    "id": "u10",
+    "code": "U10",
+    "name": "Power",
+    "category": "Unit Converters",
+    "tab": "calculators",
+    "desc": "W/kW/horsepower variants",
+    "icon": "fa-arrows-left-right"
+  },
+  {
+    "id": "u11",
+    "code": "U11",
+    "name": "Pressure",
+    "category": "Unit Converters",
+    "tab": "calculators",
+    "desc": "Pa/bar/PSI/atm",
+    "icon": "fa-arrows-left-right"
+  },
+  {
+    "id": "u12",
+    "code": "U12",
+    "name": "Force",
+    "category": "Unit Converters",
+    "tab": "calculators",
+    "desc": "N/lbf/kgf with explicit gravity constant",
+    "icon": "fa-arrows-left-right"
+  },
+  {
+    "id": "u13",
+    "code": "U13",
+    "name": "Frequency",
+    "category": "Unit Converters",
+    "tab": "calculators",
+    "desc": "Hz/kHz/MHz/GHz",
+    "icon": "fa-arrows-left-right"
+  },
+  {
+    "id": "u14",
+    "code": "U14",
+    "name": "Angles",
+    "category": "Unit Converters",
+    "tab": "calculators",
+    "desc": "Degrees/radians/gradians",
+    "icon": "fa-arrows-left-right"
+  },
+  {
+    "id": "u15",
+    "code": "U15",
+    "name": "Colors",
+    "category": "Unit Converters",
+    "tab": "calculators",
+    "desc": "HEX/RGB/HSL/HSV; gamut/alpha rules, CMYK only with defined assumptions",
+    "icon": "fa-arrows-left-right"
+  },
+  {
+    "id": "u16",
+    "code": "U16",
+    "name": "Typography",
+    "category": "Unit Converters",
+    "tab": "calculators",
+    "desc": "px/pt/em/rem with explicit DPI/font/root context",
+    "icon": "fa-arrows-left-right"
+  },
+  {
+    "id": "f01",
+    "code": "F01",
+    "name": "Batch rename",
+    "category": "File Utilities",
+    "tab": "converter",
+    "desc": "Preview/apply/undo, numbering/case/literal/regex only if supported",
+    "icon": "fa-folder-gear",
+    "alias": "batch_rename"
+  },
+  {
+    "id": "f02",
+    "code": "F02",
+    "name": "File info",
+    "category": "File Utilities",
+    "tab": "converter",
+    "desc": "Size/timestamps/basic metadata, platform limits",
+    "icon": "fa-folder-gear"
+  },
+  {
+    "id": "f03",
+    "code": "F03",
+    "name": "File type detection",
+    "category": "File Utilities",
+    "tab": "converter",
+    "desc": "Signature/MIME plus extension mismatch",
+    "icon": "fa-folder-gear"
+  },
+  {
+    "id": "f04",
+    "code": "F04",
+    "name": "Folder comparison",
+    "category": "File Utilities",
+    "tab": "converter",
+    "desc": "Relative path/size/optional content hashes, no implicit sync",
+    "icon": "fa-folder-gear"
+  },
+  {
+    "id": "f05",
+    "code": "F05",
+    "name": "File comparison",
+    "category": "File Utilities",
+    "tab": "converter",
+    "desc": "Binary/text distinctions, safe large-file view",
+    "icon": "fa-folder-gear"
+  },
+  {
+    "id": "f06",
+    "code": "F06",
+    "name": "Create ZIP",
+    "category": "File Utilities",
+    "tab": "converter",
+    "desc": "Selected inputs, relative paths, naming, safe output",
+    "icon": "fa-folder-gear"
+  },
+  {
+    "id": "f07",
+    "code": "F07",
+    "name": "Extract ZIP",
+    "category": "File Utilities",
+    "tab": "converter",
+    "desc": "Preview destination, overwrite policy, bounded safe extraction",
+    "icon": "fa-folder-gear"
+  },
+  {
+    "id": "f08",
+    "code": "F08",
+    "name": "Split/join files",
+    "category": "File Utilities",
+    "tab": "converter",
+    "desc": "Binary-safe chunks, manifest/checksum, ordered recombination",
+    "icon": "fa-folder-gear"
+  },
+  {
+    "id": "f09",
+    "code": "F09",
+    "name": "File age finder",
+    "category": "File Utilities",
+    "tab": "converter",
+    "desc": "Selected scope, modified/created availability, inclusive thresholds",
+    "icon": "fa-folder-gear"
+  },
+  {
+    "id": "f10",
+    "code": "F10",
+    "name": "Empty-file finder",
+    "category": "File Utilities",
+    "tab": "converter",
+    "desc": "Zero-byte review, no automatic removal",
+    "icon": "fa-folder-gear"
+  },
+  {
+    "id": "f11",
+    "code": "F11",
+    "name": "Symlink inspector",
+    "category": "File Utilities",
+    "tab": "converter",
+    "desc": "Target/resolution/broken-link state and scope",
+    "icon": "fa-folder-gear"
+  },
+  {
+    "id": "f12",
+    "code": "F12",
+    "name": "Archive inspector",
+    "category": "File Utilities",
+    "tab": "converter",
+    "desc": "Supported ZIP content tree/sizes, no extraction needed",
+    "icon": "fa-folder-gear"
+  },
+  {
+    "id": "s01",
+    "code": "S01",
+    "name": "Volume/disk overview",
+    "category": "Storage & Cleanup",
+    "tab": "converter",
+    "desc": "Native volumes/free/used, permission/platform state",
+    "icon": "fa-hard-drive"
+  },
+  {
+    "id": "s02",
+    "code": "S02",
+    "name": "Folder-size analyzer",
+    "category": "Storage & Cleanup",
+    "tab": "converter",
+    "desc": "Hierarchical totals, partial scan/error reporting, bounded cancellation",
+    "icon": "fa-hard-drive",
+    "alias": "storage_analyzer"
+  },
+  {
+    "id": "s03",
+    "code": "S03",
+    "name": "Largest files",
+    "category": "Storage & Cleanup",
+    "tab": "converter",
+    "desc": "Filter/sort size/path/date over scoped scan",
+    "icon": "fa-hard-drive"
+  },
+  {
+    "id": "s04",
+    "code": "S04",
+    "name": "Exact duplicates",
+    "category": "Storage & Cleanup",
+    "tab": "converter",
+    "desc": "Size prefilter + content validation; explain hardlinks/empty files",
+    "icon": "fa-hard-drive",
+    "alias": "dup_finder"
+  },
+  {
+    "id": "s05",
+    "code": "S05",
+    "name": "Empty folders",
+    "category": "Storage & Cleanup",
+    "tab": "converter",
+    "desc": "Bottom-up inspection with clear exclusions",
+    "icon": "fa-hard-drive"
+  },
+  {
+    "id": "s06",
+    "code": "S06",
+    "name": "Cleanup review/Trash",
+    "category": "Storage & Cleanup",
+    "tab": "converter",
+    "desc": "Selected findings, exact paths/actions, dry-run, confirm, native Trash and restore where supported",
+    "icon": "fa-hard-drive"
+  },
+  {
+    "id": "d01",
+    "code": "D01",
+    "name": "JSON formatter",
+    "category": "Developer Tools",
+    "tab": "converter",
+    "desc": "Pretty-print options, preserve data semantics, large-input limits",
+    "icon": "fa-code",
+    "alias": "devtools_format"
+  },
+  {
+    "id": "d02",
+    "code": "D02",
+    "name": "JSON validator",
+    "category": "Developer Tools",
+    "tab": "converter",
+    "desc": "Location-specific syntax errors and strictness policy",
+    "icon": "fa-code"
+  },
+  {
+    "id": "d03",
+    "code": "D03",
+    "name": "JSON minifier",
+    "category": "Developer Tools",
+    "tab": "converter",
+    "desc": "Whitespace reduction without data loss",
+    "icon": "fa-code"
+  },
+  {
+    "id": "d04",
+    "code": "D04",
+    "name": "JSON comparison",
+    "category": "Developer Tools",
+    "tab": "converter",
+    "desc": "Structural/path diff, order policy",
+    "icon": "fa-code"
+  },
+  {
+    "id": "d05",
+    "code": "D05",
+    "name": "JSON\u2194YAML",
+    "category": "Developer Tools",
+    "tab": "converter",
+    "desc": "Safe nonexecuting conversion, type/context policy",
+    "icon": "fa-code"
+  },
+  {
+    "id": "d06",
+    "code": "D06",
+    "name": "CSV\u2194JSON",
+    "category": "Developer Tools",
+    "tab": "converter",
+    "desc": "Preview delimiter/header/type/null mapping",
+    "icon": "fa-code",
+    "alias": "data_converter"
+  },
+  {
+    "id": "d07",
+    "code": "D07",
+    "name": "Base64 text codec",
+    "category": "Developer Tools",
+    "tab": "converter",
+    "desc": "Encode/decode, standard/URL-safe, binary-versus-text error",
+    "icon": "fa-code"
+  },
+  {
+    "id": "d08",
+    "code": "D08",
+    "name": "URL codec/parser",
+    "category": "Developer Tools",
+    "tab": "converter",
+    "desc": "Path/query/component semantics, repeated keys, parse results",
+    "icon": "fa-code"
+  },
+  {
+    "id": "d09",
+    "code": "D09",
+    "name": "JWT inspector",
+    "category": "Developer Tools",
+    "tab": "converter",
+    "desc": "Decode/claims/expiry display, explicit unverified state",
+    "icon": "fa-code",
+    "alias": "jwt_inspector"
+  },
+  {
+    "id": "d10",
+    "code": "D10",
+    "name": "Timestamp converter",
+    "category": "Developer Tools",
+    "tab": "converter",
+    "desc": "Seconds/milliseconds/ISO/time zones, explicit input type",
+    "icon": "fa-code"
+  },
+  {
+    "id": "d11",
+    "code": "D11",
+    "name": "UUID generator",
+    "category": "Developer Tools",
+    "tab": "converter",
+    "desc": "Standard versions actually supported, bulk/copy/export",
+    "icon": "fa-code"
+  },
+  {
+    "id": "d12",
+    "code": "D12",
+    "name": "Hash/checksum workbench",
+    "category": "Developer Tools",
+    "tab": "converter",
+    "desc": "Text and streaming files, selectable MD5/SHA/CRC, verify comparison",
+    "icon": "fa-code",
+    "alias": "crypto_hashes"
+  },
+  {
+    "id": "d13",
+    "code": "D13",
+    "name": "HMAC workbench",
+    "category": "Developer Tools",
+    "tab": "converter",
+    "desc": "Input/secret encoding and supported reviewed algorithm",
+    "icon": "fa-code"
+  },
+  {
+    "id": "d14",
+    "code": "D14",
+    "name": "Password/passphrase generator",
+    "category": "Developer Tools",
+    "tab": "converter",
+    "desc": "Secure RNG, selectable constraints, bounds and strength assumptions",
+    "icon": "fa-code"
+  },
+  {
+    "id": "d15",
+    "code": "D15",
+    "name": "QR generator",
+    "category": "Developer Tools",
+    "tab": "converter",
+    "desc": "Text/URL payload, size/error correction, local PNG/SVG output",
+    "icon": "fa-code"
+  },
+  {
+    "id": "d16",
+    "code": "D16",
+    "name": "Text metrics/case",
+    "category": "Developer Tools",
+    "tab": "converter",
+    "desc": "Defined word/character/line/grapheme counts and casing",
+    "icon": "fa-code"
+  },
+  {
+    "id": "d17",
+    "code": "D17",
+    "name": "Text diff",
+    "category": "Developer Tools",
+    "tab": "converter",
+    "desc": "Readable side-by-side/unified view, whitespace/line-ending policy",
+    "icon": "fa-code"
+  },
+  {
+    "id": "n01",
+    "code": "N01",
+    "name": "System information",
+    "category": "System & Network",
+    "tab": "calculators",
+    "desc": "OS/CPU/memory/basic hardware support, redacted shareable report",
+    "icon": "fa-network-wired"
+  },
+  {
+    "id": "n02",
+    "code": "N02",
+    "name": "Resource overview",
+    "category": "System & Network",
+    "tab": "calculators",
+    "desc": "Actual CPU/memory usage sampling, restrained refresh",
+    "icon": "fa-network-wired"
+  },
+  {
+    "id": "n03",
+    "code": "N03",
+    "name": "Network interface view",
+    "category": "System & Network",
+    "tab": "calculators",
+    "desc": "IPv4/IPv6/VPN/multiple interfaces, private-data warning",
+    "icon": "fa-network-wired"
+  },
+  {
+    "id": "n04",
+    "code": "N04",
+    "name": "DNS lookup",
+    "category": "System & Network",
+    "tab": "calculators",
+    "desc": "Record type/resolver/timeouts, explicit network requirement",
+    "icon": "fa-network-wired"
+  },
+  {
+    "id": "n05",
+    "code": "N05",
+    "name": "Ping diagnostics",
+    "category": "System & Network",
+    "tab": "calculators",
+    "desc": "Safe target validation, latency/loss, supported adapter/permissions",
+    "icon": "fa-network-wired"
+  },
+  {
+    "id": "a01",
+    "code": "A01",
+    "name": "Local dictation",
+    "category": "Audio & Dictation",
+    "tab": "dictate",
+    "desc": "Verified on-device engine, mic permissions, languages and model download explicit; audio import only",
+    "icon": "fa-microphone",
+    "alias": "dictate_stt"
+  },
+  {
+    "id": "a02",
+    "code": "A02",
+    "name": "Meeting notes",
+    "category": "Audio & Dictation",
+    "tab": "dictate",
+    "desc": "Editable transcript and evidence-linked actions/decisions; regex mode labelled; semantic model only ",
+    "icon": "fa-microphone"
+  }
+]

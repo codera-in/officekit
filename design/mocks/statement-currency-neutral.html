@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit — Statement amounts without guessed currency</title>
+  <style>
+    :root { color-scheme: light dark; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; --ink:#172033;--muted:#64748b;--line:#d9e1ea;--surface:#fff;--soft:#f4f6fa;--accent:#4f46e5; }
+    * {box-sizing:border-box} body{margin:0;padding:24px;background:#eef1f5;color:var(--ink)} h1{margin:0 0 6px;font-size:24px} .intro{margin:0 0 22px;color:var(--muted)}
+    main{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}.panel{min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:0 1px 2px #1720330b}h2{font-size:17px;margin:0 0 14px}
+    .summary{padding:12px 14px;margin-bottom:14px;border:1px solid #c7d2fe;border-radius:9px;background:#eef2ff;font-size:13px;line-height:1.5}.scroll{overflow:auto;border:1px solid var(--line);border-radius:9px;max-height:220px}table{width:100%;min-width:620px;border-collapse:collapse;text-align:left;font-size:13px}th{padding:10px;background:var(--soft);font-size:10px;text-transform:uppercase}td{padding:14px 10px;border-top:1px solid var(--line);font-variant-numeric:tabular-nums}td:nth-child(n+3){text-align:right;white-space:nowrap}.note{font-size:12px;color:var(--muted);line-height:1.5;margin:12px 0 0}.currency{font-weight:600}.after .currency{color:#26354a}
+    @media(max-width:760px){body{padding:12px}main{grid-template-columns:1fr;gap:12px}.panel{padding:13px}}
+    @media(prefers-color-scheme:dark){:root{--ink:#ecf0f7;--muted:#a5b1c2;--line:#344054;--surface:#171c26;--soft:#222a37;--accent:#aaa0ff}body{background:#0e1219}.summary{background:#212341;border-color:#46417c;color:#dddafd}}
+  </style>
+</head>
+<body>
+  <h1>Bank statement amounts</h1>
+  <p class="intro">The extractor parses numeric amounts but does not identify the account currency.</p>
+  <main>
+    <section class="panel" aria-labelledby="before-title">
+      <h2 id="before-title">Before · guessed US dollars</h2>
+      <div class="summary">Balance math is arithmetic only; the source currency was not detected.</div>
+      <div class="scroll"><table><thead><tr><th>Date</th><th>Description</th><th>Debit</th><th>Credit</th><th>Balance</th></tr></thead><tbody><tr><td>05/10/2026</td><td>UPI transfer</td><td>$250.50</td><td>–</td><td>$12,500.00</td></tr></tbody></table></div>
+      <p class="note">The dollar sign implies a currency OfficeKit did not establish.</p>
+    </section>
+    <section class="panel after" aria-labelledby="after-title">
+      <h2 id="after-title">After · currency-neutral values</h2>
+      <div class="summary">Amounts are shown as numbers. OfficeKit does not infer or convert the source currency.</div>
+      <div class="scroll" role="region" aria-label="Extracted transaction amounts" tabindex="0"><table><caption style="position:absolute;clip:rect(0,0,0,0)">Extracted amounts without an inferred currency</caption><thead><tr><th>Date</th><th>Description</th><th>Debit</th><th>Credit</th><th>Balance</th></tr></thead><tbody><tr><td>05/10/2026</td><td>UPI transfer</td><td class="currency">250.50</td><td>–</td><td class="currency">12500.00</td></tr></tbody></table></div>
+      <p class="note">At compact widths, scroll horizontally to see every amount column. Numeric values remain unchanged. Review the original statement for its currency; CSV/XLSX data contains no guessed currency symbol.</p>
+    </section>
+  </main>
+</body>
+</html>

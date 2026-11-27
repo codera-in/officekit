@@ -1,0 +1,39 @@
+# OfficeKit main gap review
+
+Reviewed 2026-10-05. Snapshot: cached `origin/main` at `6d7fb46`. Fetch failed because shared Git metadata is outside the writable sandbox; GitHub API access also failed. This is not confirmation of the current remote head. Source inspected from a clean archive at `/tmp/officekit-main-review`; existing local planning changes were preserved. No application code changed.
+
+## Conclusion
+
+Recent changes add a useful gallery, local history/bookmarks, appearance/privacy preferences and initial export helpers. They do not yet deliver 123 working tools or the complete find → calculate → export → save → reopen flow. Prioritize trustworthy delivery and end-to-end workflows before expanding catalogue claims.
+
+| Priority | Gap and source at reviewed main | Impact | Required fix and verification |
+| --- | --- | --- | --- |
+| P0 | Tauri only registers a status command; no backend launch/bundled sidecar in `src-tauri/src/lib.rs:3` or `src-tauri/tauri.conf.json:7`; UI uses relative `/api` requests (`index.html:1303`) | Packaged app has no configured path to its Python API | Package/start/stop backend or implement typed native commands; verify clean-machine installed workflows without development servers |
+| P0 | Registry is 123 metadata records, with PDF tools routed to `statement` (`engine_comms.py:34`), rather than individual operations | Selecting Merge PDFs opens statement extraction; catalogue descriptions imply unsupported depth | Give each available capability an exact route and executable handler; hide/label unavailable entries; test every registry destination, not just record count |
+| P0 | `createResultSnapshot` drops the oldest record unconditionally over 50 (`index.html:1836`) | Saved bookmarks can disappear during ordinary use | Separate saved retention from recent eviction; save oldest, create 51+ runs, restart and reopen/export it |
+| P0 | Compound interest always performs 12 periods per whole year regardless of frequency and ignores fractional years (`engine_calculators.py:59`) | Incorrect financial results | Define rate/deposit timing semantics; independently verify annual/quarterly/monthly and fractional-year cases |
+| P0 | Raw statement fields become HTML (`index.html:1140`); CSP disabled (`src-tauri/tauri.conf.json:27`) | Imported descriptions can inject markup into the app | Render untrusted values as text, restrict CSP and network origins; verify hostile statement fields cannot execute |
+| P1 | `ExportEngine` appears only in its module and tests; no app route/import. UI export creates plain `.txt` (`index.html:1354`) | Requested MD/HTML/PPT exports are inaccessible to users | Wire typed snapshot export API and format picker, native destination and cancellation; open each real export in an independent reader |
+| P1 | PPT silently keeps 3 results, 4 inputs/notes, 15 rows and 8 columns (`engine_export.py:222`, `:278`) | Shared deck loses data without disclosure | Paginate complete data, or explicitly offer labelled summary plus full companion report; verify row/column/assumption preservation |
+| P1 | `python-pptx` absent from `requirements.txt`; exporter advertises XLSX/JSON but defines no methods for them | Clean installs cannot reproduce PPT test success; export scope overstated | Declare required dependencies and actual format capabilities; test from clean dependency installation |
+| P1 | Markdown directly interpolates title/values/notes and only escapes pipes in row values (`engine_export.py:44`) | Backticks/newlines/headings can corrupt report structure; untrusted text can masquerade as instructions | Escape or fence data, identify untrusted sections, preview/redact sensitive fields; test multiline/backtick/pipe/instruction-like content. Do not claim prompt injection is solved by Markdown |
+| P1 | CSV sanitizes values but not column names (`engine_export.py:309`); live statement exports bypass this helper (`app.py:125`) | Formula protection is incomplete and absent from the actual workflow | Apply consistent policy to live CSV/XLSX headers and cells; validate dangerous prefixes and preserved numeric values in spreadsheet readers |
+| P1 | Snapshot saved only from EMI (`index.html:1309`); history only offers Save and Use Inputs; reuse reruns EMI (`:1911`) | Reopening a saved result does not display its original snapshot; other tools lack result history | Add read-only saved detail/export and explicit separate reuse action, all relevant tools, schema versions/artifact references; test changed formulas and missing files |
+| P1 | Registry IDs changed to `c01`/`p01`/etc, while defaults/snapshots use `loan_emi`/`bank_statement` (`index.html:1689`); favorites match only IDs (`:1791`) | Existing/default favorites disappear after upgrade | Stable IDs or explicit alias migration; test upgrade from the previous registry and persisted history |
+| P1 | License uses distributed HMAC issuer secret and trusts saved JSON (`engine_license.py:14`, `:68`) | Requested 1/N-device activation, device lock and separate trial/paid builds are not implemented | Public-key verification of server-issued device entitlements, recovery policy and separate paid artifacts; test tampering, limits, transfers and offline grace |
+| P1 | Tests construct their own snapshot, sanitizer and telemetry sample (`tests/test_design_system_and_snapshots.py:54`, `:77`, `:98`); PPT test checks ZIP header/size (`tests/test_coverage_completion.py:372`) | Coverage percentage does not establish production behavior, snapshot immutability or report completeness | Exercise actual UI/API/storage/export paths with independent expected results; add restart, bookmark retention, hostile-input and clean-installer tests |
+| P2 | Gallery category options miss Storage/System/Audio and mismatch Developer & Data (`index.html:210`); search selects only tab (`:1578`) | Poor discovery and wrong destination for advertised tools | Derive category filters from registry and search exact tools with aliases; keyboard/accessibility tests |
+| P2 | Dark tokens coexist with hardcoded white surfaces; Tailwind uses class dark mode while setter writes data-theme (`index.html:15`, `:1921`); remote font/Tailwind/icon CDNs (`:8`) | Inconsistent dark appearance and offline styling dependency | Bundle assets, consistently consume semantic tokens, follow OS theme changes; verify all screens offline/light/dark/high contrast |
+| P2 | Privacy controls only store flags/remove a localStorage key (`index.html:1932`); support stays local and adds synthetic triage (`engine_comms.py:1195`); updates remain static | Settings do not deliver consent-governed telemetry/heartbeat or actual support/update service | Implement separate network-purpose contracts, remote acknowledgment, signed updates and consent revocation; test no traffic before consent, queue purge, offline retry, genuine ticket acknowledgment |
+
+## Recommended order
+
+1. Establish clean packaged desktop operation; fix incorrect formulas and unsafe rendering.
+2. Make catalogue availability truthful and preserve bookmarks through retention and upgrades.
+3. Finish one complete EMI workflow: full schedule, immutable saved detail, reopen, format picker and complete exports.
+4. Expand that shared history/export contract to document, image and data workflows; implement licensing/privacy/support infrastructure separately.
+5. Validate 20–30 tools to the release-depth contract before pursuing the full 123-capability matrix.
+
+## Validation limits
+
+Static source/diff review completed. `pytest -q` could not run because pytest is not available in this session. No rendered UI or clean-machine installer validation was performed. Existing test-count/coverage claims were not independently reproduced. The working branch was neither rebased nor updated because the session cannot mutate shared Git metadata.

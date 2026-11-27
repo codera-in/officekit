@@ -1,0 +1,11 @@
+diff --git a/deps/CMakeLists.txt b/deps/CMakeLists.txt
+index 1450b49..7aa14c2 100644
+--- a/deps/CMakeLists.txt
++++ b/deps/CMakeLists.txt
+@@ -6,5 +6,5 @@
+ if(NOT TOKENIZER_CPP_ROOTDIR)
+     add_subdirectory(tokenizers-cpp)
+ else()
+-    add_subdirectory(TOKENIZER_CPP_ROOTDIR tokenizers-cpp)
++    add_subdirectory(${TOKENIZER_CPP_ROOTDIR} tokenizers-cpp)
+ endif()

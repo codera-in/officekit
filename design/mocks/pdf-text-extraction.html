@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit · Extract PDF text</title>
+  <style>
+    :root { color-scheme: light dark; font: 15px/1.5 Inter, ui-sans-serif, system-ui, sans-serif; --ink:#182230; --muted:#64748b; --line:#dbe3ee; --brand:#4836d1; --surface:#fff; --wash:#f7f8fc; }
+    @media (prefers-color-scheme:dark) { :root { --ink:#eef2ff; --muted:#aab5c8; --line:#344155; --brand:#a99cff; --surface:#18202e; --wash:#111723; } }
+    * { box-sizing:border-box; } body { margin:0; background:var(--wash); color:var(--ink); }
+    header { background:var(--surface); border-bottom:1px solid var(--line); padding:16px max(24px,calc((100vw - 1100px)/2)); font-weight:700; }
+    main { max-width:1100px; margin:32px auto; padding:0 24px; display:grid; gap:20px; grid-template-columns:minmax(280px,370px) 1fr; }
+    h1 { font-size:28px; margin:0 0 3px; } p { color:var(--muted); margin:4px 0 16px; }
+    section { background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:22px; }
+    label { display:grid; gap:6px; margin:14px 0; font-size:13px; font-weight:600; }
+    input,select,button { font:inherit; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:9px; padding:10px 12px; }
+    button.primary { color:white; background:#4333ca; border-color:#4333ca; font-weight:700; }
+    .drop { border:1px dashed #9ba9bd; border-radius:12px; padding:20px; text-align:center; }
+    .notice { background:#fff8e7; color:#805400; padding:12px; border-radius:10px; font-size:13px; }
+    pre { white-space:pre-wrap; overflow:auto; max-height:480px; background:var(--wash); padding:16px; border-radius:10px; font:13px/1.55 ui-monospace,SFMono-Regular,monospace; }
+    @media(max-width:760px) { main { grid-template-columns:1fr; margin:18px auto; } }
+  </style>
+</head>
+<body>
+  <header>OfficeKit <span style="color:var(--muted);font-weight:400">/ PDF &amp; Documents</span></header>
+  <main>
+    <section>
+      <h1>Extract PDF text</h1>
+      <p>Turn selectable PDF text into a clean text file. Everything runs on this Mac.</p>
+      <div class="drop">Choose or drop one PDF<br><small>Up to 50 pages · 64 MiB</small></div>
+      <label>Pages <input value="All pages" aria-label="Pages"></label>
+      <label>Download as <select><option>Plain text (.txt)</option><option>Markdown (.md)</option></select></label>
+      <button class="primary">Extract text</button>
+      <p class="notice">Scanned image pages have no selectable text. This tool does not run OCR; use a supported statement workflow or OCR app for those pages.</p>
+    </section>
+    <section>
+      <strong>Preview</strong>
+      <p>Pages 1–3 · 4,283 characters · preview limited to 20,000 characters</p>
+      <pre>Page 1
+
+Extracted selectable text appears here in document reading order. Unicode characters, punctuation and line breaks are preserved where available.
+
+Page 2
+
+Choose Download full text to save the complete output.</pre>
+      <button>Download full text</button>
+    </section>
+  </main>
+</body>
+</html>

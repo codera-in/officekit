@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OfficeKit PDF table export formats</title>
+<style>
+  :root { color-scheme: light; font: 15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color:#172033; background:#f5f7fb }
+  * { box-sizing:border-box }
+  body { margin:0; padding:32px; display:grid; gap:24px; justify-content:center }
+  main { width:min(100%,760px); padding:24px; border:1px solid #dce3ed; border-radius:16px; background:#fff; box-shadow:0 3px 12px #1720330c }
+  h1 { margin:0 0 4px; font-size:21px }
+  p { margin:0 0 18px; color:#52617a }
+  .preview { overflow:auto; margin:16px 0; border:1px solid #dce3ed; border-radius:10px }
+  table { width:100%; border-collapse:collapse; text-align:left; font-size:13px }
+  th,td { padding:10px 12px; border-bottom:1px solid #e5eaf1; white-space:nowrap }
+  th { background:#f8fafc; color:#42516a }
+  .actions { display:flex; flex-wrap:wrap; gap:10px }
+  button { padding:10px 14px; border:1px solid #cbd5e1; border-radius:9px; background:#fff; color:#25324a; font:600 14px inherit }
+  button:first-child { background:#4338ca; border-color:#4338ca; color:#fff }
+  aside { margin-top:14px; padding:11px 13px; border-radius:9px; background:#f1f5f9; color:#52617a; font-size:12px }
+  .tag { color:#4338ca; font-size:12px; font-weight:700; letter-spacing:.04em }
+  @media(max-width:600px) { body { padding:14px } main { padding:18px } }
+</style>
+<body>
+  <main>
+    <span class="tag">BEFORE</span>
+    <h1>Extract PDF tables</h1>
+    <p>Review a detected table before exporting. The current screen offers CSV and XLSX.</p>
+    <div class="preview"><table><thead><tr><th>Date</th><th>Description</th><th>Amount</th></tr></thead><tbody><tr><td>21/09/26</td><td>Office supplies</td><td>1,250.00</td></tr></tbody></table></div>
+    <div class="actions"><button>Download CSV</button><button>Download XLSX</button></div>
+  </main>
+  <main>
+    <span class="tag">AFTER</span>
+    <h1>Extract PDF tables</h1>
+    <p>Choose the spreadsheet format that matches the app you need to share with.</p>
+    <div class="preview"><table><thead><tr><th>Date</th><th>Description</th><th>Amount</th></tr></thead><tbody><tr><td>21/09/26</td><td>Office supplies</td><td>1,250.00</td></tr></tbody></table></div>
+    <div class="actions"><button>Download CSV</button><button>Download XLS</button><button>Download XLSX</button></div>
+    <aside>Legacy XLS is limited to 65,536 rows and 256 columns. Source cell values remain text; formula-like content is escaped. The original PDF stays unchanged.</aside>
+  </main>
+  <main>
+    <span class="tag">BANK STATEMENT EXPORT</span>
+    <h1>Statement results</h1>
+    <p>Reviewed transactions keep their numeric debit, credit and balance cells in the exported workbook.</p>
+    <div class="actions"><button>Export CSV</button><button>Export Excel (XLSX)</button><button>Legacy Excel (XLS)</button></div>
+    <aside>CSV, XLSX and XLS downloads use the same reviewed transaction rows. The original statement PDF remains unchanged.</aside>
+  </main>
+</body>
+</html>

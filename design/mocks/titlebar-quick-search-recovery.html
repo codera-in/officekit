@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>OfficeKit — Quick Search interaction mock</title>
+  <style>
+    :root{font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f4f6fb}
+    *{box-sizing:border-box}body{margin:0;padding:32px}.wrap{max-width:1100px;margin:auto}h1{font-size:28px;margin:0 0 8px}.intro{color:#65718a;margin:0 0 26px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.panel{background:white;border:1px solid #dce3ef;border-radius:18px;padding:22px;box-shadow:0 8px 24px #1f2c4810}.label{font-size:11px;font-weight:800;letter-spacing:.1em;color:#71809a;text-transform:uppercase}.top{height:54px;border-bottom:1px solid #e4e9f2;display:flex;align-items:center;justify-content:space-between;margin:0 -2px 20px}.brand{font-weight:800;font-size:18px}.search{border:1px solid #d9e1ee;background:#f5f7fb;border-radius:10px;padding:9px 12px;color:#34425b}.bar{display:flex;align-items:center;gap:10px;padding:14px;background:#f8f9fc;border-bottom:1px solid #e6eaf2;margin:0 -22px}.input{flex:1;border:1px solid #d9e1ee;background:#fff;border-radius:9px;padding:11px 12px}.row{display:flex;gap:12px;padding:15px 2px;border-bottom:1px solid #edf0f5}.icon{width:36px;height:36px;border-radius:10px;background:#eef0ff;color:#483de0;display:grid;place-items:center;font-weight:800;flex:none}.title{font-weight:700}.meta{font-size:12px;color:#6a7892}.kbd{border:1px solid #d7dfeb;background:#fff;border-radius:5px;padding:1px 5px;font-size:11px;color:#71809a}.state{margin-top:18px;padding:12px 14px;border-radius:10px;background:#fff6e7;color:#895510;font-size:13px}.good{background:#edf9f2;color:#236344}.foot{font-size:12px;color:#71809a;padding-top:12px}.result-list{padding:0 4px}.note{font-size:13px;color:#65718a;margin-top:16px}
+    @media(max-width:760px){body{padding:18px}.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>Title-bar Quick Search</h1>
+    <p class="intro">Behavioral before/after for the installed-app report. The visual design stays familiar; the search action must open, filter and navigate reliably under Tauri’s packaged policy, with a visible retry if the local service is starting.</p>
+    <div class="grid">
+      <section class="panel">
+        <div class="label">Before · reported failure</div>
+        <div class="top"><div class="brand">OfficeKit</div><button class="search">⌕ &nbsp;Quick Search… <span class="kbd">⌘K</span></button></div>
+        <h2 style="font-size:18px;margin:0">Tools</h2>
+        <div class="state">Click appears to do nothing, or the palette opens without usable results.</div>
+        <p class="note">Symptoms can come from blocked click handlers, a failed local API request, or a stale app bundle.</p>
+      </section>
+      <section class="panel">
+        <div class="label">After · expected flow</div>
+        <div class="top"><div class="brand">OfficeKit</div><button class="search">⌕ &nbsp;Quick Search… <span class="kbd">⌘K</span></button></div>
+        <div class="bar"><span style="color:#72809a">⌕</span><div class="input">PDF to</div><span class="kbd">ESC</span></div>
+        <div class="result-list">
+          <div class="row"><div class="icon">PDF</div><div><div class="title">PDF to images</div><div class="meta">PDF &amp; Documents · export pages as PNG or JPEG</div></div><span style="margin-left:auto;color:#8b96aa">›</span></div>
+          <div class="row"><div class="icon">PDF</div><div><div class="title">PDF to CSV</div><div class="meta">PDF &amp; Documents · extract statement tables</div></div><span style="margin-left:auto;color:#8b96aa">›</span></div>
+        </div>
+        <div class="foot">Select a result to open that exact tool. <span class="good" style="float:right;padding:3px 8px;border-radius:20px">Local search ready</span></div>
+        <div class="state">If the local service is still starting, show “Tool search is unavailable right now” with a Retry search button. Retry the current query and keep this palette open.</div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

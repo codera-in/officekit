@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Speech Coach Live Workspace</title>
+  <link rel="stylesheet" href="coach-workspace.css">
+  <script defer src="coach-workspace.js"></script>
+</head>
+<body>
+  <main id="coach-workspace" class="ws" aria-labelledby="ws-title">
+    <header data-tauri-drag-region title="Drag to move, including to another display">
+      <h1 id="ws-title" data-tauri-drag-region><span class="grip" aria-hidden="true" data-tauri-drag-region>⋮⋮</span> Live Workspace</h1>
+      <span class="priv" data-tauri-drag-region>🔒 Private · hidden from screen sharing</span>
+      <div class="bars" id="ws-bars" aria-hidden="true" data-tauri-drag-region><b></b><b></b><b></b><b></b><b></b></div>
+    </header>
+    <p class="state" id="ws-state" role="status" aria-live="polite">Listening · speak naturally</p>
+    <p class="warn" id="ws-warning" hidden><span id="ws-warning-text"></span> <a href="#" id="ws-apple-link" hidden>Turn on Apple Intelligence</a></p>
+    <p class="pace" id="ws-pace" hidden></p>
+    <div class="box" id="ws-box" aria-label="Live transcript" tabindex="0"></div>
+    <div class="sec"><span>Improvements</span><span id="ws-count">0</span></div>
+    <ul class="list" id="ws-list" aria-label="Improvements"></ul>
+    <p class="note" id="ws-note">Stays on this Mac · cleared when you press Clear or close</p>
+    <div class="bar">
+      <label class="auto-clear-control" for="ws-auto-clear">Auto-clear
+        <select id="ws-auto-clear" aria-label="Auto-clear">
+          <option value="0">Off</option>
+          <option value="5">5 min</option>
+          <option value="10">10 min</option>
+        </select>
+      </label>
+      <span class="sp" id="ws-summary" role="status" aria-live="polite"></span>
+      <button type="button" class="btn" id="ws-clear" hidden>Clear</button>
+      <button type="button" class="btn primary" id="ws-copy" disabled>Copy</button>
+      <button type="button" class="btn" id="ws-done">Done</button>
+    </div>
+  </main>
+</body>
+</html>

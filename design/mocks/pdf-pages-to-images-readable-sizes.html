@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit · PDF Pages to PNG / JPEG readable sizes</title>
+  <link rel="stylesheet" href="../officekit-tokens.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 20px; color: var(--ok-text); background: var(--ok-bg); font: var(--ok-text-base)/1.45 var(--ok-font); }
+    h1 { margin: 0; font-size: 23px; }
+    .intro { margin: 5px 0 16px; color: var(--ok-muted); }
+    .comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 1240px; margin: auto; }
+    .frame { overflow: hidden; border: 1px solid var(--ok-line); border-radius: var(--ok-radius-panel); background: var(--ok-surface); box-shadow: var(--ok-shadow); }
+    .label, .count { margin: 0; padding: 7px 12px; color: var(--ok-muted); background: var(--ok-surface-raised); font-size: var(--ok-text-xs); }
+    .titlebar { display: flex; align-items: center; gap: 9px; padding: 11px 13px; border-bottom: 1px solid var(--ok-line); background: var(--ok-surface-raised); }
+    .mark { display: grid; width: 28px; height: 28px; place-items: center; border-radius: var(--ok-radius-control); color: white; background: #087ab0; font-size: 12px; font-weight: 800; }
+    .shell { display: grid; grid-template-columns: 132px minmax(0, 1fr); min-height: 365px; }
+    .nav { padding: 12px 8px; border-right: 1px solid var(--ok-line); color: var(--ok-muted); font-size: var(--ok-text-xs); }
+    .nav strong { display: block; margin: 3px 4px 9px; font-size: 10px; letter-spacing: .04em; text-transform: uppercase; }
+    .nav span { display: block; padding: 7px 8px; border-radius: var(--ok-radius-control); }
+    .nav .active { color: var(--ok-accent); background: var(--ok-accent-wash); font-weight: 700; }
+    .card { min-width: 0; padding: 14px; }
+    .card-title { margin: 0; font-size: 18px; }
+    .sub { margin: 3px 0 12px; color: var(--ok-muted); font-size: var(--ok-text-sm); }
+    .file { display: flex; justify-content: space-between; gap: 8px; align-items: center; min-height: 42px; padding: 5px 8px; border: 1px solid var(--ok-line); border-radius: var(--ok-radius-control); }
+    .filename { overflow: hidden; font-size: var(--ok-text-sm); font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+    .size { color: var(--ok-muted); font-size: var(--ok-text-xs); white-space: nowrap; }
+    .settings { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 11px; }
+    .setting { padding: 7px 9px; border: 1px solid var(--ok-line); border-radius: var(--ok-radius-control); font-size: var(--ok-text-xs); }
+    .setting strong { display: block; color: var(--ok-muted); font-size: 10px; }
+    .preview { margin-top: 11px; padding: 10px; border: 1px solid var(--ok-line); border-radius: var(--ok-radius-control); background: var(--ok-bg); }
+    .preview strong { display: block; font-size: var(--ok-text-sm); }
+    .preview p { margin: 2px 0 0; color: var(--ok-muted); font-size: var(--ok-text-sm); }
+    .dock { display: flex; min-height: 58px; align-items: center; justify-content: space-between; gap: 8px; padding: 9px 10px; border-top: 1px solid var(--ok-line); background: var(--ok-surface-raised); }
+    .dock-title { font-size: var(--ok-text-xs); font-weight: 650; white-space: nowrap; }
+    .dock-status { color: var(--ok-muted); font-size: 10px; text-align: center; }
+    .dock-actions { display: flex; flex: 0 0 auto; gap: 6px; }
+    .btn { min-height: 34px; padding: 0 10px; border: 1px solid var(--ok-control-line); border-radius: var(--ok-radius-control); color: var(--ok-text); background: var(--ok-surface); font: inherit; font-size: var(--ok-text-xs); font-weight: 650; white-space: nowrap; }
+    .btn-primary { border-color: var(--ok-accent); color: var(--ok-on-accent); background: var(--ok-accent); }
+    @media (max-width: 900px) { .comparison { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) { body { padding: 10px; } .shell { grid-template-columns: 1fr; } .nav { display: none; } .dock { align-items: flex-start; flex-wrap: wrap; } .dock-status { order: 2; width: 100%; text-align: left; } .dock-actions { margin-left: auto; } }
+  </style>
+</head>
+<body>
+  <h1>PDF Pages to PNG / JPEG · readable sizes</h1>
+  <p class="intro">The input size and complete ZIP output remain visible with the chosen format, resolution, page count and shared result actions.</p>
+  <div class="comparison">
+    <div class="frame" aria-label="Before small PDF sizes are readable">
+      <p class="label">Before · valid small files read as empty</p><p class="count">Buttons: 3/3</p>
+      <header class="titlebar"><span class="mark">OK</span><strong>OfficeKit</strong><span class="sub">PDF &amp; Documents</span></header>
+      <div class="shell">
+        <nav class="nav" aria-label="PDF tools"><strong>Convert &amp; extract</strong><span class="active">PDF pages to PNG / JPEG</span><span>Extract PDF text</span><span>Extract PDF tables</span><span>Bank statement to CSV</span></nav>
+        <main class="card"><h2 class="card-title">PDF pages to PNG / JPEG</h2><p class="sub">Render every page locally. Choose resolution and format before exporting.</p>
+          <div class="file"><span class="filename">pdf-audit-fixture.pdf</span><span class="size">0.00 MiB</span></div>
+          <div class="settings"><div class="setting"><strong>Image format</strong>JPEG</div><div class="setting"><strong>Resolution</strong>72 DPI</div><div class="setting"><strong>JPEG quality</strong>80</div><div class="setting"><strong>Page selection</strong>All pages · 3</div></div>
+          <div class="preview"><strong>Output preview</strong><p>pdf-audit-fixture_pages.zip · <span>0.00 MiB</span> · 3 pages · source unchanged</p></div>
+        </main>
+      </div>
+      <footer class="dock"><span class="dock-title">PDF Pages to PNG / JPEG</span><span class="dock-status">Output is ready.</span><div class="dock-actions"><button class="btn">Copy summary</button><button class="btn btn-primary">Download</button><button class="btn">Select PDFs</button></div></footer>
+    </div>
+    <div class="frame" aria-label="After readable PDF size formatting">
+      <p class="label">After · KiB preserves useful output size</p><p class="count">Buttons: 3/3</p>
+      <header class="titlebar"><span class="mark">OK</span><strong>OfficeKit</strong><span class="sub">PDF &amp; Documents</span></header>
+      <div class="shell">
+        <nav class="nav" aria-label="PDF tools"><strong>Convert &amp; extract</strong><span class="active">PDF pages to PNG / JPEG</span><span>Extract PDF text</span><span>Extract PDF tables</span><span>Bank statement to CSV</span></nav>
+        <main class="card"><h2 class="card-title">PDF pages to PNG / JPEG</h2><p class="sub">Render every page locally. Choose resolution and format before exporting.</p>
+          <div class="file"><span class="filename">pdf-audit-fixture.pdf</span><span class="size">3.1 KiB</span></div>
+          <div class="settings"><div class="setting"><strong>Image format</strong>JPEG</div><div class="setting"><strong>Resolution</strong>72 DPI</div><div class="setting"><strong>JPEG quality</strong>80</div><div class="setting"><strong>Page selection</strong>All pages · 3</div></div>
+          <div class="preview"><strong>Output preview</strong><p>pdf-audit-fixture_pages.zip · <b>14.4 KiB</b> · 3 pages · source unchanged</p></div>
+        </main>
+      </div>
+      <footer class="dock"><span class="dock-title">PDF Pages to PNG / JPEG</span><span class="dock-status">Output is ready.</span><div class="dock-actions"><button class="btn">Copy summary</button><button class="btn btn-primary">Download</button><button class="btn">Select PDFs</button></div></footer>
+    </div>
+  </div>
+</body>
+</html>

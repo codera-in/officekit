@@ -1,0 +1,10 @@
+# Ensure LF line endings on all operating systems
+* text=auto eol=lf
+
+# Binary files
+*.png binary
+*.ico binary
+*.icns binary
+*.ttf binary
+*.pdf binary
+*.woff2 binary

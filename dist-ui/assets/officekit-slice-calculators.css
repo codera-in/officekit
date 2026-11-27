@@ -1,0 +1,4 @@
+/* Calculators slice (C06–C07, C15–C25) styles. Owned by this slice only. */
+.ok-app .ok-calc-stale-card { margin-bottom: 1rem; padding: .75rem 1rem; border: 1px solid var(--ok-line); border-left: 3px solid var(--ok-warning); border-radius: .5rem; background: var(--ok-warning-wash); color: var(--ok-text); }
+.ok-app .ok-calc-stale-card strong { display: block; margin-bottom: .25rem; }
+.ok-app .ok-calc-stale-card p { margin: 0; color: var(--ok-muted); }

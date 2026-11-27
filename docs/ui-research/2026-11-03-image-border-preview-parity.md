@@ -1,0 +1,7 @@
+# Image Border & Rounded Corners: preview and export parity
+
+Added a focused browser regression for a synthetic 4×4 green PNG with a 2 px red border and 4 px corner radius. It checks the 8×8 preview, transparent outside corner, exact red border and unchanged green center, then compares those pixels and dimensions with the saved PNG. The case also checks the saved status, unchanged source bytes, and three-button maximum. It captures empty, preview and saved screen states when the browser run is available.
+
+Fresh route checks pass 2/2 for PNG transparency and JPEG fill compositing. The shared image UI contract suite passes 47/47, and the browser spec passes `node --check`. The focused browser regression has not run in this milestone; WebKit 2359 aborts at launch on this machine, before test setup. Existing screenshots remain at `docs/verification/tool-unification/after/image_border-{initial,preview,saved}-{desktop,compact}-webkit.png`.
+
+This milestone adds verification only; it does not change the visible tool behavior. The installed check is blocked: LaunchServices reports `kLSNoExecutableErr` for `/Applications/OfficeKit.app`, direct launch of its bundled executable exits 134, and CUA cannot attach to an OfficeKit window (`cgWindowNotFound`). JPEG/opacity screen interaction, invalid-input recovery, fresh browser captures, Copy/Download adapter behavior, and installed/native behavior remain open.

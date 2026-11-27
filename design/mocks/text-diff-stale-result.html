@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Text Diff · stale result proposal</title>
+  <style>
+    :root { color-scheme: light; --ink:#183241; --muted:#567080; --line:#cbd9e1; --paper:#f3f7f9; --panel:#fff; --blue:#147da5; --blue-dark:#096487; --amber:#fff7df; --amber-line:#e5c976; --red:#af4747; --green:#207849; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    .wrap { max-width:1050px; margin:28px auto; padding:0 22px 108px; }
+    h1 { margin:0 0 6px; font-size:26px; letter-spacing:-.025em; }
+    .intro { margin:0 0 22px; color:var(--muted); }
+    .frame { overflow:hidden; border:1px solid var(--line); border-radius:14px; background:var(--panel); box-shadow:0 12px 34px #18324112; }
+    .frame + .frame { margin-top:22px; }
+    .frame-head { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:10px 16px; border-bottom:1px solid var(--line); background:#edf4f7; font-size:13px; font-weight:700; }
+    .count { color:#34566a; font-weight:500; }
+    .content { padding:20px; }
+    .inputs { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    label { display:block; margin-bottom:7px; font-size:13px; font-weight:650; }
+    textarea { width:100%; min-height:74px; resize:vertical; border:1px solid var(--line); border-radius:8px; padding:10px 12px; color:var(--ink); background:#fff; font:14px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace; }
+    .stale { display:flex; align-items:flex-start; gap:10px; margin:18px 0 14px; padding:12px 14px; border:1px solid var(--amber-line); border-radius:9px; background:var(--amber); color:#594916; }
+    .stale b { display:block; margin-bottom:1px; }
+    .result { overflow:auto; border:1px solid var(--line); border-radius:9px; background:#fbfdfe; padding:14px 16px; font:14px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace; white-space:pre; }
+    .del { color:var(--red); } .add { color:var(--green); }
+    .dock { display:flex; justify-content:space-between; align-items:center; gap:16px; min-height:74px; padding:12px 20px; border-top:1px solid var(--line); background:#ffffffed; }
+    .dock-label { color:var(--muted); font-size:13px; }
+    .actions { display:flex; flex-wrap:wrap; gap:8px; }
+    button { min-height:42px; padding:0 16px; border:1px solid #b8cbd5; border-radius:9px; background:#fff; color:var(--ink); font:600 14px inherit; cursor:pointer; }
+    button.primary { border-color:var(--blue); background:var(--blue); color:#fff; }
+    button:disabled { cursor:not-allowed; opacity:.48; }
+    @media(max-width:640px) { .wrap { margin:18px auto; padding:0 12px; } .content { padding:14px; } .inputs { grid-template-columns:1fr; } .dock { align-items:flex-start; flex-direction:column; gap:8px; padding:10px 14px; } .dock-label { display:none; } .actions { width:100%; } .actions button { flex:1; padding:0 10px; } }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>Text Diff</h1>
+    <p class="intro">Compare two versions of text line by line.</p>
+
+    <div class="frame" role="region" aria-label="Before: comparison result">
+      <div class="frame-head"><span>Before · result matches current inputs</span><span class="count">Buttons: 3 / 3</span></div>
+      <div class="content">
+        <div class="inputs">
+          <div><label>Original</label><textarea readonly>hello
+world</textarea></div>
+          <div><label>Changed</label><textarea readonly>hello
+planet</textarea></div>
+        </div>
+        <h2 style="font-size:16px;margin:20px 0 8px">Comparison</h2>
+        <div class="result">  hello
+<span class="del">- world</span>
+<span class="add">+ planet</span></div>
+      </div>
+      <footer class="dock" aria-label="Text Diff actions">
+        <span class="dock-label">Text Diff</span>
+        <div class="actions"><button class="btn primary">Compare</button><button class="btn">Copy patch</button><button class="btn">Download</button></div>
+      </footer>
+    </div>
+
+    <div class="frame" role="region" aria-label="After: edited comparison inputs">
+      <div class="frame-head"><span>After · input changed, old result retained for reference</span><span class="count">Buttons: 3 / 3</span></div>
+      <div class="content">
+        <div class="inputs">
+          <div><label>Original</label><textarea readonly>hello
+world</textarea></div>
+          <div><label>Changed</label><textarea readonly>hello
+cosmos</textarea></div>
+        </div>
+        <div class="stale" role="status"><span aria-hidden="true">ⓘ</span><div><b>Inputs changed — compare again to update.</b>The result below uses the previous text. Copy and Download are paused until you compare again.</div></div>
+        <h2 style="font-size:16px;margin:12px 0 8px">Previous comparison</h2>
+        <div class="result">  hello
+<span class="del">- world</span>
+<span class="add">+ planet</span></div>
+      </div>
+      <footer class="dock" aria-label="Text Diff actions">
+        <span class="dock-label">Text Diff</span>
+        <div class="actions"><button class="btn primary">Compare</button><button class="btn" disabled>Copy patch</button><button class="btn" disabled>Download</button></div>
+      </footer>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,71 @@
+{
+  "backend": "local-model",
+  "network_denied": true,
+  "scan_seconds": 0.2725067500723526,
+  "match_count": 1,
+  "context_match_count": 1,
+  "context_type": "person",
+  "context_confidence": "possible",
+  "stable_id_on_rescan": true,
+  "mask_removed_target": true,
+  "redact_removed_target": true,
+  "source_preserved": true,
+  "real_model_format_checks": [
+    {
+      "format": "CSV",
+      "scan_seconds": 0.006602874957025051,
+      "matches": 1,
+      "stable_id": true,
+      "redaction_output_changed": true,
+      "selected_value_removed": true
+    },
+    {
+      "format": "MD",
+      "scan_seconds": 0.006290792021900415,
+      "matches": 1,
+      "stable_id": true,
+      "redaction_output_changed": true,
+      "selected_value_removed": true
+    },
+    {
+      "format": "PDF",
+      "scan_seconds": 0.09680241695605218,
+      "matches": 1,
+      "stable_id": true,
+      "redaction_output_changed": true,
+      "selected_value_removed": true
+    },
+    {
+      "format": "DOCX",
+      "scan_seconds": 0.007020291988737881,
+      "matches": 1,
+      "stable_id": true,
+      "redaction_output_changed": true,
+      "selected_value_removed": true
+    },
+    {
+      "format": "XLSX",
+      "scan_seconds": 0.005958583089523017,
+      "matches": 1,
+      "stable_id": true,
+      "redaction_output_changed": true,
+      "selected_value_removed": true
+    },
+    {
+      "format": "PPTX",
+      "scan_seconds": 0.012678290950134397,
+      "matches": 1,
+      "stable_id": true,
+      "redaction_output_changed": true,
+      "selected_value_removed": true
+    },
+    {
+      "format": "PNG",
+      "scan_seconds": 0.006988083012402058,
+      "matches": 1,
+      "stable_id": true,
+      "redaction_output_changed": true,
+      "selected_value_removed": true
+    }
+  ]
+}

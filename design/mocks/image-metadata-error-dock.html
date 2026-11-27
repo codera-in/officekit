@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EXIF Viewer · recoverable error dock</title>
+  <link rel="stylesheet" href="../officekit-tokens.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { max-width: 960px; margin: 0 auto; padding: 20px; background: var(--ok-bg); color: var(--ok-text); font: 14px/1.45 var(--ok-font); }
+    h1 { margin: 0; font-size: 23px; }
+    .intro { margin: 5px 0 16px; color: var(--ok-muted); }
+    .frame { overflow: hidden; margin: 0 0 18px; border: 1px solid var(--ok-line); border-radius: var(--ok-radius-panel); background: var(--ok-surface); box-shadow: var(--ok-shadow); }
+    .label, .count { padding: 8px 14px; background: var(--ok-surface-raised); color: var(--ok-muted); font-size: 12px; }
+    .top { display: flex; align-items: center; gap: 10px; padding: 13px 16px; border-bottom: 1px solid var(--ok-line); }
+    .mark { display: grid; width: 28px; height: 28px; place-items: center; border-radius: 7px; background: #087ab0; color: white; font-weight: 750; }
+    .screen { min-height: 265px; padding: 22px; }
+    .work { max-width: 700px; margin: auto; }
+    h2 { margin: 0 0 4px; font-size: 21px; }
+    .muted { color: var(--ok-muted); }
+    .file { margin: 18px 0; }
+    .file a { color: var(--ok-accent); text-decoration: underline; }
+    .dock { display: flex; min-height: 66px; align-items: center; padding: 12px 16px; border-top: 1px solid var(--ok-line); background: var(--ok-surface-raised); box-shadow: var(--ok-dock-shadow); }
+    .dock p { margin: 0; }
+    @media (max-width: 600px) { body { padding: 10px; } .screen { padding: 16px 12px; } }
+  </style>
+</head>
+<body>
+  <h1>EXIF Viewer · keep recovery visible</h1>
+  <p class="intro">A metadata read failure keeps the chosen file and change-file control. The message moves into the shared dock and stale Copy details are cleared.</p>
+  <div class="frame">
+    <div class="label">Before · invalid input is sent to Report bug and removes the dock</div><div class="count">Buttons: 0/3</div>
+    <header class="top"><span class="mark">OK</span><strong>OfficeKit</strong><span class="muted">Image Tools</span></header>
+    <main class="screen"><div class="work"><h2>EXIF Viewer</h2><p class="muted">Read date, camera and exposure details. Location stays hidden unless you show it.</p><div class="file">broken.png · <a>Change image</a></div><p role="alert" class="alert alert-error alert-soft">The image file is invalid or cannot be decoded. <a>Report bug</a></p></div></main>
+  </div>
+  <div class="frame">
+    <div class="label">After · correctable image errors retain the shared dock and skip Report bug</div><div class="count">Buttons: 0/3</div>
+    <header class="top"><span class="mark">OK</span><strong>OfficeKit</strong><span class="muted">Image Tools</span></header>
+    <main class="screen"><div class="work"><h2>EXIF Viewer</h2><p class="muted">Read date, camera and exposure details. Location stays hidden unless you show it.</p><div class="file">broken.png · <a>Change image</a></div></div></main>
+    <footer class="dock"><p role="alert" class="text-error">The image file is invalid or cannot be decoded.</p></footer>
+  </div>
+</body>
+</html>

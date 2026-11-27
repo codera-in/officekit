@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "officekit-ergonomics",
+  "description": "The local ergonomics companion can only query its own typed reminder state and act on the current reminder.",
+  "windows": ["ergonomics"],
+  "permissions": []
+}

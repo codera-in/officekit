@@ -1,0 +1,598 @@
+{
+  "corpus": {
+    "path": "tests/fixtures/pii-eval/manifest.jsonl",
+    "sha256": "1e3b0d388f3672ba34791e8b3ff445cc1698236702fa66afc3bb4e458781d002",
+    "version": "1.1.0"
+  },
+  "detector": "officekit-regex",
+  "model_path": "/tmp/officekit-knowledgator-pii-edge",
+  "threshold": 0.5,
+  "split": "heldout",
+  "language": "en",
+  "environment": {
+    "python": "3.11.12 (main, Apr  8 2025, 14:15:29) [Clang 16.0.0 (clang-1600.0.26.6)]",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "machine": "arm64",
+    "cpu_count": 10
+  },
+  "timing": {
+    "model_load_seconds": 5.830079317092896e-07,
+    "mean_seconds_per_document": 0.0056324687611777335,
+    "p95_seconds_per_document": 0.022270250017754734
+  },
+  "metrics": {
+    "raw": {
+      "micro": {
+        "precision": 0.75,
+        "recall": 0.6,
+        "f1": 0.6666666666666665,
+        "support": 15,
+        "tp": 9,
+        "fp": 3,
+        "fn": 6
+      },
+      "per_language_entity": {
+        "en/address": {
+          "precision": 0.5,
+          "recall": 0.3333333333333333,
+          "f1": 0.4,
+          "support": 3,
+          "tp": 1,
+          "fp": 1,
+          "fn": 2
+        },
+        "en/date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "en/dob": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "en/email": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 3,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "en/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "en/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "en/person": {
+          "precision": 1.0,
+          "recall": 0.3333333333333333,
+          "f1": 0.5,
+          "support": 3,
+          "tp": 1,
+          "fp": 0,
+          "fn": 2
+        },
+        "en/phone": {
+          "precision": 0.75,
+          "recall": 1.0,
+          "f1": 0.8571428571428571,
+          "support": 3,
+          "tp": 3,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "by_text_kind": {
+        "clean": {
+          "precision": 1.0,
+          "recall": 0.75,
+          "f1": 0.8571428571428571,
+          "support": 8,
+          "tp": 6,
+          "fp": 0,
+          "fn": 2,
+          "false_positives_per_1000_words": 0.0
+        },
+        "ocr_like": {
+          "precision": 0.5,
+          "recall": 0.42857142857142855,
+          "f1": 0.4615384615384615,
+          "support": 7,
+          "tp": 3,
+          "fp": 3,
+          "fn": 4,
+          "false_positives_per_1000_words": 73.17073170731707
+        }
+      },
+      "sensitive_character_coverage": 0.7402135231316725,
+      "false_positives_per_1000_words_by_language": {
+        "en": 33.70786516853933
+      },
+      "documents_with_miss": 3,
+      "document_count": 4,
+      "false_positives_per_1000_words": 33.70786516853933,
+      "per_record": [
+        {
+          "id": "en-travel-receipt",
+          "language": "en",
+          "split": "heldout",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 4,
+          "tp": 4,
+          "fp": 0,
+          "fn": 0
+        },
+        {
+          "id": "en-network-account",
+          "language": "en",
+          "split": "heldout",
+          "text_kind": "ocr_like",
+          "gold": 2,
+          "predicted": 3,
+          "tp": 1,
+          "fp": 2,
+          "fn": 1
+        },
+        {
+          "id": "en-appointment-log",
+          "language": "en",
+          "split": "heldout",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 3,
+          "tp": 2,
+          "fp": 1,
+          "fn": 3
+        },
+        {
+          "id": "en-support-transcript",
+          "language": "en",
+          "split": "heldout",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 2,
+          "tp": 2,
+          "fp": 0,
+          "fn": 2
+        }
+      ]
+    },
+    "resolved": {
+      "micro": {
+        "precision": 0.75,
+        "recall": 0.6,
+        "f1": 0.6666666666666665,
+        "support": 15,
+        "tp": 9,
+        "fp": 3,
+        "fn": 6
+      },
+      "per_language_entity": {
+        "en/address": {
+          "precision": 0.5,
+          "recall": 0.3333333333333333,
+          "f1": 0.4,
+          "support": 3,
+          "tp": 1,
+          "fp": 1,
+          "fn": 2
+        },
+        "en/date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "en/dob": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "en/email": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 3,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "en/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "en/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "en/person": {
+          "precision": 1.0,
+          "recall": 0.3333333333333333,
+          "f1": 0.5,
+          "support": 3,
+          "tp": 1,
+          "fp": 0,
+          "fn": 2
+        },
+        "en/phone": {
+          "precision": 0.75,
+          "recall": 1.0,
+          "f1": 0.8571428571428571,
+          "support": 3,
+          "tp": 3,
+          "fp": 1,
+          "fn": 0
+        }
+      },
+      "by_text_kind": {
+        "clean": {
+          "precision": 1.0,
+          "recall": 0.75,
+          "f1": 0.8571428571428571,
+          "support": 8,
+          "tp": 6,
+          "fp": 0,
+          "fn": 2,
+          "false_positives_per_1000_words": 0.0
+        },
+        "ocr_like": {
+          "precision": 0.5,
+          "recall": 0.42857142857142855,
+          "f1": 0.4615384615384615,
+          "support": 7,
+          "tp": 3,
+          "fp": 3,
+          "fn": 4,
+          "false_positives_per_1000_words": 73.17073170731707
+        }
+      },
+      "sensitive_character_coverage": 0.7402135231316725,
+      "false_positives_per_1000_words_by_language": {
+        "en": 33.70786516853933
+      },
+      "documents_with_miss": 3,
+      "document_count": 4,
+      "false_positives_per_1000_words": 33.70786516853933,
+      "per_record": [
+        {
+          "id": "en-travel-receipt",
+          "language": "en",
+          "split": "heldout",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 4,
+          "tp": 4,
+          "fp": 0,
+          "fn": 0
+        },
+        {
+          "id": "en-network-account",
+          "language": "en",
+          "split": "heldout",
+          "text_kind": "ocr_like",
+          "gold": 2,
+          "predicted": 3,
+          "tp": 1,
+          "fp": 2,
+          "fn": 1
+        },
+        {
+          "id": "en-appointment-log",
+          "language": "en",
+          "split": "heldout",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 3,
+          "tp": 2,
+          "fp": 1,
+          "fn": 3
+        },
+        {
+          "id": "en-support-transcript",
+          "language": "en",
+          "split": "heldout",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 2,
+          "tp": 2,
+          "fp": 0,
+          "fn": 2
+        }
+      ]
+    },
+    "resolution_outcomes": {
+      "totals": {
+        "exact_duplicate_pairs": 0,
+        "nested_overlap_pairs": 1,
+        "partial_overlap_pairs": 0,
+        "merged_components": 0,
+        "incorrect_primary_type_overrides": 1
+      },
+      "per_record": {
+        "en-travel-receipt": {
+          "exact_duplicate_pairs": 0,
+          "nested_overlap_pairs": 0,
+          "partial_overlap_pairs": 0,
+          "merged_components": 0,
+          "incorrect_primary_type_overrides": 0
+        },
+        "en-network-account": {
+          "exact_duplicate_pairs": 0,
+          "nested_overlap_pairs": 1,
+          "partial_overlap_pairs": 0,
+          "merged_components": 0,
+          "incorrect_primary_type_overrides": 1
+        },
+        "en-appointment-log": {
+          "exact_duplicate_pairs": 0,
+          "nested_overlap_pairs": 0,
+          "partial_overlap_pairs": 0,
+          "merged_components": 0,
+          "incorrect_primary_type_overrides": 0
+        },
+        "en-support-transcript": {
+          "exact_duplicate_pairs": 0,
+          "nested_overlap_pairs": 0,
+          "partial_overlap_pairs": 0,
+          "merged_components": 0,
+          "incorrect_primary_type_overrides": 0
+        }
+      }
+    }
+  },
+  "predictions": {
+    "raw": {
+      "en-travel-receipt": [
+        {
+          "type": "person",
+          "start": 9,
+          "end": 18,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "email",
+          "start": 26,
+          "end": 51,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 59,
+          "end": 74,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "address",
+          "start": 89,
+          "end": 116,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        }
+      ],
+      "en-network-account": [
+        {
+          "type": "iban",
+          "start": 14,
+          "end": 41,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "checksum"
+        },
+        {
+          "type": "phone",
+          "start": 24,
+          "end": 41,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "address",
+          "start": 54,
+          "end": 64,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        }
+      ],
+      "en-appointment-log": [
+        {
+          "type": "date",
+          "start": 46,
+          "end": 56,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 66,
+          "end": 83,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "email",
+          "start": 130,
+          "end": 156,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        }
+      ],
+      "en-support-transcript": [
+        {
+          "type": "email",
+          "start": 63,
+          "end": 90,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 92,
+          "end": 107,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        }
+      ]
+    },
+    "resolved": {
+      "en-travel-receipt": [
+        {
+          "type": "person",
+          "start": 9,
+          "end": 18,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "email",
+          "start": 26,
+          "end": 51,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 59,
+          "end": 74,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "address",
+          "start": 89,
+          "end": 116,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        }
+      ],
+      "en-network-account": [
+        {
+          "type": "iban",
+          "start": 14,
+          "end": 41,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "checksum"
+        },
+        {
+          "type": "phone",
+          "start": 24,
+          "end": 41,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "address",
+          "start": 54,
+          "end": 64,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        }
+      ],
+      "en-appointment-log": [
+        {
+          "type": "date",
+          "start": 46,
+          "end": 56,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 66,
+          "end": 83,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "email",
+          "start": 130,
+          "end": 156,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        }
+      ],
+      "en-support-transcript": [
+        {
+          "type": "email",
+          "start": 63,
+          "end": 90,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 92,
+          "end": 107,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        }
+      ]
+    }
+  }
+}

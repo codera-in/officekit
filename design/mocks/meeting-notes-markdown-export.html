@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OfficeKit meeting-notes Markdown export</title>
+<style>
+:root{font:14px/1.5 system-ui,sans-serif;color:#202939;background:#f6f7fb;--brand:#4f46e5;--line:#dce2ec;--muted:#5d6b82}*{box-sizing:border-box}body{margin:0;padding:28px}.wrap{max-width:980px;margin:auto}h1{font-size:25px;margin:0 0 5px}p{margin:0;color:var(--muted)}.intro{margin-bottom:20px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}.label{text-transform:uppercase;letter-spacing:.08em;font-size:11px;font-weight:800;color:#56657d}.result{margin-top:14px;border-top:1px solid var(--line);padding-top:14px}.actions{display:flex;justify-content:space-between;align-items:center;gap:10px}.buttons{display:flex;gap:8px;flex-wrap:wrap}button{font:600 13px system-ui;border-radius:9px;padding:9px 13px;border:1px solid #cbd5e1;background:white;color:#263246}button.primary{background:var(--brand);border-color:var(--brand);color:white}.output{width:100%;min-height:170px;margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:10px;color:#263246;font:13px/1.6 ui-monospace,monospace;resize:vertical}.muted{margin-top:9px;font-size:12px}.before .output{background:#f8fafc}@media(max-width:680px){body{padding:16px}.grid{grid-template-columns:1fr}h1{font-size:22px}.actions{align-items:flex-start;flex-direction:column}}
+</style></head>
+<body><main class="wrap"><h1>Meeting notes, ready to share</h1><p class="intro">Proposed result state for a local transcript workflow. Notes remain on this device until the user copies or downloads them.</p>
+<div class="grid">
+<section class="card before"><div class="label">Before · copy-only result</div><div class="result"><div class="actions"><strong>Formatted meeting notes</strong><button>Copy Markdown</button></div><div class="output"># Meeting Notes\n\n## Summary\n- Send proposal Friday</div><p class="muted">Output cannot be edited, downloaded or tied visibly to changed transcript text.</p></div></section>
+<section class="card"><div class="label">After · editable and downloadable</div><div class="result"><div class="actions"><strong>Formatted meeting notes</strong><div class="buttons"><button>Copy Markdown</button><button class="primary">Download Markdown</button></div></div><textarea class="output" aria-label="Editable meeting notes Markdown"># Meeting Notes\n\n## Summary\n- Send proposal Friday</textarea><p class="muted">Edit these notes before sharing. If the transcript changes, regenerate notes before using the previous result.</p></div></section>
+</div></main></body></html>

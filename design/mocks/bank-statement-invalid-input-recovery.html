@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bank Statement invalid-input recovery · before and after</title>
+  <link rel="stylesheet" href="../../dist-ui/assets/officekit.css">
+  <style>
+    :root { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #20303c; background: #eef3f6; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 24px; }
+    header, main { width: min(100%, 980px); margin-inline: auto; }
+    header { margin-bottom: 18px; }
+    h1 { margin: 0 0 6px; font-size: 23px; }
+    header p { margin: 0; color: #526979; }
+    .frame { position: relative; min-height: 390px; margin: 16px 0; overflow: hidden; border: 1px solid #cbd8df; border-radius: 12px; background: #eef3f6; }
+    .label { padding: 8px 12px; background: #e7eef2; color: #526979; font-size: 13px; font-weight: 700; }
+    .count { padding: 5px 12px; color: #526979; font-size: 12px; }
+    .screen { position: relative; min-height: 330px; padding: 18px 24px 90px; }
+    .title { margin: 0; font-size: 23px; font-weight: 750; }
+    .sub { max-width: 700px; margin: 4px 0 16px; color: #526979; }
+    .input-card { max-width: 760px; margin: auto; padding: 18px; border: 1px solid #d4dfe5; border-radius: 12px; background: #fff; }
+    .formats { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin-bottom: 12px; }
+    .field { color: #344b59; font-size: 13px; font-weight: 650; }
+    .field span { display: block; margin-top: 5px; padding: 9px 10px; border: 1px solid #cbd8df; border-radius: 8px; background: #fff; font-weight: 400; }
+    .drop { display: grid; min-height: 116px; place-content: center; gap: 6px; border: 2px dashed #a9bac4; border-radius: 10px; background: #f7fafb; text-align: center; }
+    .drop strong { font-size: 16px; }
+    .drop small { color: #526979; }
+    .modal { width: min(100%, 430px); margin: 10px auto; padding: 18px; border: 1px solid #d5e0e5; border-radius: 12px; background: #fff; box-shadow: 0 12px 36px #18344324; }
+    .modal h2 { margin: 0 0 6px; font-size: 18px; }
+    .modal p { margin: 0 0 12px; color: #526979; }
+    .modal-actions, .dock-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    .mock-dock { position: absolute; inset: auto 0 0; display: flex; min-height: 66px; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 16px; border-top: 1px solid #d4dfe5; background: #fff; }
+    .dock-title { color: #637887; font-size: 13px; font-weight: 600; }
+    .result { max-width: 760px; margin: 16px auto; padding: 12px; border: 1px solid #d4dfe5; border-radius: 10px; background: #fff; }
+    .result p { margin: 0 0 8px; }
+    .btn { min-height: 40px; }
+    .btn-primary { background: #08769d; border-color: #08769d; color: #fff; }
+    @media (max-width: 620px) {
+      body { padding: 12px; }
+      .screen { padding: 14px 12px 104px; }
+      .formats { grid-template-columns: 1fr; }
+      .mock-dock { align-items: flex-start; }
+      .dock-title, .dock-actions { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Bank Statement · correctable file errors</h1>
+    <p>Keep an unreadable statement correctable in place, clear previous tool actions, and use the same shared bottom bar for recovery and results.</p>
+  </header>
+  <main>
+    <div class="frame" aria-label="Before invalid statement behavior">
+      <div class="label">Before · generic failure dialog with stale SHA-512 dock state behind it</div>
+      <div class="count">Buttons: 2/3</div>
+      <div class="screen">
+        <h2 class="title">Bank Statement to CSV / Excel</h2>
+        <p class="sub">Extract transactions and check balance movements.</p>
+        <div class="input-card">
+          <div class="formats"><div class="field">Number format<span>Automatic</span></div><div class="field">Date order<span>Automatic</span></div></div>
+          <div class="drop"><strong>Choose or drop a supported statement file</strong><small>PDF · PNG · JPG · WebP · CSV · TSV</small></div>
+        </div>
+        <section class="modal" role="alert">
+          <h2>This operation didn’t finish</h2>
+          <p>The PDF could not be read. If it is password-protected, unlock it first.</p>
+          <div class="modal-actions"><button class="btn btn-outline">Report bug</button><button class="btn btn-primary">Copy diagnostic details</button></div>
+        </section>
+        <footer class="mock-dock"><span class="dock-title">SHA-512 · 1 file · 25 bytes · stale</span></footer>
+      </div>
+    </div>
+    <div class="frame" aria-label="Proposed invalid statement behavior">
+      <div class="label">After · editable file error, no bug report or stale result actions</div>
+      <div class="count">Buttons: 1/3</div>
+      <div class="screen">
+        <h2 class="title">Bank Statement Extractor</h2>
+        <p class="sub">Extract transactions and check balance movements.</p>
+        <div class="input-card">
+          <div class="formats"><div class="field">Number format<span>Automatic</span></div><div class="field">Date order<span>Automatic</span></div></div>
+          <div class="alert alert-error alert-soft" role="alert"><span><strong>Couldn’t read statement.pdf.</strong> Choose a readable statement file. If it is password-protected, unlock it first.</span></div>
+          <div class="drop"><strong>Choose another statement</strong><small>PDF · PNG · JPG · WebP · CSV · TSV</small></div>
+        </div>
+        <footer class="mock-dock"><span class="dock-title">Bank Statement Extractor</span><div class="dock-actions"><button class="btn btn-primary">Choose another statement</button></div></footer>
+      </div>
+    </div>
+    <div class="frame" aria-label="Recovered statement behavior">
+      <div class="label">Recovered · current output returns to the shared result dock</div>
+      <div class="count">Buttons: 3/3</div>
+      <div class="screen">
+        <h2 class="title">Bank Statement Extractor</h2>
+        <p class="sub">Extract transactions and check balance movements.</p>
+        <div class="result"><p><strong>All balance movements matched</strong></p><p>2 transactions · 1 balance movement checked · 0 mismatches</p><p>2026-01-03 · Coffee Shop · 25.00 debit · 975.00 balance</p></div>
+        <footer class="mock-dock"><span class="dock-title">Bank Statement Extractor</span><div class="dock-actions"><button class="btn btn-outline">Review &amp; correct</button><button class="btn btn-outline">Copy</button><button class="btn btn-primary">Download</button></div></footer>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

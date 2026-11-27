@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Freelance Rate Calculator · Assumptions correction</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#223140;background:#f3f6f9;font-synthesis:none}
+    *{box-sizing:border-box}body{margin:0;padding:24px}main{max-width:1120px;margin:auto}h1{font-size:26px;margin:0 0 6px}h2{font-size:17px;margin:0 0 14px}.intro{color:#536477;margin:0 0 22px}.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.panel{background:#fff;border:1px solid #d7e0e8;border-radius:10px;padding:20px}.tag{color:#536477;font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:10px}.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:grid;gap:5px;font-size:13px;color:#536477;font-weight:600}.field input{min-width:0;height:42px;border:1px solid #bdcbd7;border-radius:6px;padding:0 10px;font:inherit;color:#223140}.result{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px}.metric{padding:12px;border:1px solid #d7e0e8;border-radius:8px;text-align:center}.metric span{font-size:12px;color:#536477}.metric strong{display:block;margin-top:4px;font-size:22px;color:#185c89;font-variant-numeric:tabular-nums}.note{margin-top:14px;padding:12px;border:1px solid #bddbf0;border-radius:8px;background:#f5faff;font-size:13px;line-height:1.5;color:#304a60}.note p{margin:0}.note p+p{margin-top:6px}.button{margin-top:14px;min-height:42px;width:100%;border:0;border-radius:6px;background:#185c89;color:white;font:inherit;font-weight:650}@media(max-width:700px){body{padding:14px}.compare{grid-template-columns:1fr}.panel{padding:16px}.form{grid-template-columns:1fr}.result{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Freelance Hourly Rate Planner</h1>
+    <p class="intro">Before and proposed result states. Existing calculator structure stays in place.</p>
+    <div class="compare">
+      <section class="panel" aria-label="Before">
+        <div class="tag">Before</div>
+        <h2>Estimate the rate you need</h2>
+        <div class="form">
+          <label class="field">Target take-home / year<input value="$80,000" readonly></label>
+          <label class="field">Billable hours / week<input value="25" readonly></label>
+          <label class="field">Vacation / sick weeks<input value="4" readonly></label>
+          <label class="field">Tax estimate<input value="25%" readonly></label>
+        </div>
+        <button class="button" type="button">Calculate Hourly Rate</button>
+        <div class="result">
+          <div class="metric"><span>Recommended hourly</span><strong>$93.06 / hr</strong></div>
+          <div class="metric"><span>Recommended day rate</span><strong>$465.28 / day</strong></div>
+        </div>
+        <p class="intro">The API silently adds $5,000 of annual expenses; result assumptions are not shown.</p>
+      </section>
+      <section class="panel" aria-label="Proposed after state">
+        <div class="tag">After · user-authorized correction</div>
+        <h2>Estimate the rate you need</h2>
+        <div class="form">
+          <label class="field">Target take-home / year<input value="$80,000" readonly></label>
+          <label class="field">Billable hours / week<input value="25" readonly></label>
+          <label class="field">Vacation / sick weeks<input value="4" readonly></label>
+          <label class="field">Tax estimate<input value="25%" readonly></label>
+          <label class="field">Business expenses / year<input value="$5,000" readonly></label>
+        </div>
+        <button class="button" type="button">Calculate Hourly Rate</button>
+        <div class="result">
+          <div class="metric"><span>Recommended hourly</span><strong>$93.06 / hr</strong></div>
+          <div class="metric"><span>Recommended day rate</span><strong>$465.28 / day</strong></div>
+        </div>
+        <div class="note" role="note">
+          <p><strong>Estimate assumptions</strong> · Uses your tax estimate and adds your annual expenses before dividing by 48 working weeks of billable time.</p>
+          <p>Day rate assumes 5 workdays/week. Jurisdiction-specific taxes, benefits and fees are not included.</p>
+        </div>
+        <div role="group" aria-label="Result actions" style="display:flex;gap:8px;margin-top:14px">
+          <button type="button" style="min-height:40px;padding:0 14px;border:0;border-radius:6px;background:#185c89;color:white;font:inherit;font-weight:650">Export…</button>
+          <button type="button" style="min-height:40px;padding:0 14px;border:1px solid #bdcbd7;border-radius:6px;background:white;color:#304a60;font:inherit;font-weight:600">Save result</button>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

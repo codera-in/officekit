@@ -1,0 +1,16 @@
+[run]
+omit =
+    desktop_main.py
+    benchmark_suite.py
+    tests/*
+    .venv/*
+
+[report]
+show_missing = True
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if __name__ == .__main__.:
+    raise NotImplementedError
+    pass
+    except ImportError:

@@ -1,0 +1,94 @@
+{
+  "manifest_version": "1.1.1",
+  "retrieved_on": "2026-10-17",
+  "candidates": [
+    {
+      "name": "officekit-baseline",
+      "kind": "rules",
+      "revision": "worktree",
+      "license": "OfficeKit",
+      "tokenizer": null,
+      "quantization": null,
+      "runtime": "Python standard library",
+      "artifact_bytes": 0,
+      "language_claim": "No model coverage claim; existing patterns and checks are language limited.",
+      "source": "officekit/engines/engine_pii_redaction.py"
+    },
+    {
+      "name": "maskflow-sdk",
+      "kind": "international structural recognizers plus India regional pack",
+      "revision": "maskflow-sdk 0.9.2; maskflow-core 0.8.3; maskflow-pack-intl 0.3.2; maskflow-pack-india 0.6.1",
+      "sha256": {
+        "maskflow-core-0.8.3-py3-none-any.whl": "d03aab1d6a1aa6bc5ed7395498dc3ad8b4bcc956ff373cb85845bfebcaa1a3d8",
+        "maskflow-pack-intl-0.3.2-py3-none-any.whl": "30479c3e12936f3af07eb9a643bca51f754d096dbfb633860a8a11eff61eeb53",
+        "maskflow-pack-india-0.6.1-py3-none-any.whl": "141a848562571991fadc393c27a4a3ca8b735fe1921224ae68f818e945dfed17"
+      },
+      "license": "MIT",
+      "tokenizer": null,
+      "quantization": null,
+      "runtime": "Python; spaCy NLP is an optional extra for contextual person/date recognition",
+      "artifact_bytes": 443227,
+      "language_claim": "Pattern-based international recognizers; India-specific pack is regional. Does not claim contextual coverage in all nine corpus languages.",
+      "source": "https://pypi.org/project/maskflow-sdk/0.9.2/"
+    },
+    {
+      "name": "fastino-gliner2-privacy-filter-PII-multi",
+      "kind": "multilingual contextual neural recognizer",
+      "revision": "1cb4166094dc58fa8d836429f060d6c95f62b495",
+      "license": "Apache-2.0",
+      "tokenizer": "Fastino tokenizer.json, approximately 16 MB",
+      "quantization": "F32 safetensors",
+      "runtime": "gliner2 2.1.0 with local PyTorch, Transformers and safetensors",
+      "artifact_bytes": 1230000000,
+      "language_claim": "English, French, Spanish, German, Italian, Portuguese and Dutch. Arabic, Hindi, Chinese and Japanese are unsupported pending evidence.",
+      "source": "https://huggingface.co/fastino/gliner2-privacy-filter-PII-multi"
+    },
+    {
+      "name": "bardsai-eu-pii-anonimization-multilang",
+      "kind": "multilingual token-classification ONNX comparator",
+      "revision": "36b6c06d619df068b35f759a2df0395485c71f11",
+      "license": "Apache-2.0",
+      "tokenizer": "XLM-RoBERTa tokenizer files in repository",
+      "quantization": "ONNX model; repository also lists a quantized ONNX model on main",
+      "runtime": "ONNX Runtime",
+      "artifact_bytes": 1110000000,
+      "language_claim": "Hugging Face metadata says 24 languages; per-language PII evidence must be checked against the model card before claiming corpus language coverage.",
+      "source": "https://huggingface.co/bardsai/eu-pii-anonimization-multilang/tree/36b6c06d619df068b35f759a2df0395485c71f11/onnx_model"
+    },
+    {
+      "name": "knowledgator-gliner-pii-edge-v1.0",
+      "kind": "compact English neural comparator",
+      "revision": "9b7f39b0a2da971a5beea78d35f1539d4009c891",
+      "license": "Apache-2.0",
+      "tokenizer": "tokenizer.json, approximately 3.58 MB",
+      "quantization": "Int8 ONNX graph for the measured deployment path; PyTorch checkpoint remains in the upstream repository",
+      "runtime": "Verified Python ONNX adapter for quality evaluation and GLiNER.cpp with ONNX Runtime 1.25.1 for packaged-footprint/resource evaluation",
+      "artifact_bytes": 181000000,
+      "quantized_onnx": {
+        "path": "onnx/model_quint8.onnx",
+        "artifact_bytes": 45820894,
+        "sha256": "988acb03456b26e2d9f2521016d820310c2ed64deb4a846297d3289f0c2eb7e4",
+        "tokenizer_bytes": 3583593,
+        "tokenizer_sha256": "84b3a9b18f04a0ccd03b72d9f871b7e0bec40fd7021ef50bc30a7c3693c11205",
+        "config_bytes": 4316,
+        "config_sha256": "77e6b57335c4bfd461e9041682196dd6c373a0b09bbd9269ef9e95b807915340"
+      },
+      "verified_cpp_runtime": {
+        "gliner_cpp_revision": "af99d2b1fddbfde644e07b159730a76f876ae517",
+        "gliner_cpp_license": "Apache-2.0",
+        "tokenizers_cpp_revision": "c586c52f93f7b060753bd2388eb96a105cb7374d",
+        "sentencepiece_revision": "e0f0f966959108415183d6cbe7a9051ca8bc2da1",
+        "onnxruntime_version": "1.25.1",
+        "measured_bundle_bytes": 86372807,
+        "gliner_library_bytes": 8400272,
+        "gliner_library_sha256": "a77daf8ce3daf05c9546adad1d1cb18a16d4bc8caa8c093fcb5b0022a5f3c069",
+        "onnxruntime_library_bytes": 28418248,
+        "onnxruntime_library_sha256": "7d6e3b4d66ca4b55ed00e6680cdd4686ff70fa1c78effb50924b3deaa164f754",
+        "daemon_bytes": 149800,
+        "daemon_sha256": "674d953e2851deae1877836a0815bf973cac11c51c1f0b5ee3ea175f21b825d4"
+      },
+      "language_claim": "English only per model-card language metadata; multilingual tag is not evidence for other languages.",
+      "source": "https://huggingface.co/knowledgator/gliner-pii-edge-v1.0/tree/9b7f39b0a2da971a5beea78d35f1539d4009c891"
+    }
+  ]
+}

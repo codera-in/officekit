@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit — batch rename workbench mock</title>
+  <style>
+    :root{font:14px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#202b37;background:#f3f6f9;--line:#d8e0e8;--muted:#5c6e80;--blue:#185c89;--pale:#eaf2fa;--surface:#fff}
+    *{box-sizing:border-box}body{margin:0}header{height:56px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 22px;gap:10px;font-weight:700}.mark{width:30px;height:30px;border-radius:8px;background:var(--blue);display:grid;place-items:center;color:white}header small{font-weight:500;color:var(--muted);margin-left:auto}main{max-width:1300px;margin:28px auto;padding:0 22px}.state{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 10px}.compare{display:grid;grid-template-columns:.8fr 1.5fr;gap:18px}.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;box-shadow:0 2px 8px #25384a0d}.card h2{margin:0 0 6px;font-size:20px}.muted{color:var(--muted)}.before{min-height:555px}.old-select{margin:22px 0 15px;padding:15px;border:1px dashed #aab8c5;border-radius:9px;text-align:center;color:var(--muted)}.old-row{border:1px solid var(--line);padding:12px;border-radius:8px;margin:9px 0}.old-row strong{display:block}.old-row button,.button{padding:9px 13px;border:1px solid var(--line);background:white;color:#263747;border-radius:7px;font-weight:600}.old-row button{float:right}.old-hint{font-size:12px;margin-top:30px}.button.primary{background:var(--blue);color:white;border-color:var(--blue)}.button.danger{color:#95433f}.toolbar{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:16px 0}.files{border:1px solid var(--line);border-radius:9px;overflow:hidden}.file{display:grid;grid-template-columns:24px minmax(150px,1fr) 85px;gap:9px;align-items:center;padding:11px 13px;border-bottom:1px solid var(--line)}.file:last-child{border:0}.file input{width:17px;height:17px;accent-color:var(--blue)}.file small{text-align:right;color:var(--muted)}.rename-layout{display:grid;grid-template-columns:minmax(215px,.72fr) 1.28fr;gap:14px;margin-top:15px}.settings{border:1px solid var(--line);border-radius:9px;padding:15px;background:#fbfcfd}.settings label{display:block;font-size:12px;font-weight:650;margin:0 0 7px}.settings select,.settings input{display:block;width:100%;height:37px;border:1px solid #c5d0db;border-radius:6px;background:#fff;padding:0 9px;margin-bottom:12px;color:inherit}.pair{display:grid;grid-template-columns:1fr 1fr;gap:7px}.preview-wrap{overflow:auto;border:1px solid var(--line);border-radius:9px}.preview{border-collapse:collapse;width:100%;min-width:430px;text-align:left}.preview th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);background:#f7f9fb}.preview th,.preview td{padding:10px 12px;border-bottom:1px solid var(--line);max-width:260px;overflow-wrap:anywhere}.preview td:last-child{color:#17654b;font-weight:600}.result{border:1px solid #bfdfcf;background:#f1faf5;border-radius:8px;padding:13px;margin-top:14px}.result strong{color:#195c45}.fine{font-size:12px;color:var(--muted)}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.notice{padding:10px 12px;border:1px solid #dce5ed;background:#f7f9fc;border-radius:7px;margin-top:13px;color:var(--muted);font-size:12px}.after h2{display:flex;align-items:center;justify-content:space-between}.tag{font-size:11px;background:var(--pale);color:var(--blue);border-radius:4px;padding:4px 7px}.mobile{display:none}
+    @media(max-width:950px){main{margin:18px auto}.compare{grid-template-columns:1fr}.before{min-height:auto}.rename-layout{grid-template-columns:1fr}.old-hint{margin-top:18px}}
+    @media(max-width:540px){header{padding:0 14px}.wide{display:none}main{padding:0 12px}.card{padding:15px}.toolbar{align-items:flex-start;flex-direction:column}.file{grid-template-columns:24px minmax(0,1fr);}.file small{grid-column:2;text-align:left}.actions .button{flex:1}.state{font-size:10px}}
+  </style>
+</head>
+<body>
+  <header><span class="mark" aria-hidden="true">OK</span><span>OfficeKit</span><span class="wide muted">Files &amp; storage</span><small>Local workspace · mock only</small></header>
+  <main>
+    <p class="state">Before → proposed · Batch rename inside the approved local-copy workbench flow</p>
+    <div class="compare">
+      <section class="card before" aria-labelledby="before-title">
+        <p class="state">Before · current app</p><h2 id="before-title">Converter</h2><p class="muted">File tools are mixed into a general-purpose screen. There is no rename destination or apply flow.</p>
+        <div class="old-select">Choose a file to convert</div>
+        <div class="old-row"><button>Convert</button><strong>Image converter</strong><span class="fine">Select a format and export.</span></div>
+        <div class="old-row"><button>Convert</button><strong>Data converter</strong><span class="fine">CSV, spreadsheet and structured data.</span></div>
+        <div class="old-row"><strong>Batch rename</strong><span class="fine">No selected-file rename flow is available.</span></div>
+        <p class="old-hint muted">Users leave without knowing which files will change, whether originals are safe, or where the results go.</p>
+      </section>
+      <section class="card after" aria-labelledby="after-title">
+        <p class="state">After · proposed workbench</p>
+        <h2 id="after-title">Rename files <span class="tag">Files &amp; storage</span></h2>
+        <p class="muted">Choose files, review every new name, then download renamed copies. Your selected originals stay unchanged.</p>
+        <div class="toolbar"><button class="button">＋ Add files…</button><span class="fine">2 selected · 4.8 MB · stored temporarily on this device</span></div>
+        <div class="files" aria-label="Selected files">
+          <label class="file"><input type="checkbox" checked><span>📄 &nbsp;April report.csv</span><small>2.1 MB</small></label>
+          <label class="file"><input type="checkbox" checked><span>📄 &nbsp;May report.csv</span><small>2.7 MB</small></label>
+          <label class="file"><input type="checkbox"><span>📄 &nbsp;notes.txt</span><small>12 KB</small></label>
+        </div>
+        <div class="rename-layout">
+          <section class="settings" aria-label="Rename options">
+            <label for="pattern">Rename pattern</label><select id="pattern"><option>Number sequence</option><option>Find and replace text</option><option>Add prefix and suffix</option><option>Change letter case</option></select>
+            <label for="prefix">Prefix</label><input id="prefix" value="invoice_" aria-label="Prefix">
+            <div class="pair"><div><label for="start">Start at</label><input id="start" value="1" inputmode="numeric"></div><div><label for="digits">Digits</label><input id="digits" value="2" inputmode="numeric"></div></div>
+            <button class="button">Update preview</button>
+          </section>
+          <section aria-label="Rename preview">
+            <div class="preview-wrap"><table class="preview"><thead><tr><th>Current name</th><th>New name</th></tr></thead><tbody>
+              <tr><td>April report.csv</td><td>invoice_01.csv</td></tr>
+              <tr><td>May report.csv</td><td>invoice_02.csv</td></tr>
+            </tbody></table></div>
+            <div class="result"><strong>2 renamed copies ready</strong><div class="fine">No naming collisions · original files remain unchanged.</div></div>
+          </section>
+        </div>
+        <div class="actions"><button class="button primary">Create renamed ZIP</button><button class="button">Clear temporary files</button></div>
+        <div class="notice" role="status">After processing, show a progress state, a downloadable ZIP, per-file errors if any, and a clear-workspace action. Do not report success for partial failures.</div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

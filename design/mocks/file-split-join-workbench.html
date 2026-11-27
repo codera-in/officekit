@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit — split and join files workbench mock</title>
+  <style>
+    :root{color-scheme:light dark;font:15px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#1f2937;background:#f3f6fa;--canvas:#f3f6fa;--surface:#fff;--text:#1f2937;--line:#d9e1eb;--muted:#59697c;--accent:#4f46e5;--accent-wash:#eef2ff;--success:#17654b;--success-bg:#f1faf5;--soft:#f7f9fc}
+    @media(prefers-color-scheme:dark){:root{--canvas:#111827;--surface:#1f2937;--text:#f3f4f6;--line:#374151;--muted:#b8c4d2;--accent:#a5b4fc;--accent-wash:#312e81;--success:#a7f3d0;--success-bg:#12352b;--soft:#273449}}
+    *{box-sizing:border-box}body{margin:0;background:var(--canvas);color:var(--text)}header{height:58px;background:var(--surface);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 24px;gap:12px;font-weight:700}.mark{width:30px;height:30px;border-radius:8px;background:#5138c9;color:#fff;display:grid;place-items:center;font-size:12px}header small{font-weight:500;color:var(--muted);margin-left:auto}main{max-width:1240px;margin:26px auto;padding:0 22px}.state{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 10px}.compare{display:grid;grid-template-columns:.8fr 1.4fr;gap:18px;align-items:start}.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;min-width:0}.card h2{margin:0 0 7px;font-size:20px}.muted{color:var(--muted)}.before{min-height:450px}.old-select{margin:22px 0 15px;padding:15px;border:1px dashed #aab8c5;border-radius:8px;text-align:center;color:var(--muted)}.old-row{border:1px solid var(--line);padding:12px;border-radius:8px;margin:9px 0}.old-row strong{display:block}.button{min-height:40px;padding:8px 13px;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:8px;font:inherit;font-weight:600;cursor:pointer}.primary{background:#5138c9;color:white;border-color:#5138c9}.tabs{display:flex;gap:5px;padding:4px;background:var(--soft);border:1px solid var(--line);border-radius:9px;margin:17px 0}.tabs button{flex:1;min-height:42px;border:0;background:transparent;color:var(--muted);border-radius:7px;font:inherit;font-weight:650;cursor:pointer}.tabs button[aria-selected="true"]{background:var(--surface);color:var(--accent);box-shadow:0 1px 3px #1b2c3b26}.section{border:1px solid var(--line);border-radius:9px;padding:16px;margin-top:12px}.section h3{font-size:16px;margin:0 0 6px}.fine{font-size:13px;color:var(--muted)}.picker{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border:1px dashed #9baaba;border-radius:8px;margin:13px 0}.settings{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:12px;align-items:end}.settings label,.join label{display:block;font-size:13px;font-weight:650;margin:0 0 5px}.settings input,.join input{height:40px;width:100%;border:1px solid #bdc9d4;border-radius:6px;padding:0 10px;font:inherit;background:var(--surface);color:var(--text)}.unit{font-weight:400;color:var(--muted)}.result{border:1px solid #c5dfd2;background:var(--success-bg);border-radius:8px;padding:12px;margin-top:12px}.result strong{color:var(--success)}.result p{margin:3px 0 0;font-size:13px;color:var(--muted)}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.notice{padding:11px 12px;border:1px solid var(--line);background:var(--soft);border-radius:7px;margin-top:13px;color:var(--muted);font-size:13px}.divider{height:1px;background:var(--line);margin:17px 0}:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+    @media(max-width:850px){.compare{grid-template-columns:1fr}.before{min-height:auto}main{margin:18px auto}}
+    @media(max-width:540px){header{padding:0 14px}.wide{display:none}main{padding:0 12px}.card{padding:15px}.settings{grid-template-columns:1fr}.picker{align-items:flex-start;flex-direction:column}.actions .button{flex:1}.state{font-size:10px}.tabs{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <header><span class="mark" aria-hidden="true">OK</span><span>OfficeKit</span><span class="wide muted">Files &amp; storage</span><small>Local workspace · mock only</small></header>
+  <main>
+    <p class="state">Before → proposed · File split and join inside the local-copy workbench</p>
+    <div class="compare">
+      <section class="card before" aria-labelledby="before-title">
+        <p class="state">Before · current app</p><h2 id="before-title">Universal converter</h2>
+        <p class="muted">Split and join exist in the local engine, but users have no screen to select a file, choose parts, or retrieve a verified result.</p>
+        <div class="old-select">Choose or drag any file here</div>
+        <div class="old-row"><strong>Split / join files</strong><span class="fine">No dedicated workflow or output destination.</span></div>
+        <p class="fine">Users cannot tell what “parts” means or how to restore the original safely.</p>
+      </section>
+      <section class="card after" aria-labelledby="after-title">
+        <p class="state">After · proposed workbench</p>
+        <h2 id="after-title">Split or join a file</h2>
+        <p class="muted">Create verified parts for transfer, then restore them later. Originals stay unchanged.</p>
+        <div class="tabs" role="tablist" aria-label="File operation">
+          <button id="split-tab" type="button" role="tab" aria-selected="true" aria-controls="split-panel">Split a file</button>
+          <button id="join-tab" type="button" role="tab" aria-selected="false" aria-controls="join-panel">Join OfficeKit parts</button>
+        </div>
+        <section class="section" id="split-panel" role="tabpanel" aria-labelledby="split-tab">
+          <h3>Choose a file and part size</h3>
+          <p class="fine">OfficeKit copies the selected file into temporary local storage. The selected original remains unchanged.</p>
+          <div class="picker"><span><strong>archive-backup.dat</strong><br><span class="fine">420 MiB · selected copy</span></span><button class="button" type="button">Add file…</button></div>
+          <div class="settings"><div><label for="part-size">Maximum size per part <span class="unit">(1–512 MiB)</span></label><input id="part-size" type="number" min="1" max="512" step="1" value="50" aria-describedby="part-size-help"></div><button class="button primary" type="button">Create parts</button></div>
+          <p id="part-size-help" class="fine">The selected file and generated archive must fit within the 512 MiB workspace limit. The archive also contains a manifest and checksums.</p>
+          <div class="result"><strong>Ready · 9 part files plus manifest</strong><p>Each part has a SHA-256 checksum. The manifest records the original name, part order and whole-file checksum.</p></div>
+          <div class="actions"><button class="button primary" type="button">Download archive-backup.dat.split.zip</button><button class="button" type="button">Clear temporary copies</button></div>
+        </section>
+        <section class="section join" id="join-panel" role="tabpanel" aria-labelledby="join-tab" hidden>
+          <h3>Restore from an OfficeKit split archive</h3>
+          <p class="fine">Select a split ZIP. OfficeKit checks the manifest, part order, sizes and SHA-256 checksums before creating an output.</p>
+          <div class="picker"><span><strong>archive-backup.dat.split.zip</strong><br><span class="fine">420 MiB · selected copy</span></span><button class="button" type="button">Select ZIP…</button></div>
+          <label for="joined-name">Restored file name</label><input id="joined-name" value="archive-backup.dat" maxlength="255">
+          <div class="result"><strong>Parts joined · 420 MiB</strong><p>The reconstructed bytes match the SHA-256 recorded in this archive. This confirms internal consistency; it does not verify who created the archive.</p></div>
+          <div class="actions"><button class="button primary" type="button">Download archive-backup.dat.zip</button><button class="button" type="button">Clear temporary copies</button></div>
+          <p class="fine">The downloaded ZIP contains <code>joined/archive-backup.dat</code>. Unzip it once to retrieve the restored file; originals remain unchanged.</p>
+        </section>
+        <div class="notice" role="status"><strong>Temporary local copies.</strong> Processing stays on this computer. Clear removes only OfficeKit’s temporary copies. Downloaded files remain yours to keep.</div>
+      </section>
+    </div>
+  </main>
+  <script>
+    const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+    function selectTab(tab) {
+      for (const item of tabs) {
+        const selected = item === tab;
+        item.setAttribute('aria-selected', String(selected));
+        document.getElementById(item.getAttribute('aria-controls')).hidden = !selected;
+      }
+    }
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => selectTab(tab));
+      tab.addEventListener('keydown', event => {
+        const next = event.key === 'ArrowRight' ? (index + 1) % tabs.length : event.key === 'ArrowLeft' ? (index + tabs.length - 1) % tabs.length : event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : -1;
+        if (next >= 0) { event.preventDefault(); tabs[next].focus(); selectTab(tabs[next]); }
+      });
+    });
+  </script>
+</body>
+</html>

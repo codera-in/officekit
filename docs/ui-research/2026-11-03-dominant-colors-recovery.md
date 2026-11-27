@@ -1,0 +1,7 @@
+# Dominant Colors: transparent input recovery
+
+Added an isolated browser regression for the approved shared-dock behavior. A fully transparent PNG is treated as correctable input feedback: the result stays in the tool, Report bug and stale dock actions are absent, and a replacement two-color PNG restores both swatches and Copy CSV. The test compares every CSV byte, enforces the three-button limit, and checks that twelve per-swatch Convert links remain beside their swatches while only Copy CSV is docked. It records empty, invalid and recovered screen captures when Playwright can launch.
+
+Fresh palette API checks pass 4 tests plus 10 subtests. The shared image UI contract suite passes 47/47, and the new browser spec passes `node --check`. The browser spec itself has not run; WebKit 2359 aborts before setup. Existing source screenshots and the approved action-placement decision remain in `docs/verification/tool-unification/after/image_palette-*` and `docs/ui-research/2026-10-29-approved-image-tool-recovery-and-action-placement.md`.
+
+Still open: fresh browser screenshots and actual browser execution, native clipboard interaction, and installed behavior. The app in `/Applications/OfficeKit.app` currently fails to open (`kLSNoExecutableErr`); its bundled executable exits 134 when launched directly, and CUA cannot attach to an OfficeKit window. This milestone adds verification only; it does not alter the tool UI.

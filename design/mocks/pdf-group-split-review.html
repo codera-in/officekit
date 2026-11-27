@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit PDF page groups — before and after</title>
+  <style>
+    :root { color-scheme: light dark; --canvas:#f7f8fc; --surface:#fff; --text:#172033; --muted:#64748b; --line:#e2e7ef; --accent:#4f46e5; --accent-wash:#eef2ff; --focus:#4338ca; --soft:#f8fafc; --danger:#9f1239; font:15px/1.5 Inter,system-ui,sans-serif; }
+    @media (prefers-color-scheme: dark) { :root { --canvas:#141f2c; --surface:#1c2a3a; --text:#eef4fa; --muted:#afbed0; --line:#3b4c60; --accent:#91caf0; --accent-wash:#253f55; --focus:#91caf0; --soft:#233348; --danger:#ffacb4; } }
+    * { box-sizing:border-box } body { margin:0; padding:28px; background:var(--canvas); color:var(--text) } button,input { font:inherit } button { cursor:pointer }
+    h1,h2,h3,p { margin-top:0 } h1 { margin-bottom:3px; font-size:22px; letter-spacing:-.025em } h2 { font-size:17px; margin-bottom:8px } p { color:var(--muted) }
+    .eyebrow { color:var(--accent); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px }
+    .intro { max-width:850px; margin:0 auto 22px } .intro p { margin-bottom:0 }
+    .compare { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; max-width:1240px; margin:auto; align-items:start }
+    .screen { background:var(--surface); border:1px solid var(--line); border-radius:14px; overflow:hidden; min-width:0 }
+    .screen-head { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 18px; border-bottom:1px solid var(--line) }
+    .screen-head strong { font-size:14px } .tag { color:var(--muted); font-size:12px }
+    .screen-body { padding:20px } .task { border:1px solid var(--line); background:var(--soft); border-radius:10px; padding:16px; margin-top:16px }
+    .current-field { display:grid; gap:6px; margin:16px 0 } label { font-size:13px; font-weight:650 } input[type="text"] { min-width:0; width:100%; border:1px solid var(--line); border-radius:8px; background:var(--surface); color:var(--text); padding:9px 11px; min-height:40px }
+    .help { color:var(--muted); font-size:12px; margin:0 } .drop { min-height:104px; border:2px dashed var(--line); border-radius:10px; display:grid; place-content:center; text-align:center; padding:12px; color:var(--muted) }
+    .sample-file { display:flex; gap:10px; align-items:center; border:1px solid var(--line); border-radius:8px; margin-top:12px; padding:9px 11px; font-size:13px }
+    .sample-file span:first-child { min-width:0; flex:1; overflow-wrap:anywhere } .size { white-space:nowrap; color:var(--muted); font-size:12px }
+    .group { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto; gap:10px; align-items:end; border-bottom:1px solid var(--line); padding:12px 0 }
+    .group:first-of-type { padding-top:4px } .group:last-of-type { border:0; padding-bottom:0 }
+    .group label { display:block; margin-bottom:5px } .remove { color:var(--muted); border:1px solid var(--line); background:var(--surface); border-radius:8px; width:40px; height:40px; font-size:18px }
+    .remove:hover { color:var(--danger); border-color:var(--danger) }
+    .toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:12px }
+    .secondary,.primary { min-height:40px; border-radius:8px; padding:8px 12px; font-weight:650 }
+    .secondary { border:1px solid var(--line); background:var(--surface); color:var(--text) } .primary { border:0; background:var(--accent); color:#fff }
+    @media (prefers-color-scheme: dark) { .primary { color:#142c40 } }
+    .limit { font-size:12px; color:var(--muted); margin:9px 0 0 }
+    .preview { border:1px solid var(--line); background:var(--soft); border-radius:10px; padding:12px 14px; margin-top:16px }
+    .preview-title { font-size:13px; font-weight:700; margin-bottom:3px } .preview ul { margin:7px 0 0; padding-left:19px; font-size:13px; color:var(--muted) }
+    .submit-row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; border-top:1px solid var(--line); padding-top:14px; margin-top:16px }
+    .submit-row .primary { order:0 } .submit-row .help { flex:1 1 220px }
+    .choice { display:flex; flex-wrap:wrap; gap:8px; margin:15px 0 12px }
+    .choice label { display:flex; align-items:center; gap:7px; border:1px solid var(--line); border-radius:8px; min-height:40px; padding:7px 11px; cursor:pointer }
+    .choice input { accent-color:var(--accent) } :focus-visible { outline:3px solid var(--focus); outline-offset:2px }
+    .footnote { font-size:12px; margin:14px 0 0 }
+    @media (max-width:780px) { body { padding:16px } .compare { grid-template-columns:1fr; gap:14px } .screen-body { padding:16px } }
+    @media (max-width:430px) { .group { grid-template-columns:minmax(0,1fr) 40px; gap:8px } .group .name-field { grid-column:1 } .group .range-field { grid-column:1 } .group .remove { grid-column:2; grid-row:1 / span 2; align-self:center } }
+  </style>
+</head>
+<body>
+  <header class="intro">
+    <div class="eyebrow">OfficeKit · PDF workbench review</div>
+    <h1>Extract selected pages into one or more PDFs</h1>
+    <p>This proposal adds named page groups to the existing Split by pages flow. The input stays selected once; each group becomes one PDF in a single ZIP.</p>
+  </header>
+  <main class="compare" aria-label="Before and proposed PDF split flow">
+    <section class="screen" aria-labelledby="before-title">
+      <div class="screen-head"><strong id="before-title">Current screen</strong><span class="tag">One selection · one PDF</span></div>
+      <div class="screen-body">
+        <div class="eyebrow">PDF &amp; documents · local processing</div>
+        <h2>PDF workbench</h2><p>Pick one task. Review the files and settings before creating a new output.</p>
+        <div class="task">
+          <h2>Split by pages</h2><p>Extract selected pages, preserving the order you specify.</p>
+          <div class="drop"><div><strong>quarterly-report.pdf</strong><br><span class="tag">4.8 MiB · original unchanged</span></div></div>
+          <div class="current-field"><label for="old-ranges">Pages to extract</label><input id="old-ranges" type="text" value="1-3, 5" readonly><p class="help">Use page numbers and ascending ranges. Duplicate pages are rejected.</p></div>
+          <div class="preview"><div class="preview-title">Output preview</div><p class="help">1-3, 5 · output: selected-pages.pdf</p></div>
+          <div class="submit-row"><button class="primary" type="button">Create selected-pages PDF</button><p class="help">A new PDF is created. The selected source stays unchanged.</p></div>
+        </div>
+      </div>
+    </section>
+    <section class="screen" aria-labelledby="after-title">
+      <div class="screen-head"><strong id="after-title">Proposed screen</strong><span class="tag">One selection · named outputs</span></div>
+      <div class="screen-body">
+        <div class="eyebrow">PDF &amp; documents · local processing</div>
+        <h2>PDF workbench</h2><p>Choose pages, name each output, then download the PDFs together.</p>
+        <div class="task">
+          <h2>Split by pages</h2><p>Extract pages into separate, named PDFs while keeping the source order you choose.</p>
+          <div class="drop"><div><strong>quarterly-report.pdf</strong><br><span class="tag">4.8 MiB · 12 pages · original unchanged</span></div></div>
+          <fieldset style="border:0;padding:0;margin:16px 0 0">
+            <legend class="eyebrow">Output groups</legend>
+            <div id="group-list">
+              <div class="group">
+                <div class="name-field"><label for="group-name-1">Output filename</label><input id="group-name-1" type="text" value="cover.pdf"></div>
+                <div class="range-field"><label for="group-pages-1">Pages</label><input id="group-pages-1" type="text" value="1-3" aria-describedby="group-help"></div>
+                <button class="remove" type="button" aria-label="Remove cover.pdf page group">×</button>
+              </div>
+              <div class="group">
+                <div class="name-field"><label for="group-name-2">Output filename</label><input id="group-name-2" type="text" value="appendix.pdf"></div>
+                <div class="range-field"><label for="group-pages-2">Pages</label><input id="group-pages-2" type="text" value="4-6" aria-describedby="group-help"></div>
+                <button class="remove" type="button" aria-label="Remove appendix.pdf page group">×</button>
+              </div>
+            </div>
+            <div class="toolbar"><button id="add-group" class="secondary" type="button">+ Add another PDF</button><span id="group-count" class="tag" aria-live="polite">2 of 50 groups</span></div>
+            <p id="group-help" class="limit">Use page numbers and ascending ranges. Pages can appear in only one group. Up to 2,000 pages total.</p>
+          </fieldset>
+          <div class="preview"><div class="preview-title">Download preview · split-pages.zip</div><ul><li>cover.pdf — pages 1–3</li><li>appendix.pdf — pages 4–6</li></ul></div>
+          <div class="submit-row"><button class="primary" type="button">Create 2 PDFs</button><p class="help">Your original remains unchanged. The ZIP is created only after validation succeeds.</p></div>
+        </div>
+        <p class="footnote">ZIP download contains only the named PDFs. Duplicate pages, overlapping groups, unsafe names and oversized results are rejected before download.</p>
+      </div>
+    </section>
+  </main>
+  <script>
+    const list = document.getElementById('group-list');
+    const addButton = document.getElementById('add-group');
+    const groupCount = document.getElementById('group-count');
+    let nextGroupId = 3;
+    const updateGroupControls = () => {
+      const count = list.children.length;
+      groupCount.textContent = `${count} of 50 groups`;
+      addButton.disabled = count >= 50;
+      addButton.setAttribute('aria-disabled', String(count >= 50));
+      list.querySelectorAll('.remove').forEach(button => {
+        button.disabled = count <= 2;
+        button.setAttribute('aria-disabled', String(count <= 2));
+      });
+    };
+    addButton.addEventListener('click', () => {
+      if (list.children.length >= 50) return;
+      const id = nextGroupId++;
+      const row = document.createElement('div'); row.className = 'group';
+      const nameWrap = document.createElement('div'); nameWrap.className = 'name-field';
+      const nameLabel = document.createElement('label'); nameLabel.htmlFor = `group-name-${id}`; nameLabel.textContent = 'Output filename';
+      const name = document.createElement('input'); name.id = `group-name-${id}`; name.type = 'text'; name.value = `pages-${id}.pdf`;
+      const rangeWrap = document.createElement('div'); rangeWrap.className = 'range-field';
+      const rangeLabel = document.createElement('label'); rangeLabel.htmlFor = `group-pages-${id}`; rangeLabel.textContent = 'Pages';
+      const range = document.createElement('input'); range.id = `group-pages-${id}`; range.type = 'text'; range.placeholder = 'For example: 7-9'; range.setAttribute('aria-describedby', 'group-help');
+      const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'remove'; remove.setAttribute('aria-label', `Remove ${name.value} page group`); remove.textContent = '×';
+      nameWrap.append(nameLabel, name); rangeWrap.append(rangeLabel, range); row.append(nameWrap, rangeWrap, remove); list.append(row);
+      updateGroupControls();
+    });
+    list.addEventListener('click', event => {
+      if (!event.target.matches('.remove') || list.children.length <= 2) return;
+      event.target.closest('.group')?.remove();
+      updateGroupControls();
+    });
+    updateGroupControls();
+  </script>
+</body>
+</html>

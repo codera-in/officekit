@@ -1,0 +1,13 @@
+{
+  "backend": "local-model",
+  "network_denied": true,
+  "scan_seconds": 4.347024834016338,
+  "match_count": 1,
+  "context_match_count": 1,
+  "context_type": "person",
+  "context_confidence": "possible",
+  "stable_id_on_rescan": true,
+  "mask_removed_target": true,
+  "redact_removed_target": true,
+  "source_preserved": true
+}

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit · URL encode and decode mock</title>
+  <style>
+    :root { color-scheme: light dark; font: 15px/1.5 system-ui, sans-serif; --bg:#f4f6fb; --panel:#fff; --ink:#172033; --muted:#62708a; --line:#dce2ed; --brand:#4f46e5; }
+    @media(prefers-color-scheme:dark) { :root { --bg:#111827; --panel:#1f2937; --ink:#f3f4f6; --muted:#aab5c6; --line:#374151; --brand:#a5b4fc; } }
+    * { box-sizing:border-box } body { margin:0; background:var(--bg); color:var(--ink); padding:32px 16px } main { max-width:850px; margin:auto; display:grid; gap:20px }
+    h1,h2,p { margin:0 } h1 { font-size:1.8rem } .sub,.hint { color:var(--muted) } .card { background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:24px; box-shadow:0 8px 24px #1018280b }
+    .eyebrow { color:var(--brand); font-weight:700; font-size:.76rem; letter-spacing:.07em; text-transform:uppercase } .modes,.actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:16px }
+    button { border:1px solid var(--line); background:var(--panel); color:var(--ink); border-radius:10px; padding:10px 14px; font:inherit; cursor:pointer } button[aria-pressed=true],button.primary { color:white; background:#4f46e5; border-color:#4f46e5 } @media(prefers-color-scheme:dark) { button[aria-pressed=true],button.primary { color:#111827; background:#a5b4fc; border-color:#a5b4fc } }
+    label { display:block; font-weight:650; margin:18px 0 8px } textarea { display:block; width:100%; min-height:170px; resize:vertical; border:1px solid var(--line); border-radius:11px; padding:13px; background:var(--panel); color:var(--ink); font:14px/1.5 ui-monospace,monospace }
+    .error { color:#b42318; min-height:1.5em } .limit { font-size:.8rem; color:var(--muted); text-align:right; margin-top:5px } .after { border-left:4px solid var(--brand) }
+  </style>
+</head>
+<body>
+<main>
+  <section class="card"><p class="eyebrow">Developer tools · Processed locally</p><h1>URL encode / decode</h1><p class="sub">Safely prepare text for a URL or read URL-encoded text. Input is processed on this computer.</p>
+    <div class="modes" role="group" aria-label="Operation"><button type="button" aria-pressed="true">Encode</button><button type="button" aria-pressed="false">Decode</button></div>
+    <label for="source">Text to encode</label><textarea id="source" placeholder="For example: Search &amp; filter / café"></textarea><p class="limit">0 / 1,048,576 characters</p>
+    <div class="actions"><button type="button" class="primary">Encode text</button><button type="button">Copy result</button><button type="button">Clear</button></div>
+    <label for="result">Encoded result</label><textarea id="result" readonly placeholder="Your result appears here"></textarea><p class="error" role="status" aria-live="polite"></p>
+    <p class="hint">OfficeKit encodes a URI component: reserved characters, spaces and slashes are escaped. Decoding rejects malformed percent escapes and invalid UTF-8.</p>
+  </section>
+  <section class="card after"><p class="eyebrow">Before · API-only → After · dedicated screen</p><h2>Keep the common task direct</h2><p class="sub">Current developer tools are API-only. The proposed screen exposes two modes, a large editable input, a clear result, copy and clear actions, and precise URI-component behavior without a generic format menu.</p></section>
+</main>
+</body>
+</html>

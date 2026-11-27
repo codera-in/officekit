@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit icon options</title>
+  <style>
+    :root { color-scheme: light; --ink:#172238; --muted:#65718a; --line:#d9e0eb; --paper:#f4f6fa; --violet:#4f46e5; --amber:#f59e0b; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    main { max-width:1080px; margin:0 auto; padding:42px 26px 60px; }
+    h1 { margin:0; font-size:30px; letter-spacing:-.035em; }
+    .intro { max-width:720px; margin:8px 0 28px; color:var(--muted); }
+    .current { min-height:72px; padding:14px 18px; border-radius:13px; background:#23252b; color:white; display:flex; align-items:center; gap:13px; }
+    .current img { width:40px; height:40px; border-radius:9px; }
+    .current strong,.current span { display:block; }
+    .current span { color:#b8bac1; font-size:13px; }
+    .current small { margin-left:auto; color:#c1c5cd; }
+    .options { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:18px; }
+    article { background:white; border:1px solid var(--line); border-radius:15px; padding:18px; }
+    article h2 { margin:0; font-size:17px; }
+    article p { min-height:46px; margin:5px 0 12px; color:var(--muted); font-size:13px; }
+    .iconbox { height:180px; display:grid; place-items:center; }
+    .icon { width:142px; height:142px; border-radius:30px; box-shadow:0 12px 28px #18223a20; }
+    .sizes { min-height:60px; display:flex; align-items:end; gap:15px; border-top:1px solid var(--line); padding-top:13px; }
+    .sample { display:grid; justify-items:center; gap:4px; color:var(--muted); font-size:10px; }
+    .sample svg,.sample img { width:var(--size); height:var(--size); border-radius:calc(var(--size)*.2); }
+    .sample svg { display:block; }
+    .recommend { margin:18px 0 0; padding:15px 18px; background:#eef0ff; border-left:3px solid var(--violet); color:#343c5c; }
+    @media(max-width:760px) { main {padding:26px 15px;} .options {grid-template-columns:1fr;} article p {min-height:0;} .current small {display:none;} }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>OfficeKit app icon</h1>
+    <p class="intro">The former briefcase read as a generic file utility at the 16–32 px size used in macOS background apps. The selected OfficeKit monogram keeps the violet and amber colors and gives the app a clearer, more ownable silhouette.</p>
+
+    <div class="current" aria-label="Current macOS background-app row">
+      <img src="assets/officekit-icon-before.png" alt="Former OfficeKit briefcase icon">
+      <div><strong>OfficeKit.app</strong><span>Last ran in background 1 day ago</span></div>
+      <small>Before · former generic briefcase</small>
+    </div>
+
+    <section class="options" aria-label="OfficeKit icon directions">
+      <article>
+        <h2>Selected · OfficeKit monogram</h2>
+        <p>A compact OK ligature with a small amber keyline. The initials stay recognizable in the menu bar and background-app list.</p>
+        <div class="iconbox">
+          <svg class="icon" viewBox="0 0 512 512" role="img" aria-label="Violet icon with white OK monogram and amber accent">
+            <rect width="512" height="512" rx="104" fill="#4f46e5"/>
+            <text x="256" y="330" text-anchor="middle" font-family="Arial,sans-serif" font-size="218" font-weight="700" letter-spacing="-18" fill="#fff">OK</text>
+            <rect x="356" y="354" width="54" height="14" rx="7" fill="#f59e0b"/>
+          </svg>
+        </div>
+        <div class="sizes" aria-label="Monogram icon at macOS display sizes">
+          <div class="sample" style="--size:64px"><svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="104" fill="#4f46e5"/><text x="256" y="330" text-anchor="middle" font-family="Arial,sans-serif" font-size="218" font-weight="700" letter-spacing="-18" fill="#fff">OK</text><rect x="356" y="354" width="54" height="14" rx="7" fill="#f59e0b"/></svg><span>64 px</span></div>
+          <div class="sample" style="--size:32px"><svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="104" fill="#4f46e5"/><text x="256" y="330" text-anchor="middle" font-family="Arial,sans-serif" font-size="218" font-weight="700" letter-spacing="-18" fill="#fff">OK</text><rect x="356" y="354" width="54" height="14" rx="7" fill="#f59e0b"/></svg><span>32 px</span></div>
+          <div class="sample" style="--size:16px"><svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="104" fill="#4f46e5"/><text x="256" y="330" text-anchor="middle" font-family="Arial,sans-serif" font-size="218" font-weight="700" letter-spacing="-18" fill="#fff">OK</text><rect x="356" y="354" width="54" height="14" rx="7" fill="#f59e0b"/></svg><span>16 px</span></div>
+        </div>
+      </article>
+
+      <article>
+        <h2>2 · Modular O</h2>
+        <p>An O built from four rounded utility tiles. It signals a collection of small tools without depicting a folder or briefcase.</p>
+        <div class="iconbox">
+          <svg class="icon" viewBox="0 0 512 512" role="img" aria-label="Violet icon with four white and amber rounded tiles forming an O">
+            <rect width="512" height="512" rx="104" fill="#4f46e5"/>
+            <rect x="126" y="116" width="112" height="112" rx="32" fill="#fff"/><rect x="274" y="116" width="112" height="112" rx="32" fill="#f59e0b"/>
+            <rect x="126" y="284" width="112" height="112" rx="32" fill="#f59e0b"/><rect x="274" y="284" width="112" height="112" rx="32" fill="#fff"/>
+          </svg>
+        </div>
+        <div class="sizes" aria-label="Modular O icon at macOS display sizes">
+          <div class="sample" style="--size:64px"><svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="104" fill="#4f46e5"/><rect x="126" y="116" width="112" height="112" rx="32" fill="#fff"/><rect x="274" y="116" width="112" height="112" rx="32" fill="#f59e0b"/><rect x="126" y="284" width="112" height="112" rx="32" fill="#f59e0b"/><rect x="274" y="284" width="112" height="112" rx="32" fill="#fff"/></svg><span>64 px</span></div>
+          <div class="sample" style="--size:32px"><svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="104" fill="#4f46e5"/><rect x="126" y="116" width="112" height="112" rx="32" fill="#fff"/><rect x="274" y="116" width="112" height="112" rx="32" fill="#f59e0b"/><rect x="126" y="284" width="112" height="112" rx="32" fill="#f59e0b"/><rect x="274" y="284" width="112" height="112" rx="32" fill="#fff"/></svg><span>32 px</span></div>
+          <div class="sample" style="--size:16px"><svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="104" fill="#4f46e5"/><rect x="126" y="116" width="112" height="112" rx="32" fill="#fff"/><rect x="274" y="116" width="112" height="112" rx="32" fill="#f59e0b"/><rect x="126" y="284" width="112" height="112" rx="32" fill="#f59e0b"/><rect x="274" y="284" width="112" height="112" rx="32" fill="#fff"/></svg><span>16 px</span></div>
+        </div>
+      </article>
+
+      <article>
+        <h2>3 · Sparked page</h2>
+        <p>A single folded page with an amber spark cutout. It keeps a document cue but removes the generic case shape.</p>
+        <div class="iconbox">
+          <svg class="icon" viewBox="0 0 512 512" role="img" aria-label="Violet icon with a white folded page and amber spark">
+            <rect width="512" height="512" rx="104" fill="#4f46e5"/>
+            <path d="M152 88h146l76 76v258H152c-18 0-32-14-32-32V120c0-18 14-32 32-32Z" fill="#fff"/>
+            <path d="M298 88v62c0 10 8 18 18 18h58" fill="#e0e7ff"/>
+            <path d="M244 207l19 42 42 19-42 19-19 42-19-42-42-19 42-19 19-42Z" fill="#f59e0b"/>
+            <path d="M193 352h136" stroke="#4f46e5" stroke-width="20" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="sizes" aria-label="Sparked page icon at macOS display sizes">
+          <div class="sample" style="--size:64px"><svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="104" fill="#4f46e5"/><path d="M152 88h146l76 76v258H152c-18 0-32-14-32-32V120c0-18 14-32 32-32Z" fill="#fff"/><path d="M298 88v62c0 10 8 18 18 18h58" fill="#e0e7ff"/><path d="M244 207l19 42 42 19-42 19-19 42-19-42-42-19 42-19 19-42Z" fill="#f59e0b"/><path d="M193 352h136" stroke="#4f46e5" stroke-width="20" stroke-linecap="round"/></svg><span>64 px</span></div>
+          <div class="sample" style="--size:32px"><svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="104" fill="#4f46e5"/><path d="M152 88h146l76 76v258H152c-18 0-32-14-32-32V120c0-18 14-32 32-32Z" fill="#fff"/><path d="M298 88v62c0 10 8 18 18 18h58" fill="#e0e7ff"/><path d="M244 207l19 42 42 19-42 19-19 42-19-42-42-19 42-19 19-42Z" fill="#f59e0b"/><path d="M193 352h136" stroke="#4f46e5" stroke-width="20" stroke-linecap="round"/></svg><span>32 px</span></div>
+          <div class="sample" style="--size:16px"><svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="104" fill="#4f46e5"/><path d="M152 88h146l76 76v258H152c-18 0-32-14-32-32V120c0-18 14-32 32-32Z" fill="#fff"/><path d="M298 88v62c0 10 8 18 18 18h58" fill="#e0e7ff"/><path d="M244 207l19 42 42 19-42 19-19 42-19-42-42-19 42-19 19-42Z" fill="#f59e0b"/><path d="M193 352h136" stroke="#4f46e5" stroke-width="20" stroke-linecap="round"/></svg><span>16 px</span></div>
+        </div>
+      </article>
+    </section>
+
+    <p class="recommend"><strong>Selected: OfficeKit monogram.</strong> The O/K silhouette stays legible in small system surfaces and pairs with the existing wordmark. The icon family has been regenerated; rebuild and reinstall the app to verify macOS’s cached background-app icon.</p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PDF table extraction mock · OfficeKit</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f8fafc;--accent:#4f46e5;--line:#dbe3ef;--muted:#64748b;--surface:#fff}
+    *{box-sizing:border-box}body{margin:0;padding:24px}.page{max-width:1120px;margin:auto}.eyebrow{color:var(--accent);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}h1{margin:.25rem 0;font-size:26px}.intro{color:var(--muted);margin:0 0 18px}.panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 1px 2px #0f172a0a}.panel h2{font-size:16px;margin:0 0 12px}.state{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.08em;font-weight:700}.disabled{border:1px dashed #cbd5e1;background:#f8fafc;border-radius:14px;padding:18px;text-align:center;color:#64748b;margin:12px 0}.btn{border:1px solid #cbd5e1;border-radius:9px;background:#fff;color:#273449;min-height:40px;padding:8px 12px;font-weight:650}.primary{background:var(--accent);border-color:var(--accent);color:#fff}.row{display:flex;gap:8px;align-items:end;margin:12px 0}.field{display:grid;gap:5px;flex:1;font-size:12px;font-weight:650;color:#475569}.field select,.field input{min-height:40px;border:1px solid #cbd5e1;border-radius:8px;padding:8px;background:white;color:#172033}.note{font-size:12px;color:var(--muted);line-height:1.5}.cards{display:grid;gap:8px;margin:12px 0}.table-choice{border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px;display:flex;justify-content:space-between;gap:10px}.table-choice strong{display:block}.table-choice span{color:var(--muted);font-size:12px}.selected{border-color:#818cf8;background:#eef2ff}.scroll{overflow:auto;border:1px solid var(--line);border-radius:10px;max-height:176px}table{border-collapse:collapse;min-width:440px;width:100%;font-size:12px}th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #e2e8f0;white-space:nowrap}th{background:#f1f5f9;color:#475569}.actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}.status{font-size:12px;color:#475569;margin-top:10px}@media(max-width:720px){body{padding:16px}.panels{grid-template-columns:1fr}.panel{padding:15px}.row{align-items:stretch;flex-direction:column}.actions .btn{flex:1}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <p class="eyebrow">PDF &amp; documents · 390px and desktop</p>
+    <h1>PDF to CSV or XLSX</h1>
+    <p class="intro">Before and after for the existing PDF workbench.</p>
+    <div class="panels">
+      <section class="panel" aria-label="Before">
+        <p class="state">Before</p><h2>Bank statement extraction only</h2>
+        <p class="note">The current PDF workbench sends CSV/XLSX requests to statement parsing. Ordinary PDF tables have no spreadsheet workflow.</p>
+        <div class="disabled">Select a supported bank statement to extract transactions.</div>
+        <button class="btn primary" disabled>Open statement extractor</button>
+      </section>
+      <section class="panel" aria-label="After">
+        <p class="state">After · selectable text tables</p><h2>Review a table, then export it</h2>
+        <div class="disabled">inventory-report.pdf · 4 pages <button class="btn">Change PDF</button></div>
+        <p class="note">OfficeKit found two selectable tables. Scanned PDFs and unruled layouts are not supported here; no values are guessed.</p>
+        <div class="cards" role="listbox" aria-label="Tables found">
+          <div class="table-choice selected" role="option" aria-selected="true"><div><strong>Page 2 · Table 1</strong><span>18 rows · 4 columns</span></div><b>Selected</b></div>
+          <div class="table-choice" role="option" aria-selected="false"><div><strong>Page 4 · Table 1</strong><span>6 rows · 3 columns</span></div><b>Preview</b></div>
+        </div>
+        <div class="scroll" aria-label="Selected table preview"><table><thead><tr><th>Item</th><th>Code</th><th>Quantity</th><th>Amount</th></tr></thead><tbody><tr><td>Tea</td><td>000042</td><td>3</td><td>1,250.00</td></tr><tr><td>Filter paper</td><td>FP-07</td><td>2</td><td>240.00</td></tr><tr><td>…</td><td>…</td><td>…</td><td>…</td></tr></tbody></table></div>
+        <p class="note">Previewing first 12 rows · source cells remain text to protect IDs and exact formatting.</p>
+        <div class="actions"><button class="btn">Download CSV</button><button class="btn primary">Download XLSX</button></div>
+        <p class="status" role="status">Original PDF is unchanged. Each export contains only the selected table.</p>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

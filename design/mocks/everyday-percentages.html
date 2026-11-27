@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>OfficeKit · Everyday percentages mock</title>
+  <link rel="stylesheet" href="../officekit-tokens.css">
+  <style>
+    body { margin:0; padding:24px; background:var(--surface); color:var(--text); font:15px/1.45 system-ui,sans-serif; }
+    h1 { margin:0 0 8px; font-size:1.6rem; } h2 { margin:0; font-size:1.1rem; }
+    main { max-width:1100px; margin:auto; } .eyebrow { color:var(--text-muted); font-size:.72rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; } article { padding:20px; background:var(--surface-raised); border:1px solid var(--border); border-radius:16px; }
+    .tabs { display:flex; flex-wrap:wrap; gap:8px; margin:18px 0; } .tab,button,select,input { min-height:42px; border:1px solid var(--border); border-radius:9px; padding:8px 12px; background:var(--surface); color:var(--text); font:inherit; }
+    .tab.active,button.primary { background:#4338ca; color:white; border-color:#4338ca; } .fields { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+    label { display:grid; gap:4px; font-size:.83rem; font-weight:650; } input,select { width:100%; } .result { margin:14px 0; padding:16px; background:#eef2ff; border:1px solid #c7d2fe; border-radius:12px; }
+    .value { font-size:1.5rem; font-weight:750; } .muted { color:var(--text-muted); font-size:.84rem; } .actions { display:flex; flex-wrap:wrap; gap:8px; }
+    @media(max-width:720px) { body { padding:12px; } .grid { grid-template-columns:1fr; } article { padding:16px; } .fields { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body><main>
+  <p class="eyebrow">Calculator · before and after</p>
+  <h1>Everyday percentages</h1>
+  <p class="muted">A small calculator for the percentage questions people run into every day.</p>
+  <div class="grid">
+    <article>
+      <p class="eyebrow">Before · current calculator gallery</p>
+      <h2>Loan, compound interest, tax, scientific…</h2>
+      <p class="muted">Percentage of a value, percentage change and discount calculation do not have dedicated forms. Users have to translate them into a different calculator.</p>
+      <div class="tabs"><button class="tab">Loan & EMI</button><button class="tab">Tax</button><button class="tab">Scientific</button><button class="tab">Margin & markup</button></div>
+      <p class="muted">Example task: “What is 15% of 240?” has no direct tool entry or result card.</p>
+    </article>
+    <article>
+      <p class="eyebrow">After · one focused workbench</p>
+      <h2>Everyday percentages</h2>
+      <div class="tabs" role="tablist" aria-label="Percentage calculation">
+        <button class="tab active" role="tab">Percent of</button><button class="tab" role="tab">Percentage change</button><button class="tab" role="tab">Discount</button>
+      </div>
+      <label>Percentage<input type="number" value="15"></label>
+      <label style="margin-top:10px">Value<input type="number" value="240"></label>
+      <button class="primary" style="width:100%;margin-top:14px">Calculate percentage</button>
+      <div class="result" role="status"><p class="muted">15% of 240</p><div class="value">36.00</div><p class="muted">Unit-neutral · rounded half-up to 2 decimals</p></div>
+      <div class="actions"><button>Save result</button><button>Export…</button></div>
+      <p class="muted">Saved results reopen with the original inputs. No currency or tax rule is inferred.</p>
+    </article>
+  </div>
+</main></body>
+</html>

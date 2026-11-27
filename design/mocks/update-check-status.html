@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit update-check status</title>
+  <style>
+    :root { color-scheme: light dark; font: 15px/1.5 -apple-system, BlinkMacSystemFont, sans-serif; }
+    body { margin: 0; padding: 32px; background: #f8fafc; color: #172033; }
+    main { max-width: 760px; margin: auto; }
+    h1 { margin: 0 0 8px; font-size: 24px; }
+    p { color: #475569; }
+    section { margin: 18px 0; padding: 20px; border: 1px solid #dbe3ee; border-radius: 14px; background: white; }
+    .notice { padding: 12px 14px; border-radius: 10px; background: #eef2ff; color: #3730a3; }
+    .warning { background: #fff7ed; color: #9a3412; }
+    code { color: #4338ca; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #111827; color: #e5e7eb; }
+      p { color: #cbd5e1; }
+      section { background: #1f2937; border-color: #374151; }
+      .notice { background: #312e81; color: #e0e7ff; }
+      .warning { background: #431407; color: #fed7aa; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Update check that tells the truth</h1>
+    <p>Keep the existing OfficeKit title-bar action. Render the outcome from release metadata; never infer “up to date” from a hardcoded version.</p>
+    <section>
+      <h2>Update available</h2>
+      <p><strong>OfficeKit 1.0.0 → 1.0.1</strong></p>
+      <div class="notice">Fixes PDF table extraction and improves local navigation.</div>
+      <p>Release notes and download links must come from an HTTPS <code>officekit.app</code> manifest.</p>
+    </section>
+    <section>
+      <h2>Already current</h2>
+      <div class="notice">You’re up to date on OfficeKit 1.0.1.</div>
+    </section>
+    <section>
+      <h2>Offline or manifest unavailable</h2>
+      <div class="notice warning">Update information is unavailable. OfficeKit will keep working offline.</div>
+      <p>Do not show an update badge or claim the installed version is current.</p>
+    </section>
+    <section>
+      <h2>Privacy note</h2>
+      <div class="notice">Files stay on this device. Update checks contact OfficeKit for release metadata; file contents and usage history are not sent.</div>
+    </section>
+  </main>
+</body>
+</html>

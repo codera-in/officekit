@@ -1,0 +1,62 @@
+/* Files slice (F02, F05, F06/F07/F12 discovery, F09–F11, S05–S06) styles. Owned by this slice only. */
+/* Compare diff lines use the design-system wash tokens, never literal colours (UX-5). */
+.ok-diff-line-add { background-color: var(--ok-success-wash); }
+.ok-diff-line-remove { background-color: var(--ok-error-wash); }
+/* Choosers and Reset are in-text links beside the selection line (approved button rules). */
+.ok-selection-line { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 14px; margin: 12px 0; }
+.ok-text-link { background: none; border: 0; padding: 0; min-height: 0; color: var(--ok-accent); font-weight: 600; text-decoration: underline; cursor: pointer; }
+/* List-row actions use the standard button height: 40px desktop, 44px at 900px and below. */
+.row-act { min-height: 40px; }
+@media (max-width: 900px) { .row-act { min-height: 44px; } }
+/* The Duplicate finder's phone frame drops Date modified and the folder chooser at 900px and below (UX-15). */
+@media (max-width: 900px) { .ok-phone-hide { display: none; } }
+/* Restore from Trash: the compact sub-line under the item name replaces the three desktop-only columns below 900px (S06 mock v5). */
+.ok-phone-show { display: none; }
+@media (max-width: 900px) { .ok-phone-show { display: block; } }
+.ok-trash-table .sel { width: 28px; }
+.ok-trash-table .acts { white-space: nowrap; width: 1%; }
+.ok-trash-table .acts .ok-text-link { display: block; margin: 2px 0; }
+.ok-trash-table .acts .badge { margin-bottom: 4px; }
+/* The sub-line's display comes only from .ok-phone-show (below 900px). The reason under a skipped row is always a block. */
+.ok-trash-table small { color: var(--ok-muted, inherit); margin-top: 2px; overflow-wrap: anywhere; }
+.ok-trash-table .ok-trash-reason { display: block; }
+.ok-trash-table .item { overflow-wrap: normal; word-break: normal; }
+.ok-trash-dock { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-top: 16px; border-top: 1px solid var(--ok-line, currentColor); padding-top: 12px; }
+.ok-trash-dock .status { font-size: 13px; color: var(--ok-muted, inherit); }
+.ok-trash-kept { margin: 8px 0 0; font-size: 13px; line-height: 1.5; }
+.ok-trash-disclosure { margin-top: 12px; font-size: 13px; line-height: 1.45; }
+.ok-trash-disclosure p { margin: 0; }
+.ok-trash-disclosure .ok-text-link { margin-left: 8px; }
+.ok-trash-disclosure.boxed { border: 1px solid var(--ok-line, currentColor); border-radius: 8px; padding: 10px 12px; }
+.ok-trash-disclosure.boxed b { display: block; margin-bottom: 2px; }
+/* Restore from Trash compact layout (S06 review round 1): below 900px the name line carries the sub-line, the state sits in one column and the links stack under it at a 44px tap height. */
+@media (max-width: 900px) {
+.ok-trash-table { min-width: 0; }
+.ok-trash-table thead { display: none; }
+.ok-trash-table, .ok-trash-table tbody { display: block; }
+.ok-trash-table tr { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; column-gap: 8px; align-items: start; padding: 10px 0; border-bottom: 1px solid var(--ok-line, currentColor); }
+.ok-trash-table td { display: block; padding: 0; border: 0; }
+.ok-trash-table td.ok-phone-hide { display: none; }
+.ok-trash-table td.sel { grid-column: 1; grid-row: 1 / span 2; }
+.ok-trash-table td.item { grid-column: 2; grid-row: 1; min-width: 0; }
+.ok-trash-table td.state { grid-column: 3; grid-row: 1; }
+.ok-trash-table .acts { grid-column: 3; grid-row: 2; }
+.ok-trash-table .acts .ok-text-link { min-height: 44px; display: flex; align-items: center; }
+.ok-trash-result tr { grid-template-columns: minmax(0, 1fr) auto; }
+.ok-trash-result td.item { grid-column: 1; grid-row: 1; }
+.ok-trash-result .acts { grid-column: 2; grid-row: 1; }
+}
+/* Nothing chosen yet: the choosers sit in a dashed area, centred, with a one-line hint (owner-approved 2026-10-26). */
+.ok-selection-line[data-empty="true"] { flex-direction: column; justify-content: center; gap: 4px; padding: 24px 16px; border: 2px dashed var(--ok-line); border-radius: 10px; background: var(--ok-surface); text-align: center; }
+.ok-selection-line[data-empty="true"] #direct-selection-summary { font-size: 16px; font-weight: 700; }
+.ok-selection-hint { color: var(--ok-muted); }
+.ok-selection-links { display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px; margin-top: 8px; }
+.ok-hash-algorithm { display: inline-flex; border: 1px solid var(--ok-line); border-radius: 8px; overflow: hidden; }
+.ok-file-panel .ok-hash-algorithm button { margin: 0; min-height: 36px; padding: 0 16px; border: 0; border-radius: 0; background: var(--ok-surface-raised); color: var(--ok-text); font-weight: 500; cursor: pointer; }
+.ok-file-panel .ok-hash-algorithm button[aria-pressed="true"] { background: var(--ok-accent); color: var(--ok-on-accent); font-weight: 700; }
+.ok-file-panel p.ok-hash-hint { margin: 8px 0 0; color: var(--ok-muted); font-size: 12px; }
+.ok-image-list { list-style: none; margin: 4px 0 0; padding: 0; font-size: 14px; }
+.ok-image-list li { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-top: 1px solid var(--ok-line); }
+.ok-image-list .ok-muted { color: var(--ok-muted); }
+.ok-file-panel p.ok-image-ready { margin: 10px 0 0; font-size: 14px; color: var(--ok-muted); }
+.ok-file-panel p.ok-image-ready[data-state="over"], .ok-file-panel p.ok-image-ready[data-state="empty"] { color: var(--ok-danger, #b45309); }

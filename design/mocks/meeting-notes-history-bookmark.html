@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OfficeKit — Save meeting notes</title>
+<style>
+  :root{font:15px/1.5 system-ui,sans-serif;color:#172033;background:#f5f7fb}body{margin:0}.shell{max-width:860px;margin:32px auto;padding:24px}.card{background:white;border:1px solid #dbe2ef;border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 2px 8px #1720330a}h1{font-size:28px;margin:0}h2{font-size:19px;margin:0 0 8px}p{color:#58657a;margin:4px 0 12px}textarea{box-sizing:border-box;width:100%;min-height:180px;border:1px solid #cbd5e1;border-radius:10px;padding:14px;font:14px/1.6 ui-monospace,monospace;color:inherit;background:#fbfcff}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}button{border:1px solid #cbd5e1;border-radius:9px;background:white;padding:9px 13px;font:600 13px system-ui;color:#26334a}button.primary{background:#4536cb;color:white;border-color:#4536cb}.note{font-size:12px}.row{display:flex;justify-content:space-between;align-items:center;gap:12px}.saved{border-top:1px solid #e7ebf2;padding:14px 0}.saved h3{font-size:15px;margin:0}.saved button{padding:6px 10px}.status{min-height:20px;font-size:13px;color:#3e4c64}
+</style>
+<main class="shell">
+  <h1>Meeting notes</h1><p>Edit your notes, then save a copy to this device’s History.</p>
+  <section class="card"><h2>Formatted meeting notes</h2><p>Review the generated notes before you save or share them.</p>
+    <textarea aria-label="Editable meeting notes">## Decisions
+- Ship the approved Mac beta on Friday.
+
+## Action items
+- Morgan: send the release checklist by Thursday.
+
+## Open questions
+- Which installer signing identity will we use?</textarea>
+    <div class="actions"><button>Copy Markdown</button><button>Download Markdown</button><button class="primary" onclick="saveNotes()">Save to History</button></div>
+    <p class="note">Saving keeps this exact Markdown on this Mac, with no separate transcript or audio field.</p><div class="status" id="save-status" role="status" aria-live="polite"></div>
+  </section>
+  <section class="card"><div class="row"><div><h2>History · Saved results</h2><p>Reopen the exact notes you saved, even after closing this screen.</p></div></div>
+    <article class="saved"><div class="row"><div><h3>Meeting notes · Product review</h3><p>Saved on this device · Markdown notes</p></div><button onclick="openSaved()">Open result</button></div><div id="reopened" hidden><p>Saved note content</p></div></article>
+  </section>
+</main>
+<script>
+  function saveNotes(){document.getElementById('save-status').textContent='Saved on this device. Find it in History → Saved results.'}
+  function openSaved(){document.getElementById('reopened').hidden=false}
+</script>
+</html>

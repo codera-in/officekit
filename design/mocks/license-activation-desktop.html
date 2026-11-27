@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit license activation flow</title>
+  <style>
+    :root { color-scheme: light; font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #223140; background: #f3f6f9; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 28px; }
+    h1, h2, p { margin-top: 0; }
+    h1 { margin-bottom: 8px; font-size: 28px; line-height: 1.2; }
+    .lede { color: #536477; margin-bottom: 24px; }
+    .comparison { display: grid; grid-template-columns: repeat(2, minmax(320px, 1fr)); gap: 20px; max-width: 1050px; }
+    .side { min-width: 0; }
+    .side > h2 { font-size: 16px; margin-bottom: 10px; }
+    .shell { min-height: 590px; display: flex; align-items: center; justify-content: center; padding: 18px; border: 1px solid #d8e0e7; border-radius: 12px; background: #e9eef3; }
+    .dialog { width: 100%; max-width: 440px; padding: 24px; background: #fff; border: 1px solid #d9e1e8; border-radius: 14px; box-shadow: 0 18px 48px #2231401c; }
+    .dialog-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .title-wrap { display: flex; align-items: center; gap: 10px; }
+    .mark { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 10px; background: #5446e8; color: white; font-weight: 750; letter-spacing: -2px; }
+    .x { border: 0; background: transparent; color: #536477; font-size: 22px; }
+    h3 { margin: 0; font-size: 19px; line-height: 1.25; }
+    .muted { color: #536477; font-size: 13px; }
+    label { display: block; margin: 16px 0 6px; font-size: 13px; font-weight: 650; }
+    input { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid #aebbc7; border-radius: 6px; color: #223140; font: inherit; }
+    button { min-height: 44px; padding: 10px 15px; border-radius: 6px; font: inherit; font-weight: 650; }
+    .primary { width: 100%; margin-top: 18px; border: 0; color: white; background: #185c89; }
+    .secondary { border: 1px solid #c5d0da; color: #34495c; background: #fff; }
+    .row { display: flex; justify-content: flex-end; gap: 8px; }
+    .note { margin: 14px 0 0; padding: 12px; border-radius: 8px; background: #f3f6f9; font-size: 13px; color: #536477; }
+    .privacy { display: flex; align-items: flex-start; gap: 9px; margin-top: 16px; color: #536477; font-size: 13px; }
+    .privacy b { color: #223140; }
+    .status { margin: 15px 0 0; padding: 12px; border: 1px solid #b8dfca; border-radius: 8px; background: #eff9f2; color: #245c39; font-size: 13px; }
+    .status strong { display: block; margin-bottom: 2px; }
+    .before-copy { margin-top: 16px; }
+    @media (max-width: 760px) {
+      body { padding: 18px 14px; }
+      h1 { font-size: 24px; }
+      .comparison { grid-template-columns: minmax(0, 1fr); }
+      .shell { min-height: unset; padding: 12px; }
+      .dialog { padding: 19px; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Activate a license on this Mac</h1>
+  <p class="lede">Existing Settings activation versus the device-bound flow from the licensing HLD.</p>
+  <main class="comparison">
+    <section class="side" aria-labelledby="before-title">
+      <h2 id="before-title">Before · current modal</h2>
+      <div class="shell">
+        <div class="dialog">
+          <div class="dialog-head">
+            <div class="title-wrap"><span class="mark">OK</span><h3>Activate Lifetime License</h3></div>
+            <button class="x" aria-label="Close">×</button>
+          </div>
+          <p class="muted before-copy">Purchased an AppSumo code, Gumroad license, or direct deal? Enter your purchase email and code below to permanently unlock offline desktop features.</p>
+          <label for="old-email">Purchase Email</label>
+          <input id="old-email" type="email" placeholder="buyer@example.com">
+          <label for="old-key">Redemption Code</label>
+          <input id="old-key" placeholder="AS-T1-XXXX-YYYY-ZZZZ">
+          <div class="row" style="margin-top:18px"><button class="primary" style="width:auto">Activate Now</button><button class="secondary">Cancel</button></div>
+        </div>
+      </div>
+    </section>
+    <section class="side" aria-labelledby="after-title">
+      <h2 id="after-title">After · proposed Mac activation</h2>
+      <div class="shell">
+        <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="activation-title">
+          <div class="dialog-head">
+            <div class="title-wrap"><span class="mark">OK</span><h3 id="activation-title">Activate OfficeKit</h3></div>
+            <button class="x" aria-label="Close">×</button>
+          </div>
+          <p class="muted" style="margin:14px 0 0">Enter the license key from your purchase. This activates one device slot for this Mac.</p>
+          <label for="new-key">License key</label>
+          <input id="new-key" autocomplete="off" spellcheck="false" placeholder="OK1.…" aria-describedby="key-help">
+          <p id="key-help" class="muted" style="margin:7px 0 0">Your key is sent only to the OfficeKit licensing service. It is never shown in diagnostics.</p>
+          <div class="privacy"><span aria-hidden="true">●</span><span><b>Private device binding</b><br>A device key is created in macOS Keychain. Only its public key is sent during activation.</span></div>
+          <button class="primary">Activate this Mac</button>
+          <div class="status" role="status"><strong>Activated · this device</strong>1 of 5 device slots used · Available offline after activation</div>
+          <p class="note">OfficeKit tools continue to work offline. License checks are not required at app startup.</p>
+          <div class="row" style="margin-top:14px"><button class="secondary">Close</button></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

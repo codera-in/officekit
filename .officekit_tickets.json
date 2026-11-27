@@ -1,0 +1,302 @@
+{
+  "OK-1791161365-1E38": {
+    "ticket_id": "OK-1791161365-1E38",
+    "user_email": "tester@example.com",
+    "ticket_type": "bug",
+    "title": "OCR text extraction glitch on rotated bank statement",
+    "description": "When uploading a 90 degree rotated scan, columns are displaced.",
+    "system_info": {
+      "os": "macOS",
+      "app_version": "1.0.0"
+    },
+    "status": "received",
+    "created_at": 1791161365.159703,
+    "timeline": [
+      {
+        "status": "received",
+        "message": "Ticket received and logged by OfficeKit local support engine.",
+        "timestamp": 1791161365.159703
+      },
+      {
+        "status": "triaged",
+        "message": "Automated diagnostics analyzed. Priority: Normal.",
+        "timestamp": 1791161366.159704
+      }
+    ]
+  },
+  "OK-1791161456-FC54": {
+    "ticket_id": "OK-1791161456-FC54",
+    "user_email": "tester@example.com",
+    "ticket_type": "bug",
+    "title": "OCR text extraction glitch on rotated bank statement",
+    "description": "When uploading a 90 degree rotated scan, columns are displaced.",
+    "system_info": {
+      "os": "macOS",
+      "app_version": "1.0.0"
+    },
+    "status": "received",
+    "created_at": 1791161456.966003,
+    "timeline": [
+      {
+        "status": "received",
+        "message": "Ticket received and logged by OfficeKit local support engine.",
+        "timestamp": 1791161456.966003
+      },
+      {
+        "status": "triaged",
+        "message": "Automated diagnostics analyzed. Priority: Normal.",
+        "timestamp": 1791161457.966003
+      }
+    ]
+  },
+  "OK-1791161538-8210": {
+    "ticket_id": "OK-1791161538-8210",
+    "user_email": "tester@example.com",
+    "ticket_type": "bug",
+    "title": "OCR text extraction glitch on rotated bank statement",
+    "description": "When uploading a 90 degree rotated scan, columns are displaced.",
+    "system_info": {
+      "os": "macOS",
+      "app_version": "1.0.0"
+    },
+    "status": "received",
+    "created_at": 1791161538.020045,
+    "timeline": [
+      {
+        "status": "received",
+        "message": "Ticket received and logged by OfficeKit local support engine.",
+        "timestamp": 1791161538.020046
+      },
+      {
+        "status": "triaged",
+        "message": "Automated diagnostics analyzed. Priority: Normal.",
+        "timestamp": 1791161539.0200472
+      }
+    ]
+  },
+  "OK-1791161603-5996": {
+    "ticket_id": "OK-1791161603-5996",
+    "user_email": "tester@example.com",
+    "ticket_type": "bug",
+    "title": "OCR text extraction glitch on rotated bank statement",
+    "description": "When uploading a 90 degree rotated scan, columns are displaced.",
+    "system_info": {
+      "os": "macOS",
+      "app_version": "1.0.0"
+    },
+    "status": "received",
+    "created_at": 1791161603.13972,
+    "timeline": [
+      {
+        "status": "received",
+        "message": "Ticket received and logged by OfficeKit local support engine.",
+        "timestamp": 1791161603.139721
+      },
+      {
+        "status": "triaged",
+        "message": "Automated diagnostics analyzed. Priority: Normal.",
+        "timestamp": 1791161604.139721
+      }
+    ]
+  },
+  "OK-1791161628-A155": {
+    "ticket_id": "OK-1791161628-A155",
+    "user_email": "tester@example.com",
+    "ticket_type": "bug",
+    "title": "OCR text extraction glitch on rotated bank statement",
+    "description": "When uploading a 90 degree rotated scan, columns are displaced.",
+    "system_info": {
+      "os": "macOS",
+      "app_version": "1.0.0"
+    },
+    "status": "received",
+    "created_at": 1791161628.054404,
+    "timeline": [
+      {
+        "status": "received",
+        "message": "Ticket received and logged by OfficeKit local support engine.",
+        "timestamp": 1791161628.0544052
+      },
+      {
+        "status": "triaged",
+        "message": "Automated diagnostics analyzed. Priority: Normal.",
+        "timestamp": 1791161629.054406
+      }
+    ]
+  },
+  "OK-1791161640-2AA6": {
+    "ticket_id": "OK-1791161640-2AA6",
+    "user_email": "tester@example.com",
+    "ticket_type": "bug",
+    "title": "OCR text extraction glitch on rotated bank statement",
+    "description": "When uploading a 90 degree rotated scan, columns are displaced.",
+    "system_info": {
+      "os": "macOS",
+      "app_version": "1.0.0"
+    },
+    "status": "received",
+    "created_at": 1791161640.080231,
+    "timeline": [
+      {
+        "status": "received",
+        "message": "Ticket received and logged by OfficeKit local support engine.",
+        "timestamp": 1791161640.080231
+      },
+      {
+        "status": "triaged",
+        "message": "Automated diagnostics analyzed. Priority: Normal.",
+        "timestamp": 1791161641.080232
+      }
+    ]
+  },
+  "OK-1791161658-9458": {
+    "ticket_id": "OK-1791161658-9458",
+    "user_email": "tester@example.com",
+    "ticket_type": "bug",
+    "title": "OCR text extraction glitch on rotated bank statement",
+    "description": "When uploading a 90 degree rotated scan, columns are displaced.",
+    "system_info": {
+      "os": "macOS",
+      "app_version": "1.0.0"
+    },
+    "status": "received",
+    "created_at": 1791161658.185228,
+    "timeline": [
+      {
+        "status": "received",
+        "message": "Ticket received and logged by OfficeKit local support engine.",
+        "timestamp": 1791161658.185229
+      },
+      {
+        "status": "triaged",
+        "message": "Automated diagnostics analyzed. Priority: Normal.",
+        "timestamp": 1791161659.185229
+      }
+    ]
+  },
+  "OK-1791184530-6891": {
+    "ticket_id": "OK-1791184530-6891",
+    "user_email": "tester@example.com",
+    "ticket_type": "bug",
+    "title": "OCR text extraction glitch on rotated bank statement",
+    "description": "When uploading a 90 degree rotated scan, columns are displaced.",
+    "system_info": {
+      "os": "macOS",
+      "app_version": "1.0.0"
+    },
+    "status": "received",
+    "created_at": 1791184530.813952,
+    "timeline": [
+      {
+        "status": "received",
+        "message": "Ticket received and logged by OfficeKit local support engine.",
+        "timestamp": 1791184530.813952
+      },
+      {
+        "status": "triaged",
+        "message": "Automated diagnostics analyzed. Priority: Normal.",
+        "timestamp": 1791184531.813953
+      }
+    ]
+  },
+  "OK-1791184560-65C7": {
+    "ticket_id": "OK-1791184560-65C7",
+    "user_email": "tester@example.com",
+    "ticket_type": "bug",
+    "title": "OCR text extraction glitch on rotated bank statement",
+    "description": "When uploading a 90 degree rotated scan, columns are displaced.",
+    "system_info": {
+      "os": "macOS",
+      "app_version": "1.0.0"
+    },
+    "status": "received",
+    "created_at": 1791184560.336261,
+    "timeline": [
+      {
+        "status": "received",
+        "message": "Ticket received and logged by OfficeKit local support engine.",
+        "timestamp": 1791184560.336261
+      },
+      {
+        "status": "triaged",
+        "message": "Automated diagnostics analyzed. Priority: Normal.",
+        "timestamp": 1791184561.336261
+      }
+    ]
+  },
+  "OK-1791185738-056B": {
+    "ticket_id": "OK-1791185738-056B",
+    "user_email": "tester@example.com",
+    "ticket_type": "bug",
+    "title": "OCR text extraction glitch on rotated bank statement",
+    "description": "When uploading a 90 degree rotated scan, columns are displaced.",
+    "system_info": {
+      "os": "macOS",
+      "app_version": "1.0.0"
+    },
+    "status": "received",
+    "created_at": 1791185738.7951958,
+    "timeline": [
+      {
+        "status": "received",
+        "message": "Ticket received and logged by OfficeKit local support engine.",
+        "timestamp": 1791185738.7951958
+      },
+      {
+        "status": "triaged",
+        "message": "Automated diagnostics analyzed. Priority: Normal.",
+        "timestamp": 1791185739.7951958
+      }
+    ]
+  },
+  "OK-1791187587-6C8D": {
+    "ticket_id": "OK-1791187587-6C8D",
+    "user_email": "tester@example.com",
+    "ticket_type": "bug",
+    "title": "OCR text extraction glitch on rotated bank statement",
+    "description": "When uploading a 90 degree rotated scan, columns are displaced.",
+    "system_info": {
+      "os": "macOS",
+      "app_version": "1.0.0"
+    },
+    "status": "received",
+    "created_at": 1791187587.27482,
+    "timeline": [
+      {
+        "status": "received",
+        "message": "Ticket received and logged by OfficeKit local support engine.",
+        "timestamp": 1791187587.274821
+      },
+      {
+        "status": "triaged",
+        "message": "Automated diagnostics analyzed. Priority: Normal.",
+        "timestamp": 1791187588.274821
+      }
+    ]
+  },
+  "OK-1791187928-E786": {
+    "ticket_id": "OK-1791187928-E786",
+    "user_email": "tester@example.com",
+    "ticket_type": "bug",
+    "title": "OCR text extraction glitch on rotated bank statement",
+    "description": "When uploading a 90 degree rotated scan, columns are displaced.",
+    "system_info": {
+      "os": "macOS",
+      "app_version": "1.0.0"
+    },
+    "status": "received",
+    "created_at": 1791187928.324244,
+    "timeline": [
+      {
+        "status": "received",
+        "message": "Ticket received and logged by OfficeKit local support engine.",
+        "timestamp": 1791187928.324244
+      },
+      {
+        "status": "triaged",
+        "message": "Automated diagnostics analyzed. Priority: Normal.",
+        "timestamp": 1791187929.324245
+      }
+    ]
+  }
+}

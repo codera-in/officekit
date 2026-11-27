@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>OfficeKit startup navigation behavior</title>
+  <style>
+    :root{font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#223140;background:#f3f6f9;--surface:#fff;--line:#d4dde6;--muted:#536477;--accent:#185c89;--wash:#e8f1f8}
+    *{box-sizing:border-box}body{margin:0;padding:24px}main{max-width:1100px;margin:auto}h1{font-size:26px;margin:0 0 6px}.intro{margin:0 0 20px;color:var(--muted)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:18px}.label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}.shell{margin-top:12px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}.header{height:52px;display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);font-weight:700}.mark{width:28px;height:28px;border-radius:7px;background:#4939db;color:white;display:grid;place-items:center}.body{display:grid;grid-template-columns:150px 1fr;min-height:210px}.rail{padding:12px;border-right:1px solid var(--line);font-size:13px}.nav{display:block;width:100%;text-align:left;border:0;background:transparent;padding:8px;color:var(--muted);font:inherit}.nav.active{background:var(--wash);color:var(--accent);font-weight:700;border-radius:6px}.content{padding:16px}.title{font-size:20px;font-weight:750}.sub{color:var(--muted);font-size:13px}.card{border:1px solid var(--line);border-radius:8px;padding:12px;margin-top:12px}.status{font-size:12px;color:var(--muted);margin-top:12px}.good{color:#216742}.issue{color:#a02f39}
+    @media(max-width:760px){body{padding:16px}.grid{grid-template-columns:1fr}.body{grid-template-columns:112px 1fr}.rail{padding:8px}.content{padding:12px}}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Navigation while OfficeKit checks this build</h1>
+    <p class="intro">The screen design stays the same. A click made during startup must be honored after the local release profile loads, and still respect the profile's tool limits.</p>
+    <div class="grid">
+      <section class="panel">
+        <div class="label">Before · click gets dropped</div>
+        <div class="shell"><div class="header"><span class="mark">OK</span>OfficeKit</div><div class="body"><aside class="rail"><button class="nav">All Tools</button><button class="nav">Favorites</button><button class="nav">History</button><hr><button class="nav active">PDF &amp; Documents</button></aside><section class="content"><div class="title">Your Everyday Tools</div><div class="sub">Find what you need. Keep what matters.</div><div class="card">47 tools</div><p class="status issue">PDF is selected in navigation, but its workbench never opens.</p></section></div></div>
+      </section>
+      <section class="panel">
+        <div class="label">After · latest click opens when ready</div>
+        <div class="shell"><div class="header"><span class="mark">OK</span>OfficeKit</div><div class="body"><aside class="rail"><button class="nav">All Tools</button><button class="nav">Favorites</button><button class="nav">History</button><hr><button class="nav active">PDF &amp; Documents</button></aside><section class="content"><div class="sub">PDF &amp; Documents</div><div class="title">Merge PDFs</div><div class="sub">Combine selected PDFs into a new file.</div><div class="card">Choose PDF files</div><p class="status good">Navigation completed after this build's available tools were verified.</p></section></div></div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,2 @@
+# Isolated POC-only local neural detector runtime; do not add to the app's default sidecar.
+gliner2[local]==2.1.0

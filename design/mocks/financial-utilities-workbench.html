@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>OfficeKit · Everyday business calculators</title>
+  <style>
+    :root { color-scheme:light dark; font:15px/1.5 system-ui,sans-serif; --bg:#f4f6fb; --panel:#fff; --ink:#172033; --muted:#66738b; --line:#dce2ed; --brand:#4f46e5; }
+    @media(prefers-color-scheme:dark){:root{--bg:#111827;--panel:#1f2937;--ink:#f3f4f6;--muted:#aab5c6;--line:#374151;--brand:#a5b4fc}}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);padding:28px 16px}main{max-width:920px;margin:auto;display:grid;gap:18px}h1,h2,p{margin:0}.muted{color:var(--muted)}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px}.eyebrow{color:var(--brand);font-weight:700;font-size:.76rem;letter-spacing:.08em;text-transform:uppercase}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:18px}.tool{border:1px solid var(--line);border-radius:14px;padding:16px}.tool h2{font-size:1.05rem}.tool p{margin-top:5px;font-size:.86rem;color:var(--muted)}label{display:block;font-size:.85rem;font-weight:650;margin:14px 0 6px}input,select{width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;background:var(--panel);color:var(--ink)}button{margin-top:16px;border:0;border-radius:10px;padding:11px 15px;background:var(--brand);color:#fff;font:inherit;font-weight:700}.result{margin-top:14px;border-radius:12px;background:#eef2ff;padding:14px;color:#1f2937}.hint{margin-top:12px;font-size:.78rem;color:var(--muted)}
+  </style>
+</head>
+<body><main>
+  <section class="card"><p class="eyebrow">Calculators · Local processing</p><h1>Everyday business calculators</h1><p class="muted">Four direct tasks, with the inputs and assumptions visible beside each result.</p>
+    <div class="grid">
+      <article class="tool"><h2>Margin &amp; markup</h2><p>Compare cost with revenue. Money rounds half-up to cents; percentages use entered values. Undefined percentages stay blank when their denominator is zero.</p><label>Cost<input type="number" value="80"></label><label>Revenue<input type="number" value="100"></label><button>Calculate margin</button><div class="result">Profit · 20<br>Gross margin · 20%<br>Markup · 25%</div></article>
+      <article class="tool"><h2>Break-even point</h2><p>See required whole units and revenue using contribution per unit.</p><label>Fixed costs<input type="number" value="1000"></label><label>Price / unit<input type="number" value="50"></label><label>Variable cost / unit<input type="number" value="20"></label><button>Calculate break-even</button><div class="result">Contribution · 30<br>Units required · 34<br>Revenue required · 1,700</div></article>
+      <article class="tool"><h2>Simple interest</h2><p>Uses a nominal annual rate, no compounding and half-up cent rounding.</p><label>Principal<input type="number" value="1000"></label><label>Annual rate (%)<input type="number" value="10"></label><label>Duration<input type="number" value="2"><select><option>Years</option><option>Months</option></select></label><button>Calculate interest</button><div class="result">Interest · 200<br>Total amount · 1,200</div></article>
+      <article class="tool"><h2>Straight-line depreciation</h2><p>Annual schedule ends at the salvage value; the final year adjusts for rounding.</p><label>Asset cost<input type="number" value="10000"></label><label>Salvage value<input type="number" value="1000"></label><label>Useful life (years)<input type="number" value="3"></label><button>Calculate schedule</button><div class="result">Annual depreciation · 3,000<br>Year 1 · book value 7,000<br>Year 3 · book value 1,000</div></article>
+    </div><p class="hint">Enter amounts in the same currency. OfficeKit does not infer or convert currencies, apply taxes, or include other costs. Save or export a result only after calculating.</p>
+  </section>
+  <section class="card"><p class="eyebrow">Before → after</p><p class="muted">These calculations existed as API-only operations. The proposed workspace makes them discoverable and shows validated outputs, assumptions, and the shared Save result / Export actions.</p></section>
+</main></body></html>

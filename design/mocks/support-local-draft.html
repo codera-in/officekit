@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit · Help and feedback</title>
+  <style>
+    :root{--canvas:#f3f6f9;--surface:#fff;--text:#223140;--muted:#536477;--line:#dbe3eb;--accent:#185c89;--warning:#805b0a;font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}body{margin:0;padding:20px;background:var(--canvas);color:var(--text)}h1{font-size:24px;margin:0 0 4px}.lead{color:var(--muted);margin:0 0 18px}.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:960px;margin:auto}.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}.tag{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}h2{font-size:18px;margin:6px 0 14px}.field{display:block;font-size:12px;font-weight:600;margin:10px 0 4px}input,select,textarea{display:block;width:100%;min-height:40px;border:1px solid var(--line);border-radius:7px;background:#fff;padding:8px 10px;color:var(--text);font:inherit;font-size:13px}textarea{min-height:68px;resize:vertical}.checkbox{display:flex;gap:8px;align-items:flex-start;font-size:12px;margin:10px 0}.checkbox input{width:16px;height:16px;min-height:16px;margin-top:2px}.info{font-size:12px;color:var(--warning);background:#fff8e7;border:1px solid #ead9aa;border-radius:8px;padding:9px;margin:12px 0}.status{font-size:12px;color:var(--muted);min-height:22px}.actions{display:flex;justify-content:flex-end;margin-top:12px}button{min-height:40px;border:1px solid var(--line);border-radius:7px;background:#f5f8fb;padding:8px 12px;color:var(--text);font:inherit;font-size:13px}.primary{background:var(--accent);border-color:var(--accent);color:#fff}@media(max-width:760px){body{padding:12px}.compare{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.card{padding:10px}.tag{font-size:9px}h2{font-size:15px;margin-bottom:8px}.field,.checkbox,.info,.status{font-size:10px}input,select,textarea{font-size:11px;min-height:34px;padding:5px}.checkbox input{min-height:14px;width:14px;height:14px}.actions button{width:100%;font-size:11px;padding:6px}}
+  </style>
+</head>
+<body>
+  <h1>Help &amp; feedback</h1>
+  <p class="lead">Choose a topic and keep control of what leaves this Mac.</p>
+  <main class="compare">
+    <section class="card" aria-label="Before">
+      <span class="tag">Before</span>
+      <h2>Support &amp; Bug Reporter</h2>
+      <label class="field">Your email<input value="you@example.com"></label>
+      <label class="field">Request type<select><option>Report a Bug / Glitch</option></select></label>
+      <label class="field">Subject / Summary<input value="PDF table not detected"></label>
+      <label class="field">Detailed description<textarea>Expected four transaction rows. Got one merged row.</textarea></label>
+      <div class="actions"><button class="primary">Submit Ticket</button></div>
+      <p class="info">The UI claims this goes to engineering. The API only saves it locally.</p>
+    </section>
+    <section class="card" aria-label="After">
+      <span class="tag">After</span>
+      <h2>Help &amp; feedback</h2>
+      <label class="field">I want to<select><option>Report a bug</option><option>Request a feature</option><option selected>Leave a testimonial</option></select></label>
+      <label class="field">Email for a reply (optional)<input type="email" placeholder="you@example.com"></label>
+      <label class="field">How has OfficeKit helped you?<textarea>OfficeKit helps me finish everyday file tasks quickly.</textarea></label>
+      <label class="field">Display name (optional)<input type="text" placeholder="Name shown if you grant permission"></label>
+      <label class="checkbox"><input type="checkbox">OfficeKit may publish this testimonial. Nothing is published or sent from this draft.</label>
+      <p class="info">Saved only on this Mac. Not sent to OfficeKit. System and browser details are not attached.</p>
+      <div class="actions"><button class="primary">Save local draft</button></div>
+      <p class="status" role="status">After saving: “Draft saved on this Mac. Nothing was sent or published.”</p>
+    </section>
+  </main>
+</body>
+</html>

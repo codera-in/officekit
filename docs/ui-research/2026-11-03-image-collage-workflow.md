@@ -1,0 +1,7 @@
+# Image Collage: ordered inputs and export parity
+
+Added a focused browser regression that creates two synthetic striped PNGs, reorders them, removes one and confirms Save is disabled, restores the second image without losing order, builds the 35×18 PNG collage, and compares every preview pixel with the saved output. The spec captures the empty, reordered, incomplete, preview and saved states when a browser is available.
+
+Fresh collage API checks pass 7 tests plus 6 subtests; collage engine tests pass 13/13; the shared image UI contracts pass 47/47. The focused browser spec passes `node --check` but has not run because the local WebKit 2359 process aborts before setup. Archived desktop and compact source captures remain under `docs/verification/tool-unification/after/image_collage-*`; the old compact saved image shows a washed out dock, so replace it after browser access is restored.
+
+Static review found a possible status race: `previewOrdered()` unconditionally reports “Preview updated.” after its request, while Preview and Save remain enabled during requests. A late preview could therefore replace a newer “Saved” message. This still needs a runtime reproduction and a reviewed mock before any UI behavior change. The installed-app check is also blocked: LaunchServices cannot open `/Applications/OfficeKit.app` (`kLSNoExecutableErr`), direct execution exits 134, and CUA cannot attach to an OfficeKit window.

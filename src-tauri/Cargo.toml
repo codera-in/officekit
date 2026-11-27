@@ -1,0 +1,44 @@
+[package]
+name = "officekit"
+version = "1.0.123"
+description = "OfficeKit — The Everyday Toolbox for your Computer"
+authors = ["OfficeKit Team <support@officekit.app>"]
+edition = "2021"
+
+[lib]
+name = "officekit_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.1", features = [] }
+
+[dependencies]
+tauri = { version = "2.1", features = ["tray-icon"] }
+tauri-plugin-shell = "2.1"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+chrono = "=0.4.45"
+harper-core = "=3.2.0"
+uuid = { version = "1.27", features = ["v4"] }
+base64 = "0.23"
+jsonwebtoken = { version = "12.0", default-features = false, features = ["rust_crypto", "use_pem"] }
+sha2 = "0.11"
+ureq = { version = "3.4.2", default-features = false, features = ["json", "rustls"] }
+p256 = { version = "0.14", features = ["ecdsa", "pkcs8"] }
+tauri-plugin-clipboard-manager = "2.4.1"
+tauri-plugin-dialog = "2.4"
+tauri-plugin-global-shortcut = "2.4.1"
+
+[dev-dependencies]
+tauri = { version = "2.1", features = ["test"] }
+rsa = "0.10"
+
+[target.'cfg(target_os = "macos")'.dependencies]
+objc2-app-kit = { version = "=0.3.2", features = ["NSPasteboard", "NSWorkspace"] }
+objc2-foundation = { version = "=0.3.2", features = ["NSString"] }
+fluidaudio-rs = { path = "vendor/fluidaudio-rs", default-features = false, features = ["asr"] }
+security-framework = "3.7"
+whisper-rs = { version = "=0.16.0", features = ["metal"] }
+
+[patch.crates-io]
+tauri = { path = "vendor/tauri" }

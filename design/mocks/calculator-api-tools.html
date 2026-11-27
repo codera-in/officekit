@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit calculator tools — screen proposal</title>
+  <style>
+    :root { color-scheme: light dark; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; --page:#f3f6f9; --surface:#fff; --ink:#223140; --muted:#536477; --line:#d7e0e8; --accent:#185c89; --soft:#e9f2f8; }
+    @media (prefers-color-scheme: dark) { :root { --page:#141f2c; --surface:#1c2a3a; --ink:#eef4fa; --muted:#afbed0; --line:#394b60; --accent:#91caf0; --soft:#263a4e; } }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#e8edf2; color:var(--ink); }
+    header { padding:18px 24px; background:var(--surface); border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; }
+    header strong { font-size:19px; letter-spacing:-.03em; }
+    header small { color:var(--muted); }
+    main { max-width:1240px; margin:0 auto; padding:26px 22px 40px; }
+    h1 { font-size:27px; letter-spacing:-.035em; margin:0 0 5px; }
+    .intro { color:var(--muted); margin:0 0 22px; }
+    .legend { display:flex; gap:8px; align-items:center; margin:20px 0 10px; color:var(--muted); font-size:12px; }
+    .legend b { color:var(--ink); }
+    .compare { display:grid; grid-template-columns:1fr 1.15fr; gap:18px; align-items:start; }
+    .frame { border:1px solid var(--line); background:var(--page); border-radius:12px; overflow:hidden; box-shadow:0 3px 14px #20304012; }
+    .frame-title { padding:12px 15px; color:var(--muted); font-size:12px; background:var(--surface); border-bottom:1px solid var(--line); }
+    .frame-title strong { color:var(--ink); margin-right:6px; }
+    .app { min-height:410px; padding:22px; }
+    .windowbar { display:flex; gap:7px; align-items:center; margin:-22px -22px 22px; padding:11px 15px; background:var(--surface); border-bottom:1px solid var(--line); font-size:13px; }
+    .mark { width:24px; height:24px; display:inline-grid; place-items:center; color:white; background:#4f46e5; border-radius:7px; font-weight:750; }
+    .nav { display:flex; gap:7px; overflow:hidden; border-bottom:1px solid var(--line); margin-bottom:22px; padding-bottom:12px; }
+    .nav span { font-size:12px; white-space:nowrap; border:1px solid var(--line); border-radius:7px; padding:7px 10px; color:var(--muted); background:var(--surface); }
+    .nav .active { border-color:var(--accent); color:var(--accent); }
+    .box { background:var(--surface); border:1px solid var(--line); border-radius:9px; padding:16px; }
+    .old-tabs { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:18px 0; }
+    .old-tabs div { padding:12px; background:var(--surface); border:1px solid var(--line); border-radius:8px; color:var(--muted); font-size:13px; }
+    .empty { padding:23px 16px; background:var(--surface); border:1px dashed var(--line); border-radius:9px; text-align:center; color:var(--muted); font-size:13px; line-height:1.55; }
+    .switch { display:flex; gap:7px; border-bottom:1px solid var(--line); margin:16px 0 20px; padding-bottom:12px; }
+    .switch span { font-size:13px; border-radius:7px; padding:8px 12px; background:var(--surface); border:1px solid var(--line); }
+    .switch .chosen { background:var(--soft); color:var(--accent); border-color:var(--accent); font-weight:650; }
+    .formrow { display:grid; grid-template-columns:1fr 150px; gap:12px; align-items:end; margin:15px 0; }
+    label { display:block; color:var(--muted); font-size:12px; margin-bottom:6px; }
+    input, select { width:100%; border:1px solid var(--line); border-radius:7px; background:var(--surface); color:var(--ink); padding:11px 12px; min-height:42px; font:inherit; }
+    .help { color:var(--muted); font-size:12px; margin:7px 0 16px; }
+    button { border:0; min-height:42px; border-radius:7px; padding:0 16px; font:inherit; font-size:13px; font-weight:650; cursor:default; }
+    .primary { color:white; background:#185c89; }
+    @media(prefers-color-scheme:dark) { .primary { color:#142c40; background:#91caf0; } }
+    .secondary { color:var(--accent); background:var(--soft); }
+    .result { background:var(--surface); border:1px solid var(--line); border-radius:9px; margin-top:16px; padding:15px 16px; }
+    .result small { display:block; color:var(--muted); margin-bottom:5px; }
+    .result strong { display:block; font-size:29px; letter-spacing:-.03em; font-variant-numeric:tabular-nums; }
+    .result-actions { display:flex; gap:8px; margin-top:14px; }
+    .foot { margin-top:14px; color:var(--muted); font-size:11px; }
+    .mobile { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:18px; }
+    .mobile .frame { max-width:390px; justify-self:center; width:100%; }
+    .mobile .app { min-height:0; padding:15px; }
+    .mobile .windowbar { margin:-15px -15px 15px; padding:10px 12px; }
+    .mobile .nav { margin-bottom:14px; }
+    .mobile h2 { font-size:19px; margin:0; }
+    .mobile .formrow { grid-template-columns:1fr; gap:10px; }
+    .mobile .result strong { font-size:26px; }
+    @media(max-width:900px) { .compare,.mobile { grid-template-columns:1fr; } main { padding:18px 12px 28px; } .app { min-height:0; } }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; transition:none !important; } }
+  </style>
+</head>
+<body>
+  <header><strong>OfficeKit</strong><small>Calculator tools · proposed UI</small></header>
+  <main>
+    <h1>Give the existing calculator engines a clear home</h1>
+    <p class="intro">The current app exposes four calculator tabs. Scientific math and unit conversion already have typed local APIs, but no usable destinations.</p>
+    <div class="legend"><b>Desktop review</b> <span>Before: current calculator screen</span><span>·</span><span>After: direct, task-specific forms for two existing APIs</span></div>
+    <section class="compare" aria-label="Desktop before and after comparison">
+      <article class="frame">
+        <div class="frame-title"><strong>Before</strong> Current implementation</div>
+        <div class="app">
+          <div class="windowbar"><span class="mark">OK</span><strong>OfficeKit</strong></div>
+          <nav class="nav"><span>Tools</span><span>Favorites</span><span>History</span><span>Statements</span><span>Converter</span><span class="active">Calculators</span></nav>
+          <h2>Calculators</h2>
+          <div class="old-tabs"><div>Loan &amp; EMI</div><div>Compound Interest</div><div>VAT / Sales Tax</div><div>Freelance Hourly Rate</div></div>
+          <div class="empty">Scientific math and unit conversion are searchable in the tool catalogue, but there is no screen to enter values or see their results.</div>
+        </div>
+      </article>
+      <article class="frame">
+        <div class="frame-title"><strong>After</strong> Proposed Calculator tools route</div>
+        <div class="app">
+          <div class="windowbar"><span class="mark">OK</span><strong>OfficeKit</strong></div>
+          <nav class="nav"><span>Tools</span><span>Favorites</span><span>History</span><span>Statements</span><span>Converter</span><span class="active">Calculators</span></nav>
+          <h2>Calculators</h2>
+          <div class="switch" aria-label="Calculator selection"><span class="chosen">Scientific</span><span>Unit converter</span></div>
+          <section class="box" aria-label="Scientific calculator form">
+            <label for="expression">Expression</label>
+            <input id="expression" value="sqrt(2) * 20" readonly>
+            <div class="formrow"><div><label for="angle">Angle mode</label><select id="angle"><option>Radians</option><option>Degrees</option></select></div><button class="primary">Calculate</button></div>
+            <p class="help">Use standard operators, constants such as π, and supported math functions.</p>
+            <div class="result"><small>Result</small><strong>28.284271…</strong><div class="result-actions"><button class="secondary">Copy result</button><button class="secondary">Clear</button></div></div>
+          </section>
+          <p class="foot">Calculated locally · no account or network needed</p>
+        </div>
+      </article>
+    </section>
+    <h2 style="font-size:19px;margin:30px 0 8px">Compact layout</h2>
+    <p class="intro">At narrow widths the form and result stack; controls keep full labels and targets remain easy to tap.</p>
+    <section class="mobile" aria-label="Compact before and after comparison">
+      <article class="frame"><div class="frame-title"><strong>Before</strong> Current</div><div class="app"><div class="windowbar"><span class="mark">OK</span><strong>Calculators</strong></div><div class="old-tabs"><div>Loan &amp; EMI</div><div>Compound Interest</div><div>VAT / Sales Tax</div><div>Freelance Rate</div></div><div class="empty">No scientific or unit-conversion form.</div></div></article>
+      <article class="frame"><div class="frame-title"><strong>After</strong> Proposed unit converter</div><div class="app"><div class="windowbar"><span class="mark">OK</span><strong>Unit converter</strong></div><div class="switch"><span>Scientific</span><span class="chosen">Unit converter</span></div><label for="category">Category</label><select id="category"><option>Length</option></select><div class="formrow"><div><label for="from">Value and unit</label><input id="from" value="5.6 km" readonly></div><div><label for="to">Convert to</label><select id="to"><option>Miles (mi)</option></select></div></div><button class="primary" style="width:100%">Convert</button><div class="result"><small>Result</small><strong>3.48 mi</strong><div class="result-actions"><button class="secondary">Copy result</button><button class="secondary">Swap</button></div></div></div></article>
+    </section>
+    <p class="foot">Proposal only. The existing API contracts are <code>POST /api/math/eval</code> and <code>POST /api/units/convert</code>. This mock uses current app colors for comparison; it does not select the broader brand palette or add history/export actions.</p>
+  </main>
+</body>
+</html>

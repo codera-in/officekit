@@ -1,0 +1,2227 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit — Apple Senior UI Engineer Redesign Mock (All Tools, STT Overlay, Progress & Banner)</title>
+  <link rel="stylesheet" href="../officekit-tokens.css">
+  <link rel="stylesheet" href="../../dist-ui/assets/officekit.css">
+  <style>
+    /* ==========================================================================
+       Apple macOS Sequoia / Sonoma Design System & Liquid Glass Primitives
+       ========================================================================== */
+    :root {
+      --app-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Plus Jakarta Sans", system-ui, sans-serif;
+      --app-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+      
+      /* Light Glass Theme */
+      --bg-canvas: #edf2f7;
+      --bg-window: rgba(255, 255, 255, 0.88);
+      --bg-sidebar: rgba(246, 248, 251, 0.78);
+      --bg-card: rgba(255, 255, 255, 0.92);
+      --bg-card-hover: rgba(255, 255, 255, 1);
+      --bg-input: rgba(238, 242, 246, 0.9);
+      --bg-pill: rgba(0, 0, 0, 0.05);
+      
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      
+      --border-subtle: rgba(0, 0, 0, 0.07);
+      --border-focus: #0284c7;
+      --border-card: rgba(0, 0, 0, 0.06);
+      
+      --accent-color: #0284c7;
+      --accent-light: #e0f2fe;
+      --accent-text: #ffffff;
+      
+      --shadow-window: 0 24px 60px -12px rgba(15, 23, 42, 0.15), 0 8px 24px -4px rgba(15, 23, 42, 0.08);
+      --shadow-card: 0 4px 16px -2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.03);
+      --shadow-hover: 0 12px 28px -4px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04);
+      --hairline: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    [data-theme="dark"] {
+      --bg-canvas: #090e17;
+      --bg-window: rgba(18, 26, 38, 0.9);
+      --bg-sidebar: rgba(14, 20, 30, 0.85);
+      --bg-card: rgba(24, 34, 48, 0.85);
+      --bg-card-hover: rgba(30, 42, 60, 0.98);
+      --bg-input: rgba(30, 42, 58, 0.92);
+      --bg-pill: rgba(255, 255, 255, 0.08);
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: #38bdf8;
+      --border-card: rgba(255, 255, 255, 0.07);
+      
+      --accent-color: #38bdf8;
+      --accent-light: rgba(56, 189, 248, 0.16);
+      --accent-text: #090e17;
+      
+      --shadow-window: 0 30px 80px -15px rgba(0, 0, 0, 0.7);
+      --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+      --shadow-hover: 0 16px 36px -4px rgba(0, 0, 0, 0.55);
+      --hairline: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: var(--bg-canvas);
+      font-family: var(--app-font);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    /* Top Review & Switcher Toolbar */
+    .review-control-bar {
+      width: 100%;
+      max-width: 1400px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 12px 20px;
+      background: var(--bg-window);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      box-shadow: var(--shadow-card);
+      font-size: 13px;
+    }
+
+    .pill-group {
+      display: inline-flex;
+      background: var(--bg-input);
+      padding: 3px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      gap: 2px;
+    }
+
+    .pill-btn {
+      border: none;
+      background: transparent;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-radius: 9px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: var(--app-font);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill-btn:hover {
+      color: var(--text-main);
+    }
+
+    .pill-btn.active {
+      background: var(--bg-card);
+      color: var(--text-main);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Virtual macOS Application Frame */
+    .mac-window-frame {
+      width: 100%;
+      max-width: 1400px;
+      height: 840px;
+      background: var(--bg-window);
+      backdrop-filter: blur(36px) saturate(180%);
+      -webkit-backdrop-filter: blur(36px) saturate(180%);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      box-shadow: var(--shadow-window);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Unified macOS Sequoia Window Titlebar */
+    .mac-titlebar {
+      height: 52px;
+      min-height: 52px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      background: transparent;
+      user-select: none;
+    }
+
+    .traffic-lights {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .traffic-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      box-shadow: inset 0 1px 1px rgba(0,0,0,0.25);
+    }
+    .dot-red { background: #ff5f57; }
+    .dot-yellow { background: #febc2e; }
+    .dot-green { background: #28c840; }
+
+    /* macOS 2-Pane Split Container */
+    .mac-split-container {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* Vibrant Frosted Sidebar */
+    .mac-sidebar {
+      width: 240px;
+      min-width: 240px;
+      background: var(--bg-sidebar);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-right: 1px solid var(--border-subtle);
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+    }
+
+    .sidebar-section-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-dim);
+      padding: 6px 10px 4px;
+    }
+
+    .sidebar-nav-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 7px 10px;
+      margin: 1px 0;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 550;
+      color: var(--text-muted);
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.12s ease;
+      font-family: var(--app-font);
+    }
+
+    .sidebar-nav-item:hover {
+      background: var(--bg-pill);
+      color: var(--text-main);
+    }
+
+    .sidebar-nav-item.active {
+      background: var(--accent-light);
+      color: var(--accent-color);
+      font-weight: 650;
+    }
+
+    [data-theme="dark"] .sidebar-nav-item.active {
+      background: rgba(56, 189, 248, 0.16);
+      color: var(--accent-color);
+    }
+
+    .sidebar-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 6px;
+      background: var(--bg-pill);
+      color: var(--text-dim);
+    }
+
+    /* Content Viewport */
+    .mac-content-viewport {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 32px;
+      background: transparent;
+      position: relative;
+    }
+
+    /* Tool Cards Grid */
+    .tool-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .apple-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 18px;
+      padding: 18px 20px;
+      box-shadow: var(--hairline), var(--shadow-card);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .apple-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--hairline), var(--shadow-hover);
+      border-color: rgba(2, 132, 199, 0.35);
+      background: var(--bg-card-hover);
+    }
+
+    .glyph-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      margin-bottom: 12px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+    }
+
+    .favorite-star {
+      font-size: 17px;
+      color: var(--text-dim);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 2px 6px;
+      transition: transform 0.15s ease, color 0.15s ease;
+      border-radius: 6px;
+    }
+    .favorite-star:hover {
+      transform: scale(1.2);
+    }
+    .favorite-star.starred {
+      color: #f59e0b;
+    }
+
+    /* Tabular Numbers & Tables */
+    .tabular-num {
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+      letter-spacing: -0.02em;
+    }
+
+    table th {
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+    table td {
+      color: var(--text-main);
+    }
+
+    /* Sliders */
+    .apple-slider-wrap {
+      margin-bottom: 18px;
+    }
+    .slider-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 13px;
+      margin-bottom: 6px;
+      font-weight: 550;
+    }
+
+    /* Storage Segmented Bar */
+    .storage-bar-container {
+      height: 16px;
+      border-radius: 10px;
+      background: var(--bg-input);
+      display: flex;
+      overflow: hidden;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+      margin: 16px 0 12px;
+    }
+
+    /* Screenshot Floating Annotation Toolbar */
+    .canvas-floating-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px;
+      background: var(--bg-card);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      box-shadow: var(--shadow-hover);
+    }
+
+    .canvas-tool-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+    .canvas-tool-btn:hover {
+      background: var(--bg-pill);
+      color: var(--text-main);
+    }
+    .canvas-tool-btn.active {
+      background: var(--accent-color);
+      color: var(--accent-text);
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.35);
+    }
+
+    /* ==========================================================================
+       Apple Progress Bar System Styles
+       ========================================================================== */
+    .apple-progress-track {
+      height: 8px;
+      border-radius: 999px;
+      background: var(--bg-input);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+    }
+    .apple-progress-bar {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #0071e3, #38bdf8);
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .apple-progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+      background-size: 200% 100%;
+      animation: progress-shimmer 2s infinite linear;
+    }
+    @keyframes progress-shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    .apple-progress-indeterminate {
+      width: 35%;
+      position: absolute;
+      animation: indeterminate-slide 1.6s infinite ease-in-out;
+    }
+    @keyframes indeterminate-slide {
+      0% { left: -35%; }
+      100% { left: 100%; }
+    }
+
+    /* ==========================================================================
+       Apple Liquid Glass App Banner Styles (3 Interactive Modes)
+       ========================================================================== */
+    .apple-app-banner {
+      margin-bottom: 20px;
+      border-radius: 16px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: linear-gradient(90deg, rgba(0, 113, 227, 0.08), rgba(168, 85, 247, 0.08));
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(0, 113, 227, 0.22);
+      box-shadow: 0 4px 16px rgba(0, 113, 227, 0.06);
+      transition: all 0.25s ease;
+    }
+    .apple-app-banner.banner-task {
+      background: linear-gradient(90deg, rgba(245, 158, 11, 0.08), rgba(99, 102, 241, 0.08));
+      border-color: rgba(245, 158, 11, 0.25);
+    }
+    .apple-app-banner.banner-privacy {
+      background: linear-gradient(90deg, rgba(16, 185, 129, 0.08), rgba(6, 182, 212, 0.08));
+      border-color: rgba(16, 185, 129, 0.25);
+    }
+
+    /* ==========================================================================
+       Floating STT Overlay / Siri Dictation HUD
+       ========================================================================== */
+    .stt-overlay-hud {
+      position: fixed;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%) translateY(0);
+      width: 90%;
+      max-width: 580px;
+      background: rgba(18, 20, 26, 0.92);
+      backdrop-filter: blur(40px) saturate(200%);
+      -webkit-backdrop-filter: blur(40px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 28px;
+      padding: 14px 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 35px rgba(0, 113, 227, 0.35);
+      z-index: 9999;
+      color: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-theme="light"] .stt-overlay-hud {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.15), 0 0 35px rgba(0, 113, 227, 0.25);
+      color: #0f172a;
+    }
+    .stt-overlay-hud.hud-hidden {
+      opacity: 0;
+      transform: translateX(-50%) translateY(35px);
+      pointer-events: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.08); opacity: 0.85; }
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Waveform visualizer */
+    .waveform-bars {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .wave-bar {
+      width: 3.5px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, #f43f5e, #fb7185);
+      transition: height 0.08s ease;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .mac-split-container {
+        flex-direction: column;
+      }
+      .mac-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+        padding: 12px;
+      }
+      .mac-content-viewport {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP REVIEW & TEST CONTROLLER BAR -->
+  <div class="review-control-bar">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span style="font-size: 16px; font-weight: 700; color: var(--accent-color);"></span>
+      <div>
+        <strong style="color: var(--text-main);">Apple Senior UI Redesign</strong>
+        <span style="color: var(--text-dim); margin-left: 6px;">· All 124 Tools, Favorites, STT Overlay & Progress Bars</span>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <!-- Screen Views -->
+      <div class="pill-group" role="tablist">
+        <button class="pill-btn active" id="btn-screen-home" onclick="switchScreen('home')">All Tools (124)</button>
+        <button class="pill-btn" id="btn-screen-favorites" onclick="switchScreen('favorites')">★ Favorites (<span id="top-fav-count">6</span>)</button>
+        <button class="pill-btn" id="btn-screen-calc" onclick="switchScreen('calc')">Financial</button>
+        <button class="pill-btn" id="btn-screen-media" onclick="switchScreen('media')">PDFs</button>
+        <button class="pill-btn" id="btn-screen-screenshot" onclick="switchScreen('screenshot')">Screenshot</button>
+        <button class="pill-btn" id="btn-screen-stt" onclick="switchScreen('stt')">STT</button>
+        <button class="pill-btn" id="btn-screen-notes" onclick="switchScreen('notes')">Notes</button>
+        <button class="pill-btn" id="btn-screen-storage" onclick="switchScreen('storage')">Storage</button>
+        <button class="pill-btn" id="btn-screen-progress" onclick="switchScreen('progress')" style="color: #0284c7; font-weight: 700;">Progress</button>
+        <button class="pill-btn" id="btn-screen-comparison" onclick="switchScreen('comparison')" style="color: #ea580c; font-weight: 700;">Critique</button>
+      </div>
+
+      <!-- Feature Interactive Triggers -->
+      <div class="pill-group">
+        <button class="pill-btn" id="btn-stt-overlay-toggle" onclick="toggleSttOverlay()" title="Toggle Siri/Dictation Floating HUD">🎙️ STT Overlay</button>
+        <button class="pill-btn" id="btn-banner-cycle" onclick="cycleAppBanner()" title="Cycle banner through Release, Task, and Privacy states">🔔 App Banner</button>
+      </div>
+
+      <!-- Theme Switcher -->
+      <div class="pill-group">
+        <button class="pill-btn active" id="btn-theme-light" onclick="setMockTheme('light')">☀️ Light</button>
+        <button class="pill-btn" id="btn-theme-dark" onclick="setMockTheme('dark')">🌙 Dark</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIRTUAL MACOS APPLICATION WINDOW -->
+  <div class="mac-window-frame">
+
+    <!-- Unified Titlebar & Spotlight Toolbar -->
+    <div class="mac-titlebar">
+      <!-- Traffic lights & Brand Mark -->
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div class="traffic-lights">
+          <span class="traffic-dot dot-red"></span>
+          <span class="traffic-dot dot-yellow"></span>
+          <span class="traffic-dot dot-green"></span>
+        </div>
+        <div style="height: 18px; width: 1px; background: var(--border-subtle); margin: 0 4px;"></div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <div style="width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(135deg, #0284c7, #38bdf8); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 11px; letter-spacing: -0.5px;">OK</div>
+          <span style="font-weight: 750; font-size: 14px; letter-spacing: -0.3px; color: var(--text-main);">OfficeKit</span>
+          <span style="font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 6px; background: var(--accent-light); color: var(--accent-color);">PRO</span>
+        </div>
+      </div>
+
+      <!-- Centered Spotlight Search Pill -->
+      <div style="flex: 1; max-width: 440px; margin: 0 20px;">
+        <div style="position: relative; display: flex; align-items: center;">
+          <svg style="position: absolute; left: 12px; width: 15px; height: 15px; color: var(--text-dim);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input type="text" id="spotlight-input" oninput="handleSearch(this.value)" placeholder="Search all 124 tools, formats, or tasks (⌘K)…" style="width: 100%; background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 20px; padding: 7px 55px 7px 34px; font-size: 12.5px; color: var(--text-main); font-family: var(--app-font); outline: none; transition: all 0.15s ease;" onfocus="this.style.borderColor='var(--border-focus)'" onblur="this.style.borderColor='var(--border-subtle)'">
+          <kbd style="position: absolute; right: 10px; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 5px; font-size: 10px; font-family: var(--app-mono); padding: 1px 5px; color: var(--text-dim);">⌘K</kbd>
+        </div>
+      </div>
+
+      <!-- Trailing Status Telemetry -->
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; padding: 3px 10px; border-radius: 20px; background: rgba(34, 197, 94, 0.12); color: #16a34a;">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: #22c55e;"></span>
+          100% On-Device
+        </span>
+        <button onclick="toggleSttOverlay()" style="border: none; background: transparent; cursor: pointer; color: var(--text-muted); padding: 4px;" title="Trigger Voice HUD (⌥ Space)">
+          <svg style="width: 17px; height: 17px; color: #f43f5e;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- macOS 2-Pane Split Container -->
+    <div class="mac-split-container">
+      
+      <!-- Frosted Navigation Sidebar -->
+      <aside class="mac-sidebar">
+        <div>
+          <!-- Section 1: Workspaces -->
+          <div class="sidebar-section-title">Workspace</div>
+          
+          <button class="sidebar-nav-item active" id="nav-btn-home" onclick="switchScreen('home')">
+            <span style="display: flex; align-items: center; gap: 8px;">
+              <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+              All Tools
+            </span>
+            <span class="sidebar-badge" id="sidebar-all-count">124</span>
+          </button>
+
+          <button class="sidebar-nav-item" id="nav-btn-favorites" onclick="switchScreen('favorites')">
+            <span style="display: flex; align-items: center; gap: 8px;">
+              <svg style="width: 16px; height: 16px; color: #f59e0b;" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              Favorites
+            </span>
+            <span class="sidebar-badge" id="sidebar-fav-count" style="color: #f59e0b; font-weight: 700;">6</span>
+          </button>
+
+          <!-- Section 2: Flagship Pro Studios -->
+          <div class="sidebar-section-title" style="margin-top: 16px;">Pro Studios</div>
+          
+          <button class="sidebar-nav-item" id="nav-btn-calc" onclick="switchScreen('calc')">
+            <span style="display: flex; align-items: center; gap: 8px;">
+              <svg style="width: 16px; height: 16px; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+              Financial Studio
+            </span>
+            <span class="sidebar-badge">25</span>
+          </button>
+
+          <button class="sidebar-nav-item" id="nav-btn-media" onclick="switchScreen('media')">
+            <span style="display: flex; align-items: center; gap: 8px;">
+              <svg style="width: 16px; height: 16px; color: #6366f1;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+              PDF & Documents
+            </span>
+            <span class="sidebar-badge">20</span>
+          </button>
+
+          <button class="sidebar-nav-item" id="nav-btn-screenshot" onclick="switchScreen('screenshot')">
+            <span style="display: flex; align-items: center; gap: 8px;">
+              <svg style="width: 16px; height: 16px; color: #a855f7;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+              Screenshot Editor
+            </span>
+            <span class="sidebar-badge" style="color: #a855f7;">Pro</span>
+          </button>
+
+          <button class="sidebar-nav-item" id="nav-btn-stt" onclick="switchScreen('stt')">
+            <span style="display: flex; align-items: center; gap: 8px;">
+              <svg style="width: 16px; height: 16px; color: #f43f5e;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+              Speech-to-Text
+            </span>
+            <span class="sidebar-badge" style="color: #f43f5e;">PTT</span>
+          </button>
+
+          <button class="sidebar-nav-item" id="nav-btn-notes" onclick="switchScreen('notes')">
+            <span style="display: flex; align-items: center; gap: 8px;">
+              <svg style="width: 16px; height: 16px; color: #0284c7;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              Meeting Notes
+            </span>
+            <span class="sidebar-badge" style="color: #0284c7;">AI</span>
+          </button>
+
+          <button class="sidebar-nav-item" id="nav-btn-storage" onclick="switchScreen('storage')">
+            <span style="display: flex; align-items: center; gap: 8px;">
+              <svg style="width: 16px; height: 16px; color: #f59e0b;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7M4 7c0-2 1-3 3-3h10c2 0 3 1 3 3M4 7h16m-5 4h.01M9 11h.01"/></svg>
+              Storage Reclaim
+            </span>
+            <span class="sidebar-badge">6</span>
+          </button>
+
+          <button class="sidebar-nav-item" id="nav-btn-progress" onclick="switchScreen('progress')">
+            <span style="display: flex; align-items: center; gap: 8px;">
+              <svg style="width: 16px; height: 16px; color: #0284c7;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              Progress & Tasks
+            </span>
+            <span class="sidebar-badge" style="color: #0284c7;">Pro</span>
+          </button>
+
+          <button class="sidebar-nav-item" id="nav-btn-comparison" onclick="switchScreen('comparison')">
+            <span style="display: flex; align-items: center; gap: 8px; color: #ea580c; font-weight: 600;">
+              <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Design Critique
+            </span>
+            <span class="sidebar-badge" style="color: #ea580c;">v2.0</span>
+          </button>
+        </div>
+
+        <!-- System Footprint Pill at Sidebar Bottom -->
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 10px 12px;">
+          <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 600; color: var(--text-main); margin-bottom: 4px;">
+            <span>Macintosh HD</span>
+            <span style="color: var(--accent-color); font-family: var(--app-mono);">55% Free</span>
+          </div>
+          <div style="height: 5px; background: var(--bg-input); border-radius: 5px; overflow: hidden;">
+            <div style="width: 45%; height: 100%; background: var(--accent-color); border-radius: 5px;"></div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Content Viewport -->
+      <main class="mac-content-viewport" id="main-viewport">
+
+        <!-- ====================================================================
+             APPLE LIQUID GLASS APP BANNER (3 INTERACTIVE MODES)
+             ==================================================================== -->
+        <div id="apple-app-banner" class="apple-app-banner">
+          <div style="display: flex; align-items: center; gap: 14px; flex: 1; min-width: 0;">
+            <div id="banner-icon-box" style="width: 34px; height: 34px; border-radius: 10px; background: rgba(0, 113, 227, 0.15); color: var(--accent-color); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;">
+              ✨
+            </div>
+            <div style="flex: 1; min-width: 0;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span id="banner-badge" style="font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 2px 7px; border-radius: 6px; background: rgba(0, 113, 227, 0.18); color: var(--accent-color);">OfficeKit 2.5 Pro</span>
+                <span id="banner-title" style="font-size: 13px; font-weight: 700; color: var(--text-main);">On-Device Whisper Turbo & Neural Engine Active</span>
+              </div>
+              <p id="banner-desc" style="margin: 3px 0 0; font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                All 124 tools process files directly on this Mac. Zero network telemetry; zero data retention.
+              </p>
+              <!-- Embedded Mini Progress Track (Visible in task mode) -->
+              <div id="banner-mini-progress" style="display: none; margin-top: 8px;">
+                <div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 600; color: var(--text-main); margin-bottom: 4px;">
+                  <span>Reclaiming unlinked cache & duplicate files</span>
+                  <span id="banner-progress-pct" style="font-family: var(--app-mono); color: var(--accent-color);">68% (32/47 files)</span>
+                </div>
+                <div class="apple-progress-track" style="height: 6px;">
+                  <div class="apple-progress-bar" id="banner-progress-fill" style="width: 68%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+            <button id="banner-action-btn" onclick="switchScreen('stt')" class="pill-btn active" style="font-size: 12px; padding: 5px 12px;">What's New →</button>
+            <button onclick="dismissAppBanner()" style="border: none; background: transparent; cursor: pointer; color: var(--text-dim); padding: 4px; border-radius: 6px; font-size: 14px; line-height: 1;" title="Dismiss announcement">✕</button>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             VIEW 1: PRO HOME & ALL 124 TOOLS SHOWCASE
+             ==================================================================== -->
+        <div id="screen-home" style="display: block;">
+          
+          <!-- Hero Section -->
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--accent-color); margin-bottom: 4px;">Complete Tool Catalog · 124 Capabilities</div>
+              <h1 style="margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main);">Everyday Pro Tools</h1>
+              <p style="margin: 4px 0 0; font-size: 13.5px; color: var(--text-muted);">100% on-device private processing with Apple Liquid Glass aesthetics.</p>
+            </div>
+
+            <!-- Segmented Category Filters -->
+            <div class="pill-group" style="flex-wrap: wrap;" id="category-filters-group">
+              <button class="pill-btn active" onclick="filterCategory('All')">All (124)</button>
+              <button class="pill-btn" onclick="filterCategory('PDF & Documents')">Documents (20)</button>
+              <button class="pill-btn" onclick="filterCategory('Images')">Images (21)</button>
+              <button class="pill-btn" onclick="filterCategory('Calculators')">Calculators (25)</button>
+              <button class="pill-btn" onclick="filterCategory('Unit Converters')">Converters (16)</button>
+              <button class="pill-btn" onclick="filterCategory('File Utilities')">Files (12)</button>
+              <button class="pill-btn" onclick="filterCategory('Storage & Cleanup')">Storage (6)</button>
+              <button class="pill-btn" onclick="filterCategory('Developer Tools')">Developer (17)</button>
+              <button class="pill-btn" onclick="filterCategory('Audio & Dictation')">Audio (2)</button>
+            </div>
+          </div>
+
+          <!-- Quick Jump Recents -->
+          <div style="margin-bottom: 28px;" id="home-recents-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-dim);">Jump Right Back In</span>
+              <span style="font-size: 11.5px; color: var(--accent-color); cursor: pointer;" onclick="showToast('Recent history cleared')">Clear history</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px;">
+              
+              <div onclick="switchScreen('screenshot')" class="apple-card" style="padding: 14px 16px; border-radius: 14px; flex-direction: row; align-items: center; gap: 12px;">
+                <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(168, 85, 247, 0.12); color: #a855f7; display: flex; align-items: center; justify-content: center; font-size: 18px;">✏️</div>
+                <div style="flex: 1; min-width: 0;">
+                  <div style="font-size: 13px; font-weight: 700; color: var(--text-main);">Screenshot Editor</div>
+                  <div style="font-size: 11.5px; color: var(--text-muted); font-family: var(--app-mono);">Annotated screenshot-01.png</div>
+                </div>
+              </div>
+
+              <div onclick="switchScreen('stt')" class="apple-card" style="padding: 14px 16px; border-radius: 14px; flex-direction: row; align-items: center; gap: 12px;">
+                <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(244, 63, 94, 0.12); color: #f43f5e; display: flex; align-items: center; justify-content: center; font-size: 18px;">🎙️</div>
+                <div style="flex: 1; min-width: 0;">
+                  <div style="font-size: 13px; font-weight: 700; color: var(--text-main);">Push-to-Talk STT</div>
+                  <div style="font-size: 11.5px; color: var(--text-muted); font-family: var(--app-mono);">Ready · ⌥ Space</div>
+                </div>
+              </div>
+
+              <div onclick="switchScreen('notes')" class="apple-card" style="padding: 14px 16px; border-radius: 14px; flex-direction: row; align-items: center; gap: 12px;">
+                <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(2, 132, 199, 0.12); color: #0284c7; display: flex; align-items: center; justify-content: center; font-size: 18px;">📋</div>
+                <div style="flex: 1; min-width: 0;">
+                  <div style="font-size: 13px; font-weight: 700; color: var(--text-main);">Meeting Notes</div>
+                  <div style="font-size: 11.5px; color: var(--text-muted); font-family: var(--app-mono);">Q4 Architecture Sync · 4 items</div>
+                </div>
+              </div>
+
+              <div onclick="switchScreen('calc')" class="apple-card" style="padding: 14px 16px; border-radius: 14px; flex-direction: row; align-items: center; gap: 12px;">
+                <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(16, 185, 129, 0.12); color: #10b981; display: flex; align-items: center; justify-content: center; font-size: 18px;">💰</div>
+                <div style="flex: 1; min-width: 0;">
+                  <div style="font-size: 13px; font-weight: 700; color: var(--text-main);">Loan & EMI Studio</div>
+                  <div style="font-size: 11.5px; color: var(--text-muted); font-family: var(--app-mono);">$25,000 at 7.5% · $500.95/mo</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- All 124 Capabilities Grid Section -->
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span id="catalog-heading-title" style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-dim);">All 124 Capabilities</span>
+              <span id="catalog-count-label" style="font-size: 11.5px; color: var(--text-dim);">Showing 124 of 124 tools</span>
+            </div>
+
+            <!-- Dynamically Rendered 124 Cards -->
+            <div id="all-tools-grid-container" class="tool-cards-grid"></div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             VIEW 2: DEDICATED FAVORITES VIEW
+             ==================================================================== -->
+        <div id="screen-favorites" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                <span style="font-size: 18px; color: #f59e0b;">★</span>
+                <h1 style="margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main);">Favorites</h1>
+              </div>
+              <p style="margin: 4px 0 0; font-size: 13.5px; color: var(--text-muted);">Your pinned tools for quick access · Click ★ to toggle favorites</p>
+            </div>
+
+            <button onclick="switchScreen('home')" class="pill-btn" style="border: 1px solid var(--border-subtle);">+ Add More Tools</button>
+          </div>
+
+          <div id="favorites-grid-container" class="tool-cards-grid"></div>
+
+          <div id="favorites-empty-state" style="display: none; text-align: center; padding: 60px 20px;">
+            <div style="font-size: 40px; margin-bottom: 12px;">⭐</div>
+            <h3 style="font-size: 16px; font-weight: 700; color: var(--text-main); margin: 0;">No Favorites Yet</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0 16px;">Click the star on any of the 124 tools to pin them here for instant access.</p>
+            <button onclick="switchScreen('home')" class="pill-btn active" style="margin: 0 auto;">Browse All Tools</button>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             VIEW 3: FLAGSHIP SCREENSHOT EDITOR & MARKUP STUDIO
+             ==================================================================== -->
+        <div id="screen-screenshot" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                <button onclick="switchScreen('home')" class="pill-btn" style="padding: 2px 6px;">←</button>
+                <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #a855f7;">Image & Canvas Studio</div>
+              </div>
+              <h1 style="margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main);">Screenshot Editor & Markup</h1>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <button onclick="showToast('Area capture shortcut: ⌘⇧6')" class="pill-btn" style="border: 1px solid var(--border-subtle);">📷 Capture Area (⌘⇧6)</button>
+              <button onclick="showToast('Copied markup to clipboard')" class="pill-btn" style="border: 1px solid var(--border-subtle);">📋 Copy (⌘C)</button>
+              <button onclick="showToast('Saved lossless PNG with annotations')" class="pill-btn active" style="background: var(--accent-color); color: var(--accent-text);">Save / Export PNG</button>
+            </div>
+          </div>
+
+          <!-- Canvas Workspace with Floating Toolbar -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 18px; padding: 20px; position: relative; min-height: 540px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            
+            <!-- Floating Apple-Style Markup Toolbar -->
+            <div class="canvas-floating-toolbar" style="position: absolute; top: 16px; z-index: 10;">
+              <button class="canvas-tool-btn active" id="tool-select" onclick="setMarkupTool('select')" title="Select (V)">
+                <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/></svg>
+              </button>
+              <button class="canvas-tool-btn" id="tool-pen" onclick="setMarkupTool('pen')" title="Pencil / Draw (P)">✏️</button>
+              <button class="canvas-tool-btn" id="tool-rect" onclick="setMarkupTool('rect')" title="Rectangle (R)">⬜</button>
+              <button class="canvas-tool-btn" id="tool-circle" onclick="setMarkupTool('circle')" title="Circle (O)">⭕</button>
+              <button class="canvas-tool-btn" id="tool-arrow" onclick="setMarkupTool('arrow')" title="Arrow Callout (A)">➡️</button>
+              <button class="canvas-tool-btn" id="tool-highlight" onclick="setMarkupTool('highlight')" title="Translucent Highlight (H)">🖍️</button>
+              <button class="canvas-tool-btn" id="tool-text" onclick="setMarkupTool('text')" title="Text Callout (T)">🔤</button>
+              <button class="canvas-tool-btn" id="tool-blur" onclick="setMarkupTool('blur')" title="Blur PII Mask (B)">▒</button>
+              <button class="canvas-tool-btn" id="tool-redact" onclick="setMarkupTool('redact')" title="Opaque Redaction (M)">⬛</button>
+              <button class="canvas-tool-btn" id="tool-crop" onclick="setMarkupTool('crop')" title="Crop Canvas (C)">✂️</button>
+
+              <div style="height: 20px; width: 1px; background: var(--border-subtle); margin: 0 4px;"></div>
+
+              <!-- Color Palette -->
+              <div style="display: flex; align-items: center; gap: 4px; padding: 0 4px;">
+                <span onclick="setMarkupColor('#ef4444')" style="width: 14px; height: 14px; border-radius: 50%; background: #ef4444; cursor: pointer; display: inline-block;"></span>
+                <span onclick="setMarkupColor('#f59e0b')" style="width: 14px; height: 14px; border-radius: 50%; background: #f59e0b; cursor: pointer; display: inline-block;"></span>
+                <span onclick="setMarkupColor('#10b981')" style="width: 14px; height: 14px; border-radius: 50%; background: #10b981; cursor: pointer; display: inline-block;"></span>
+                <span onclick="setMarkupColor('#0284c7')" style="width: 14px; height: 14px; border-radius: 50%; background: #0284c7; cursor: pointer; display: inline-block;"></span>
+              </div>
+            </div>
+
+            <!-- Canvas Viewport Simulation -->
+            <div style="width: 100%; max-width: 760px; height: 420px; background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; box-shadow: inset 0 2px 8px rgba(0,0,0,0.06);">
+              
+              <!-- Simulated Document Image Being Annotated -->
+              <div style="width: 90%; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 24px; box-shadow: var(--shadow-card); position: relative;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px;">
+                  <span style="font-size: 13px; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 6px;">
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent-color);"></span>
+                    Production API Key & Token Credentials
+                  </span>
+                  <span style="font-size: 11px; font-family: var(--app-mono); color: var(--text-dim);">app-auth.json</span>
+                </div>
+
+                <p style="font-size: 12px; color: var(--text-muted); margin: 0 0 10px;">Verify the following client secret before deploying to internal staging environment:</p>
+                
+                <div style="background: var(--bg-input); border-radius: 8px; padding: 12px; font-family: var(--app-mono); font-size: 12px; position: relative;">
+                  <code>CLIENT_ID: live_acct_8492</code><br>
+                  <code style="display: inline-block; margin-top: 4px;">CLIENT_SECRET: </code>
+                  <!-- Simulated Blur Mask (Approved PII feature) -->
+                  <span style="filter: blur(5px); background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 4px; user-select: none;">sk_live_99482_secret_key_prod</span>
+                  <span style="position: absolute; right: 8px; top: 8px; font-size: 10px; background: var(--accent-color); color: white; padding: 1px 6px; border-radius: 4px;">PII Blurred</span>
+                </div>
+
+                <!-- Highlight Annotation Simulation -->
+                <div style="margin-top: 14px; font-size: 12px; color: var(--text-muted);">
+                  Ensure all team leads submit signoff before 
+                  <mark style="background: rgba(253, 224, 71, 0.4); border-radius: 4px; padding: 2px 4px; color: inherit; font-weight: 600;">Friday 5:00 PM PST</mark>
+                  to include release candidate in beta build.
+                </div>
+
+                <!-- Rectangle Callout Simulation -->
+                <div style="margin-top: 14px; border: 2px solid #ef4444; border-radius: 8px; padding: 8px 12px; background: rgba(239, 68, 68, 0.05); display: flex; justify-content: space-between; align-items: center;">
+                  <span style="font-size: 11.5px; font-weight: 700; color: #ef4444;">⚠️ Action Required: Verify Zero-Data Retention</span>
+                  <span style="font-size: 11px; color: #ef4444;">➔ Approved</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Canvas Bottom Metadata Bar -->
+            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-size: 11.5px; color: var(--text-dim);">
+              <span style="font-family: var(--app-mono);">1920 × 1080 @2x (3.2 MB PNG)</span>
+              <div>
+                <span>Active Tool: <strong id="active-tool-label" style="color: var(--text-main);">Select (V)</strong></span>
+                <span style="margin-left: 12px;">Zoom: <strong style="color: var(--text-main);">100%</strong></span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             VIEW 4: SPEECH-TO-TEXT (STT) & PUSH-TO-TALK STUDIO
+             ==================================================================== -->
+        <div id="screen-stt" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                <button onclick="switchScreen('home')" class="pill-btn" style="padding: 2px 6px;">←</button>
+                <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #f43f5e;">Whisper On-Device AI</div>
+              </div>
+              <h1 style="margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main);">Speech-to-Text & Push-to-Talk</h1>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <button onclick="toggleDictation()" id="btn-toggle-dictate" class="pill-btn active" style="background: #f43f5e; color: white;">🎙️ Start Dictation</button>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px;">
+            
+            <!-- Left Pane: Audio Capture & Engine Config -->
+            <div class="apple-card">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                  <span style="font-size: 13px; font-weight: 700; color: var(--text-main);">Input Device</span>
+                  <span style="font-size: 11px; color: #22c55e; font-weight: 600;">● Mic Active</span>
+                </div>
+
+                <div style="background: var(--bg-input); padding: 10px 14px; border-radius: 12px; border: 1px solid var(--border-subtle); font-size: 12.5px; font-weight: 600; color: var(--text-main); margin-bottom: 16px;">
+                  MacBook Pro Microphone (Built-in)
+                </div>
+
+                <!-- Animated Waveform Visualizer -->
+                <div style="height: 50px; background: var(--bg-input); border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 4px; padding: 0 20px; margin-bottom: 20px;" id="waveform-container">
+                  <div class="waveform-bars" id="waveform-bars">
+                    <div class="wave-bar" style="height: 12px;"></div>
+                    <div class="wave-bar" style="height: 24px;"></div>
+                    <div class="wave-bar" style="height: 38px;"></div>
+                    <div class="wave-bar" style="height: 18px;"></div>
+                    <div class="wave-bar" style="height: 32px;"></div>
+                    <div class="wave-bar" style="height: 28px;"></div>
+                    <div class="wave-bar" style="height: 14px;"></div>
+                    <div class="wave-bar" style="height: 36px;"></div>
+                    <div class="wave-bar" style="height: 20px;"></div>
+                    <div class="wave-bar" style="height: 12px;"></div>
+                  </div>
+                </div>
+
+                <div style="margin-bottom: 18px;">
+                  <span style="font-size: 13px; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 6px;">Push-to-Talk Shortcut</span>
+                  <div style="display: flex; justify-content: space-between; align-items: center; background: var(--bg-input); padding: 8px 12px; border-radius: 10px;">
+                    <span style="font-size: 12px; color: var(--text-muted);">Global system-wide hotkey:</span>
+                    <kbd style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 6px; font-size: 12px; font-family: var(--app-mono); padding: 2px 8px; font-weight: 700;">Hold ⌥ Space</kbd>
+                  </div>
+                </div>
+
+                <div>
+                  <span style="font-size: 13px; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 6px;">On-Device Whisper Model</span>
+                  <div class="pill-group" style="width: 100%; justify-content: space-between;">
+                    <button class="pill-btn active" style="flex: 1; text-align: center;">Base (142 MB)</button>
+                    <button class="pill-btn" style="flex: 1; text-align: center;">Small (466 MB)</button>
+                    <button class="pill-btn" style="flex: 1; text-align: center;">FluidAudio</button>
+                  </div>
+                  <p style="margin: 6px 0 0; font-size: 11px; color: var(--text-dim);">Apple Silicon Neural Engine acceleration enabled (12x real-time).</p>
+                </div>
+
+                <div style="margin-top: 16px;">
+                  <span style="font-size: 13px; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 6px;">Vocabulary Correction Dictionary</span>
+                  <div style="background: var(--bg-input); border-radius: 10px; padding: 10px; font-family: var(--app-mono); font-size: 11px; color: var(--text-muted);">
+                    "Office Kit" → "OfficeKit"<br>
+                    "sequoia" → "Sequoia"
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Pane: Streaming Transcript & Clean Export -->
+            <div class="apple-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                  <span style="font-size: 13px; font-weight: 700; color: var(--text-main);">Live Clean Transcript</span>
+                  <span style="font-size: 11px; color: var(--accent-color); font-family: var(--app-mono);">Confidence: 99.4%</span>
+                </div>
+
+                <div id="transcript-output-box" style="background: var(--bg-input); border-radius: 14px; padding: 16px; min-height: 280px; font-size: 13.5px; line-height: 1.6; color: var(--text-main); border: 1px solid var(--border-subtle);">
+                  <p style="margin: 0; color: var(--text-main);">"Today we reviewed the entire UI architecture for OfficeKit. All 124 tools have been grouped into intuitive Apple-standard categories, and we have fully integrated macOS Sequoia liquid glass materials with tactile parameter sliders."</p>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; border-top: 1px solid var(--border-subtle); padding-top: 12px;">
+                <button onclick="document.getElementById('transcript-output-box').innerHTML='<p style='color:var(--text-dim)'>Ready to record...</p>'; showToast('Transcript cleared')" class="pill-btn">Clear</button>
+                <button onclick="showToast('Transcript copied to clipboard')" class="pill-btn active" style="background: var(--accent-color); color: var(--accent-text);">Copy Text</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             VIEW 5: AI MEETING NOTES STUDIO
+             ==================================================================== -->
+        <div id="screen-notes" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                <button onclick="switchScreen('home')" class="pill-btn" style="padding: 2px 6px;">←</button>
+                <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #0284c7;">Local Intelligence</div>
+              </div>
+              <h1 style="margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main);">Meeting Notes & Action Items</h1>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <button onclick="showToast('Snapshot saved to history')" class="pill-btn" style="border: 1px solid var(--border-subtle);">★ Bookmark Snapshot</button>
+              <button onclick="showToast('Exported Markdown notes')" class="pill-btn active" style="background: var(--accent-color); color: var(--accent-text);">Export Markdown ↗</button>
+            </div>
+          </div>
+
+          <div class="apple-card" style="padding: 26px; max-width: 900px; margin: 0 auto;">
+            
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 14px;">
+              <div>
+                <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-dim);">Architecture Sync</span>
+                <h2 style="margin: 4px 0 0; font-size: 20px; font-weight: 800; color: var(--text-main);">Q4 OfficeKit Desktop Revamp & Tool Parity</h2>
+                <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px; font-family: var(--app-mono);">
+                  October 17, 2026 · 42 minutes · Audio: meeting-recording.m4a
+                </div>
+              </div>
+              <div style="display: flex; gap: 6px;">
+                <span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: rgba(2, 132, 199, 0.12); color: #0284c7;">4 Attendees</span>
+                <span style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: rgba(34, 197, 94, 0.12); color: #16a34a;">100% Private</span>
+              </div>
+            </div>
+
+            <!-- Structured Section 1: Executive Summary -->
+            <div style="margin-bottom: 22px;">
+              <h3 style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-dim); margin-bottom: 8px;">🎯 Executive Summary</h3>
+              <div style="background: var(--bg-input); border-radius: 12px; padding: 14px 18px; font-size: 13.5px; line-height: 1.6; color: var(--text-main);">
+                The team aligned on transforming OfficeKit's UI from an outdated web dashboard into an Apple-grade desktop application. All 124 tools across 9 categories will be presented with frosted glass vibrancy, unified titlebars, and dedicated pro workbenches for Financial, PDF, Screenshot, and STT operations.
+              </div>
+            </div>
+
+            <!-- Structured Section 2: Key Decisions -->
+            <div style="margin-bottom: 22px;">
+              <h3 style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-dim); margin-bottom: 8px;">⚖️ Decisions Made</h3>
+              <ul style="margin: 0; padding-left: 20px; font-size: 13px; line-height: 1.8; color: var(--text-main);">
+                <li><strong style="color: #10b981;">✓</strong> Adopt Apple Human Interface Guidelines with Tailwind CSS 4 and daisyUI 5.</li>
+                <li><strong style="color: #10b981;">✓</strong> Ensure zero network tracking or external analytics across all document operations.</li>
+                <li><strong style="color: #10b981;">✓</strong> Maintain an explicit Favorites list with persistent local bookmarks and keyboard navigation.</li>
+              </ul>
+            </div>
+
+            <!-- Structured Section 3: Interactive Action Items Checklist -->
+            <div>
+              <h3 style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-dim); margin-bottom: 8px;">☑️ Action Items & Next Steps</h3>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                
+                <label style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--bg-input); border-radius: 10px; cursor: pointer;">
+                  <span style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-main);">
+                    <input type="checkbox" checked style="accent-color: var(--accent-color);">
+                    <span>Compile all 124 tools into searchable unified registry mock</span>
+                  </span>
+                  <span style="font-size: 11px; font-family: var(--app-mono); color: var(--text-muted);">UI Team · Oct 17</span>
+                </label>
+
+                <label style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--bg-input); border-radius: 10px; cursor: pointer;">
+                  <span style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-main);">
+                    <input type="checkbox" style="accent-color: var(--accent-color);">
+                    <span>Run automated Chromium Playwright visual inspection on all screens</span>
+                  </span>
+                  <span style="font-size: 11px; font-family: var(--app-mono); color: var(--text-muted);">QA Team · Oct 18</span>
+                </label>
+
+                <label style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--bg-input); border-radius: 10px; cursor: pointer;">
+                  <span style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-main);">
+                    <input type="checkbox" style="accent-color: var(--accent-color);">
+                    <span>Verify Whisper on-device Neural Engine execution bounds</span>
+                  </span>
+                  <span style="font-size: 11px; font-family: var(--app-mono); color: var(--text-muted);">Engine Team · Oct 19</span>
+                </label>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             VIEW 6: FINANCIAL STUDIO (LOAN & EMI WORKBENCH)
+             ==================================================================== -->
+        <div id="screen-calc" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                <button onclick="switchScreen('home')" class="pill-btn" style="padding: 2px 6px;">←</button>
+                <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #10b981;">Financial Intelligence</div>
+              </div>
+              <h1 style="margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main);">Loan & EMI Studio</h1>
+              <p style="margin: 4px 0 0; font-size: 13.5px; color: var(--text-muted);">Fixed-rate monthly repayment schedules with amortization curves.</p>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div class="pill-group">
+                <button class="pill-btn active" id="curr-USD" onclick="setCurrency('USD')">$ USD</button>
+                <button class="pill-btn" id="curr-EUR" onclick="setCurrency('EUR')">€ EUR</button>
+                <button class="pill-btn" id="curr-GBP" onclick="setCurrency('GBP')">£ GBP</button>
+                <button class="pill-btn" id="curr-INR" onclick="setCurrency('INR')">₹ INR</button>
+              </div>
+              <button onclick="toggleFavorite('c08')" class="pill-btn" id="calc-fav-btn" style="border: 1px solid var(--border-subtle);">★ Favorite</button>
+              <button onclick="openExportModal()" class="pill-btn active" style="background: var(--accent-color); color: var(--accent-text);">Export Schedule ↗</button>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px;">
+            <div class="apple-card">
+              <div>
+                <h3 style="margin: 0 0 18px; font-size: 15px; font-weight: 750; color: var(--text-main);">Loan Parameters</h3>
+                <div class="apple-slider-wrap">
+                  <div class="slider-label-row">
+                    <span style="color: var(--text-muted);">Principal Amount</span>
+                    <span id="label-principal-val" class="tabular-num" style="font-size: 15px; font-weight: 700; color: var(--accent-color);">$25,000.00</span>
+                  </div>
+                  <input type="range" id="slider-principal" min="1000" max="200000" step="1000" value="25000" oninput="updateCalculation()" style="width: 100%; accent-color: var(--accent-color);">
+                </div>
+                <div class="apple-slider-wrap">
+                  <div class="slider-label-row">
+                    <span style="color: var(--text-muted);">Annual Interest Rate</span>
+                    <span id="label-rate-val" class="tabular-num" style="font-size: 15px; font-weight: 700; color: var(--accent-color);">7.5%</span>
+                  </div>
+                  <input type="range" id="slider-rate" min="1.0" max="25.0" step="0.25" value="7.5" oninput="updateCalculation()" style="width: 100%; accent-color: var(--accent-color);">
+                </div>
+                <div class="apple-slider-wrap">
+                  <div class="slider-label-row">
+                    <span style="color: var(--text-muted);">Repayment Tenure</span>
+                    <span id="label-years-val" class="tabular-num" style="font-size: 15px; font-weight: 700; color: var(--accent-color);">5 Years (60 mos)</span>
+                  </div>
+                  <input type="range" id="slider-years" min="1" max="30" step="1" value="5" oninput="updateCalculation()" style="width: 100%; accent-color: var(--accent-color);">
+                </div>
+              </div>
+            </div>
+
+            <div class="apple-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-dim);">Estimated Monthly Repayment</span>
+                <div id="hero-payment-val" class="tabular-num" style="font-size: 44px; font-weight: 850; letter-spacing: -1.5px; color: var(--text-main); margin: 6px 0 16px;">
+                  $500.95
+                </div>
+                <div style="height: 10px; border-radius: 10px; background: var(--bg-input); overflow: hidden; display: flex; margin-bottom: 12px;">
+                  <div id="bar-principal" style="width: 83%; height: 100%; background: #0284c7;" title="Principal Portion"></div>
+                  <div id="bar-interest" style="width: 17%; height: 100%; background: #38bdf8;" title="Total Interest"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 18px;">
+                  <div><span style="color: var(--text-dim);">Total Interest:</span> <strong id="hero-interest-val" class="tabular-num">$5,057.00</strong></div>
+                  <div><span style="color: var(--text-dim);">Total Repaid:</span> <strong id="hero-total-val" class="tabular-num">$30,057.00</strong></div>
+                </div>
+              </div>
+
+              <div>
+                <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-dim); display: block; margin-bottom: 8px;">First Quarter Amortization</span>
+                <table style="width: 100%; font-size: 12px; border-collapse: collapse; text-align: right;">
+                  <thead>
+                    <tr style="border-bottom: 1px solid var(--border-subtle);">
+                      <th style="text-align: left; padding: 6px 0;">Mo</th>
+                      <th style="padding: 6px;">Payment</th>
+                      <th style="padding: 6px;">Principal</th>
+                      <th style="padding: 6px;">Interest</th>
+                      <th style="padding: 6px 0;">Balance</th>
+                    </tr>
+                  </thead>
+                  <tbody id="schedule-rows"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             VIEW 7: PDF & DOCUMENT BATCH STUDIO
+             ==================================================================== -->
+        <div id="screen-media" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                <button onclick="switchScreen('home')" class="pill-btn" style="padding: 2px 6px;">←</button>
+                <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #6366f1;">Batch Document Studio</div>
+              </div>
+              <h1 style="margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main);">PDF Merge, Compress & Organize</h1>
+            </div>
+            <button onclick="showToast('Starting private document batch...')" class="pill-btn active" style="background: var(--accent-color); color: var(--accent-text);">Process Batch (3 Files) →</button>
+          </div>
+
+          <div class="apple-card" style="padding: 36px 20px; text-align: center; border: 2px dashed var(--border-subtle); margin-bottom: 20px;">
+            <div style="font-size: 32px; margin-bottom: 8px;">📥</div>
+            <strong style="font-size: 15px; color: var(--text-main);">Drop PDFs or Documents Here</strong>
+            <p style="margin: 4px 0 14px; font-size: 12px; color: var(--text-muted);">100% on-device local memory sandbox. Files never leave this machine.</p>
+            <button class="pill-btn active" style="margin: 0 auto;">Select Files from Mac…</button>
+          </div>
+
+          <div class="apple-card">
+            <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-dim); margin-bottom: 10px; display: block;">Queued Documents (3)</span>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--bg-input); border-radius: 10px; font-size: 13px;">
+                <span>📄 Annual_Report_2025_Final.pdf (14.2 MB)</span>
+                <span style="color: #10b981; font-weight: 600; font-family: var(--app-mono);">Ready · -62% savings</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--bg-input); border-radius: 10px; font-size: 13px;">
+                <span>📄 Board_Meeting_Minutes.pdf (3.8 MB)</span>
+                <span style="color: #10b981; font-weight: 600; font-family: var(--app-mono);">Ready · -44% savings</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--bg-input); border-radius: 10px; font-size: 13px;">
+                <span>📄 Appendix_Signed.pdf (8.1 MB)</span>
+                <span style="color: #10b981; font-weight: 600; font-family: var(--app-mono);">Ready · -55% savings</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             VIEW 8: STORAGE RECLAIM & DUPLICATE CLEANER
+             ==================================================================== -->
+        <div id="screen-storage" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                <button onclick="switchScreen('home')" class="pill-btn" style="padding: 2px 6px;">←</button>
+                <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #f59e0b;">macOS Storage Optimization</div>
+              </div>
+              <h1 style="margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main);">Storage Reclaim Studio</h1>
+            </div>
+            <button onclick="showToast('Reclaiming 4.8 GB duplicate space safely...')" class="pill-btn active" style="background: #ef4444; color: white;">Reclaim 4.8 GB Space</button>
+          </div>
+
+          <div class="apple-card" style="margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong style="font-size: 15px; color: var(--text-main);">Macintosh HD (1 TB SSD)</strong>
+                <p style="margin: 2px 0 0; font-size: 12px; color: var(--text-muted);">552 GB available · 4.8 GB safe recoverable space found</p>
+              </div>
+              <span class="tabular-num" style="font-size: 22px; font-weight: 800; color: #10b981;">+4.8 GB</span>
+            </div>
+
+            <div class="storage-bar-container">
+              <div style="width: 45%; background: #0284c7;" title="System & Apps (450 GB)"></div>
+              <div style="width: 25%; background: #6366f1;" title="Documents & Media (250 GB)"></div>
+              <div style="width: 5%; background: #ef4444;" title="Exact Duplicates (4.8 GB)"></div>
+              <div style="width: 25%; background: var(--bg-card);" title="Free Space (250 GB)"></div>
+            </div>
+
+            <div style="display: flex; gap: 18px; font-size: 11.5px; color: var(--text-muted); flex-wrap: wrap;">
+              <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: #0284c7;"></span> System & Apps</span>
+              <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: #6366f1;"></span> Documents</span>
+              <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: #ef4444;"></span> Exact Duplicates (4.8 GB)</span>
+              <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--border-subtle);"></span> Available Free Space</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             VIEW 9: PROGRESS BAR SYSTEM SHOWCASE STUDIO
+             ==================================================================== -->
+        <div id="screen-progress" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--accent-color); margin-bottom: 4px;">Feedback & Telemetry Systems</div>
+              <h1 style="margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main);">Apple Progress Bars & Task HUDs</h1>
+              <p style="margin: 4px 0 0; font-size: 13.5px; color: var(--text-muted);">Tactile, non-blocking feedback with determinate progress, multistage pipelines, and indeterminate shimmers.</p>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <button onclick="startProgressSimulation()" class="pill-btn active" style="background: var(--accent-color); color: var(--accent-text);">▶ Run Simulation (0% → 100%)</button>
+              <button onclick="pauseProgressSimulation()" class="pill-btn">⏸ Pause</button>
+              <button onclick="resetProgressSimulation()" class="pill-btn">↺ Reset</button>
+            </div>
+          </div>
+
+          <!-- Grid of Progress Patterns -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 20px;">
+            
+            <!-- Pattern 1: Determinate Batch File Progress -->
+            <div class="apple-card">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="glyph-icon-box" style="margin-bottom: 0; width: 34px; height: 34px; font-size: 16px; background: rgba(0, 113, 227, 0.12); color: var(--accent-color);">📄</div>
+                    <div>
+                      <h3 style="margin: 0; font-size: 14.5px; font-weight: 750; color: var(--text-main);">Batch PDF Optimization & OCR</h3>
+                      <p style="margin: 0; font-size: 11.5px; color: var(--text-muted);">Lossless compression with text layer generation</p>
+                    </div>
+                  </div>
+                  <span id="demo-pct-label" style="font-size: 18px; font-weight: 800; font-family: var(--app-mono); color: var(--accent-color);">68%</span>
+                </div>
+
+                <!-- Apple Rounded Track -->
+                <div class="apple-progress-track" style="height: 10px; margin: 16px 0 10px;">
+                  <div class="apple-progress-bar" id="demo-progress-bar" style="width: 68%;"></div>
+                </div>
+
+                <!-- Progress Telemetry -->
+                <div style="display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-muted); font-family: var(--app-mono);">
+                  <span id="demo-files-label">24 of 35 files processed</span>
+                  <span id="demo-bytes-label">14.8 MB / 21.6 MB (68%)</span>
+                  <span id="demo-eta-label" style="color: var(--accent-color); font-weight: 600;">3.2s remaining</span>
+                </div>
+              </div>
+
+              <div style="margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 11px; color: var(--text-dim);">Speed: 4.8 MB/s · 8 parallel workers</span>
+                <div style="display: flex; gap: 6px;">
+                  <button onclick="pauseProgressSimulation()" class="pill-btn" style="font-size: 11px; padding: 3px 8px;">Pause</button>
+                  <button onclick="resetProgressSimulation()" class="pill-btn" style="font-size: 11px; padding: 3px 8px; color: #ef4444;">Cancel (Esc)</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pattern 2: Multistage Processing Pipeline -->
+            <div class="apple-card">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                  <div>
+                    <h3 style="margin: 0; font-size: 14.5px; font-weight: 750; color: var(--text-main);">Multistage Document Pipeline</h3>
+                    <p style="margin: 2px 0 0; font-size: 11.5px; color: var(--text-muted);">Step-by-step verified execution pipeline</p>
+                  </div>
+                  <span style="font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); color: #10b981;">Stage 2 of 4</span>
+                </div>
+
+                <!-- 4-Stage Segmented Pipeline -->
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                  
+                  <!-- Step 1 (Done) -->
+                  <div style="display: flex; align-items: center; gap: 10px; font-size: 12.5px;">
+                    <div style="width: 20px; height: 20px; border-radius: 50%; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800;">✓</div>
+                    <span style="flex: 1; font-weight: 600; color: var(--text-main);">1. File Ingestion & Integrity Hash</span>
+                    <span style="font-size: 11px; font-family: var(--app-mono); color: #10b981;">0.4s · Verified</span>
+                  </div>
+
+                  <!-- Step 2 (Active) -->
+                  <div style="display: flex; flex-direction: column; gap: 4px; background: var(--bg-input); padding: 8px 10px; border-radius: 10px; border: 1px solid var(--border-focus);">
+                    <div style="display: flex; align-items: center; gap: 10px; font-size: 12.5px;">
+                      <div style="width: 20px; height: 20px; border-radius: 50%; background: var(--accent-color); color: white; display: flex; align-items: center; justify-content: center; font-size: 10px; animation: pulse 1.5s infinite;">●</div>
+                      <span style="flex: 1; font-weight: 700; color: var(--accent-color);">2. On-Device OCR & Text Extraction</span>
+                      <span style="font-size: 11px; font-family: var(--app-mono); color: var(--accent-color); font-weight: 700;">75%</span>
+                    </div>
+                    <div class="apple-progress-track" style="height: 4px; margin-left: 30px;">
+                      <div class="apple-progress-bar" style="width: 75%;"></div>
+                    </div>
+                  </div>
+
+                  <!-- Step 3 (Pending) -->
+                  <div style="display: flex; align-items: center; gap: 10px; font-size: 12.5px; opacity: 0.6;">
+                    <div style="width: 20px; height: 20px; border-radius: 50%; background: var(--bg-pill); color: var(--text-dim); display: flex; align-items: center; justify-content: center; font-size: 11px;">3</div>
+                    <span style="flex: 1; color: var(--text-main);">3. PII Masking & Privacy Check</span>
+                    <span style="font-size: 11px; color: var(--text-dim);">Queued</span>
+                  </div>
+
+                  <!-- Step 4 (Pending) -->
+                  <div style="display: flex; align-items: center; gap: 10px; font-size: 12.5px; opacity: 0.6;">
+                    <div style="width: 20px; height: 20px; border-radius: 50%; background: var(--bg-pill); color: var(--text-dim); display: flex; align-items: center; justify-content: center; font-size: 11px;">4</div>
+                    <span style="flex: 1; color: var(--text-main);">4. Lossless Package Export</span>
+                    <span style="font-size: 11px; color: var(--text-dim);">Queued</span>
+                  </div>
+
+                </div>
+              </div>
+
+              <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border-subtle); font-size: 11px; color: var(--text-dim);">
+                <span>Hardware: Apple M-Series Neural Engine accelerated</span>
+              </div>
+            </div>
+
+            <!-- Pattern 3: Indeterminate Shimmer & Circular Activity -->
+            <div class="apple-card">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                  <div>
+                    <h3 style="margin: 0; font-size: 14.5px; font-weight: 750; color: var(--text-main);">Indeterminate & Background Scanning</h3>
+                    <p style="margin: 2px 0 0; font-size: 11.5px; color: var(--text-muted);">Used when item total or duration is unknown ahead of time</p>
+                  </div>
+                  <span style="font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: rgba(245, 158, 11, 0.15); color: #f59e0b;">Scanning</span>
+                </div>
+
+                <div style="margin: 16px 0;">
+                  <div style="display: flex; justify-content: space-between; font-size: 11.5px; color: var(--text-muted); margin-bottom: 6px;">
+                    <span>Traversing ~/Documents/OfficeKit Data…</span>
+                    <span style="font-family: var(--app-mono);">4,281 items scanned</span>
+                  </div>
+                  <!-- Indeterminate Bar -->
+                  <div class="apple-progress-track" style="height: 8px;">
+                    <div class="apple-progress-bar apple-progress-indeterminate"></div>
+                  </div>
+                </div>
+
+                <!-- macOS Spinner Indicator -->
+                <div style="display: flex; align-items: center; gap: 12px; background: var(--bg-input); padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border-subtle);">
+                  <div style="width: 20px; height: 20px; border: 2.5px solid var(--border-subtle); border-top-color: var(--accent-color); border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Computing cryptographic duplicate hashes</div>
+                    <div style="font-size: 11px; color: var(--text-dim); font-family: var(--app-mono);">Zero CPU throttling · Thermal State: Nominal</div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim);">
+                <span>Indeterminate Shimmer Pattern</span>
+                <span style="color: var(--accent-color); cursor: pointer;" onclick="showToast('Scan paused')">Pause Scan</span>
+              </div>
+            </div>
+
+            <!-- Pattern 4: Inline Table Progress Bars -->
+            <div class="apple-card">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                  <div>
+                    <h3 style="margin: 0; font-size: 14.5px; font-weight: 750; color: var(--text-main);">Inline Queue Progress (Finder / Safari Style)</h3>
+                    <p style="margin: 2px 0 0; font-size: 11.5px; color: var(--text-muted);">Compact inline progress tracks embedded in data rows</p>
+                  </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                  <!-- Row 1 (100%) -->
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 10px; background: var(--bg-input); border-radius: 10px;">
+                    <div style="font-size: 12px; font-weight: 600; color: var(--text-main); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Q3_Financial_Summary.pdf</div>
+                    <div style="width: 90px;">
+                      <div class="apple-progress-track" style="height: 5px;">
+                        <div class="apple-progress-bar" style="width: 100%; background: #10b981;"></div>
+                      </div>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 700; color: #10b981; font-family: var(--app-mono); min-width: 35px; text-align: right;">100%</span>
+                  </div>
+
+                  <!-- Row 2 (64%) -->
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 10px; background: var(--bg-input); border-radius: 10px;">
+                    <div style="font-size: 12px; font-weight: 600; color: var(--text-main); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Recording_Sync_Meeting.m4a</div>
+                    <div style="width: 90px;">
+                      <div class="apple-progress-track" style="height: 5px;">
+                        <div class="apple-progress-bar" style="width: 64%;"></div>
+                      </div>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-color); font-family: var(--app-mono); min-width: 35px; text-align: right;">64%</span>
+                  </div>
+
+                  <!-- Row 3 (18%) -->
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 10px; background: var(--bg-input); border-radius: 10px;">
+                    <div style="font-size: 12px; font-weight: 600; color: var(--text-main); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Client_Contracts_Archive.zip</div>
+                    <div style="width: 90px;">
+                      <div class="apple-progress-track" style="height: 5px;">
+                        <div class="apple-progress-bar" style="width: 18%;"></div>
+                      </div>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); font-family: var(--app-mono); min-width: 35px; text-align: right;">18%</span>
+                  </div>
+
+                  <!-- Row 4 (Queued) -->
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 10px; background: var(--bg-input); border-radius: 10px; opacity: 0.6;">
+                    <div style="font-size: 12px; font-weight: 600; color: var(--text-main); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Database_Dump_2026.sqlite</div>
+                    <div style="width: 90px;">
+                      <div class="apple-progress-track" style="height: 5px;">
+                        <div class="apple-progress-bar" style="width: 0%;"></div>
+                      </div>
+                    </div>
+                    <span style="font-size: 11px; color: var(--text-dim); font-family: var(--app-mono); min-width: 35px; text-align: right;">Wait</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim);">
+                <span>Compact Table Pattern</span>
+                <span style="color: var(--accent-color); cursor: pointer;" onclick="showToast('Cleared completed items')">Clear completed</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             VIEW 10: DESIGN CRITIQUE & COMPARISON
+             ==================================================================== -->
+        <div id="screen-comparison" style="display: none;">
+          <div style="margin-bottom: 24px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px;">
+            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #ea580c; margin-bottom: 4px;">Architectural Review</div>
+            <h1 style="margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main);">Design System Evolution: v1.0 vs v2.0</h1>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 24px;">
+            <div style="border: 1px solid #ef4444; border-radius: 18px; padding: 22px; background: rgba(239, 68, 68, 0.04);">
+              <span style="display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; background: rgba(239, 68, 68, 0.15); color: #ef4444; margin-bottom: 12px;">Legacy Design Flaws</span>
+              <ul style="font-size: 13px; color: var(--text-muted); line-height: 1.8; margin: 0; padding-left: 20px;">
+                <li><strong>Noisy Borders:</strong> Heavy slate lines around every card create visual clutter.</li>
+                <li><strong>Harsh Announcement Banner:</strong> Clashing indigo gradient banner looks like a web ad.</li>
+                <li><strong>No Dedicated Studios:</strong> Flagship features (STT, Screenshot markup) buried in plain forms.</li>
+                <li><strong>Zero Translucency:</strong> Flat opaque cards lack macOS Sequoia glass depth.</li>
+              </ul>
+            </div>
+
+            <div style="border: 1px solid #10b981; border-radius: 18px; padding: 22px; background: rgba(16, 185, 129, 0.04);">
+              <span style="display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; background: rgba(16, 185, 129, 0.15); color: #10b981; margin-bottom: 12px;">Apple Pro Modernization</span>
+              <ul style="font-size: 13px; color: var(--text-main); line-height: 1.8; margin: 0; padding-left: 20px;">
+                <li><strong>Liquid Glass Material:</strong> Backdrop blur with hairline edge highlights.</li>
+                <li><strong>Pro App Banner:</strong> Subtle frosted glass announcement with integrated mini progress.</li>
+                <li><strong>Floating STT Overlay HUD:</strong> Siri-style voice HUD with live waveform.</li>
+                <li><strong>All 124 Tools + Favorites:</strong> Complete registry with fast Spotlight search.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+
+    <!-- ====================================================================
+         APPLE SIRI / DICTATION FLOATING STT OVERLAY HUD
+         ==================================================================== -->
+    <div id="stt-floating-hud" class="stt-overlay-hud hud-hidden">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 26px; height: 26px; border-radius: 50%; background: rgba(244, 63, 94, 0.2); border: 1.5px solid #f43f5e; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #f43f5e; animation: pulse 1.8s infinite ease-in-out;">
+            🎙️
+          </div>
+          <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.3px; color: var(--text-main);">Dictation Active</span>
+          <span style="font-size: 10.5px; padding: 2px 7px; border-radius: 6px; background: var(--bg-input); color: var(--text-dim); font-family: var(--app-mono);">en-US · Whisper Base</span>
+        </div>
+
+        <!-- Animated Waveform Sound Bars -->
+        <div class="waveform-bars" id="hud-waveform-bars" style="height: 18px;">
+          <div class="wave-bar" style="height: 8px;"></div>
+          <div class="wave-bar" style="height: 14px;"></div>
+          <div class="wave-bar" style="height: 18px;"></div>
+          <div class="wave-bar" style="height: 10px;"></div>
+          <div class="wave-bar" style="height: 16px;"></div>
+          <div class="wave-bar" style="height: 12px;"></div>
+          <div class="wave-bar" style="height: 17px;"></div>
+          <div class="wave-bar" style="height: 9px;"></div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <button onclick="toggleSttOverlay(false)" class="pill-btn" style="font-size: 11px; padding: 4px 10px; background: var(--bg-input);">Esc Cancel</button>
+          <button onclick="acceptSttTranscript()" class="pill-btn active" style="font-size: 11px; padding: 4px 12px; background: #f43f5e; color: white;">Done ↵</button>
+        </div>
+      </div>
+
+      <!-- Live Streamed Speech Bubble -->
+      <div style="background: var(--bg-input); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 10px 14px; font-size: 13.5px; line-height: 1.45; color: var(--text-main);">
+        <span id="hud-streamed-text">"Extract the financial statement from quarterly report and redact customer account numbers..."</span>
+        <span style="display: inline-block; width: 2px; height: 14px; background: var(--accent-color); vertical-align: middle; margin-left: 2px; animation: blink 1s infinite;"></span>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-dim); padding: 0 4px;">
+        <span>Hold <kbd style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 4px; padding: 1px 4px; font-family: var(--app-mono);">⌥ Space</kbd> to talk</span>
+        <span style="color: #22c55e; font-weight: 600;">● Neural Engine Real-Time (99.4% confidence)</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- EXPORT SHEET MODAL -->
+  <dialog id="apple-export-modal" style="border: 1px solid var(--border-subtle); border-radius: 20px; background: var(--bg-card); color: var(--text-main); padding: 24px; max-width: 480px; width: 90%; box-shadow: var(--shadow-window);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <div>
+        <strong style="font-size: 15px; color: var(--text-main);">Export Financial Report</strong>
+        <p style="margin: 2px 0 0; font-size: 11px; color: var(--text-dim);">Generated directly on this Mac. No network requests.</p>
+      </div>
+      <button onclick="closeExportModal()" style="border: none; background: transparent; cursor: pointer; color: var(--text-dim); font-size: 16px;">✕</button>
+    </div>
+
+    <div style="font-size: 12.5px; display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+      <div>
+        <span style="font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Format</span>
+        <div class="pill-group" style="width: 100%; justify-content: space-between;">
+          <button class="pill-btn active" style="flex: 1; text-align: center;">PDF</button>
+          <button class="pill-btn" style="flex: 1; text-align: center;">CSV</button>
+          <button class="pill-btn" style="flex: 1; text-align: center;">Excel</button>
+          <button class="pill-btn" style="flex: 1; text-align: center;">PNG</button>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+          <input type="checkbox" checked style="accent-color: var(--accent-color);">
+          <span>Include full 60-month amortization schedule</span>
+        </label>
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+          <input type="checkbox" checked style="accent-color: var(--accent-color);">
+          <span>Include calculation assumptions & formula</span>
+        </label>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 8px; border-top: 1px solid var(--border-subtle); padding-top: 14px;">
+      <button onclick="closeExportModal()" class="pill-btn" style="background: var(--bg-input);">Cancel</button>
+      <button onclick="simulateExportAction()" class="pill-btn active" style="background: var(--accent-color); color: var(--accent-text);">Save Report…</button>
+    </div>
+  </dialog>
+
+  <!-- TOAST -->
+  <div id="apple-toast" style="position: fixed; bottom: 24px; right: 24px; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 10px 16px; box-shadow: var(--shadow-hover); display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; color: var(--text-main); transform: translateY(80px); opacity: 0; transition: all 0.25s ease; z-index: 100; pointer-events: none;">
+    <span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></span>
+    <span id="apple-toast-text">Action completed</span>
+  </div>
+
+  <!-- EMBEDDED COMPLETE TOOLS CATALOG DATA -->
+  <script>
+    const TOOLS_CATALOG = [{"id":"screenshot","code":"I00","name":"Screenshot Editor & Annotation","category":"Images","tab":"screenshot","desc":"Capture area, freehand markup, blur PII, highlight, shapes, text callouts and lossless export","icon":"fa-crop","alias":"screenshot_editor"},{"id":"p01","code":"P01","name":"Bank statement extraction","category":"PDF & Documents","tab":"statement","desc":"Text PDF/images/CSV/TSV; OCR fallback; explicit mapping/correction; reconciliation; currency/date co","icon":"fa-file-pdf","alias":"bank_statement"},{"id":"p02","code":"P02","name":"Merge PDFs","category":"PDF & Documents","tab":"statement","desc":"Reorder source files, preview page totals, preserve supported structure and originals; batch safe ou","icon":"fa-file-pdf","alias":"pdf_merge"},{"id":"p03","code":"P03","name":"Split/extract pages","category":"PDF & Documents","tab":"statement","desc":"Ranges, every-page/selected-group outputs, naming and ZIP; explicit requested order/duplicate policy","icon":"fa-file-pdf","alias":"pdf_split"},{"id":"p04","code":"P04","name":"Delete pages","category":"PDF & Documents","tab":"statement","desc":"Visual selection and review before creating a new PDF","icon":"fa-file-pdf"},{"id":"p05","code":"P05","name":"Reorder pages","category":"PDF & Documents","tab":"statement","desc":"Thumbnail and keyboard reorder; mixed page sizes","icon":"fa-file-pdf"},{"id":"p06","code":"P06","name":"Rotate pages","category":"PDF & Documents","tab":"statement","desc":"Selected/all pages; 90/180/270 degrees; preview","icon":"fa-file-pdf"},{"id":"p07","code":"P07","name":"Compress PDF","category":"PDF & Documents","tab":"statement","desc":"Real documented presets, measured actual size/fidelity, expansion reported honestly","icon":"fa-file-pdf","alias":"pdf_compress"},{"id":"p08","code":"P08","name":"Images→PDF","category":"PDF & Documents","tab":"statement","desc":"Ordered batch, page size/orientation/margins, image fitting","icon":"fa-file-pdf"},{"id":"p09","code":"P09","name":"PDF→images","category":"PDF & Documents","tab":"statement","desc":"Selected pages, PNG/JPEG, DPI/resolution, batch/ZIP","icon":"fa-file-pdf"},{"id":"p10","code":"P10","name":"PDF metadata inspection","category":"PDF & Documents","tab":"statement","desc":"Readable standard fields and supported XMP, absent fields distinguished","icon":"fa-file-pdf"},{"id":"p11","code":"P11","name":"PDF metadata removal","category":"PDF & Documents","tab":"statement","desc":"Before/after inspection, explicit removal limits","icon":"fa-file-pdf","alias":"pdf_metadata_strip"},{"id":"p12","code":"P12","name":"Watermark PDF","category":"PDF & Documents","tab":"statement","desc":"Text/image position/opacity, page ranges, preview","icon":"fa-file-pdf"},{"id":"p13","code":"P13","name":"Page numbering","category":"PDF & Documents","tab":"statement","desc":"Format, start number, position, page range and margins","icon":"fa-file-pdf"},{"id":"p14","code":"P14","name":"Crop PDF","category":"PDF & Documents","tab":"statement","desc":"Visual crop per page/all; explain content is not securely removed","icon":"fa-file-pdf"},{"id":"p15","code":"P15","name":"Resize PDF pages","category":"PDF & Documents","tab":"statement","desc":"Standard/custom dimensions and explicit scale-versus-canvas choice","icon":"fa-file-pdf"},{"id":"p16","code":"P16","name":"Grayscale PDF","category":"PDF & Documents","tab":"statement","desc":"Actual images/graphics/text behavior, fidelity warning if rasterized","icon":"fa-file-pdf"},{"id":"p17","code":"P17","name":"Flatten forms/annotations","category":"PDF & Documents","tab":"statement","desc":"Preview/reversibility warning; preserve visual appearance","icon":"fa-file-pdf"},{"id":"p18","code":"P18","name":"Protect PDF","category":"PDF & Documents","tab":"unlocker","desc":"Supported encryption, password confirmation, safe handling, encrypt PDF document with password","icon":"fa-file-shield","alias":"pdf_protect","keywords":["pdf password","encrypt pdf","password protect","lock pdf","secure pdf"]},{"id":"p19","code":"P19","name":"Unlock PDF","category":"PDF & Documents","tab":"unlocker","desc":"Known-password authorization path, clear failure, batch, remove PDF password, decrypt PDF","icon":"fa-unlock","alias":"pdf_unlock","keywords":["pdf password","unlock pdf","remove password","decrypt pdf","pdf password remover","pdf decrypt"]},{"id":"p20","code":"P20","name":"PDF→text","category":"PDF & Documents","tab":"statement","desc":"Select pages, meaningful order, encoding; scanned detection","icon":"fa-file-pdf"},{"id":"i01","code":"I01","name":"Common image conversion","category":"Images","tab":"converter","desc":"JPEG/PNG/WebP/BMP/TIFF/ICO as supported; direction/codec availability explicit; batch","icon":"fa-image","alias":"image_converter"},{"id":"i02","code":"I02","name":"Resize images","category":"Images","tab":"converter","desc":"Dimensions/percentage, lock ratio, upscale policy, batch presets","icon":"fa-image","alias":"image_resize"},{"id":"i03","code":"I03","name":"Compress images","category":"Images","tab":"converter","desc":"Quality presets, actual bytes and preview, batch","icon":"fa-image"},{"id":"i04","code":"I04","name":"Target-size attempt","category":"Images","tab":"converter","desc":"Bounded iterative sizing, quality/min-dimension limits, best-effort disclosure","icon":"fa-image"},{"id":"i05","code":"I05","name":"Crop images","category":"Images","tab":"converter","desc":"Visual/keyboard crop, ratio presets, non-destructive preview","icon":"fa-image"},{"id":"i06","code":"I06","name":"Rotate/flip images","category":"Images","tab":"converter","desc":"Direction/axis explicit; EXIF normalized","icon":"fa-image"},{"id":"i07","code":"I07","name":"EXIF inspection","category":"Images","tab":"converter","desc":"Date/camera/location fields with missing/unsupported states","icon":"fa-image"},{"id":"i08","code":"I08","name":"Remove image metadata","category":"Images","tab":"converter","desc":"Chosen metadata policy; output read-back verification","icon":"fa-image","alias":"image_exif_strip"},{"id":"i09","code":"I09","name":"Image watermark","category":"Images","tab":"converter","desc":"Text/logo, positions/opacity, batch","icon":"fa-image"},{"id":"i10","code":"I10","name":"DPI/PPI metadata","category":"Images","tab":"converter","desc":"Edit density without inventing pixels; units explained","icon":"fa-image"},{"id":"i11","code":"I11","name":"Grayscale images","category":"Images","tab":"converter","desc":"Consistent preview and export, preserve alpha if supported","icon":"fa-image"},{"id":"i12","code":"I12","name":"Color adjustments","category":"Images","tab":"converter","desc":"Brightness/contrast/saturation with reset and preview","icon":"fa-image"},{"id":"i13","code":"I13","name":"Blur images","category":"Images","tab":"converter","desc":"Radius/region controls where offered; no secure-redaction claim","icon":"fa-image"},{"id":"i14","code":"I14","name":"Borders/rounded corners","category":"Images","tab":"converter","desc":"Canvas/fill/alpha choices, dimension preview","icon":"fa-image"},{"id":"i15","code":"I15","name":"Dominant colors","category":"Images","tab":"converter","desc":"Reproducible swatches/HEX/RGB, sample transparency policy","icon":"fa-image"},{"id":"i16","code":"I16","name":"Image↔Base64/data URI","category":"Images","tab":"converter","desc":"Binary-safe import/export, MIME and size bounds","icon":"fa-image"},{"id":"i17","code":"I17","name":"Favicon/app-icon pack","category":"Images","tab":"converter","desc":"One tool generates reviewed size bundles, platform support explicit","icon":"fa-image"},{"id":"i18","code":"I18","name":"Collage/merge images","category":"Images","tab":"converter","desc":"Layout/gaps/background and ordered batch","icon":"fa-image"},{"id":"i19","code":"I19","name":"Contact sheet","category":"Images","tab":"converter","desc":"Thumbnails, filenames optionally, page/grid sizing","icon":"fa-image"},{"id":"i20","code":"I20","name":"Visual image comparison","category":"Images","tab":"converter","desc":"Side-by-side/overlay/difference, scale alignment, honest thresholds","icon":"fa-image"},{"id":"c01","code":"C01","name":"Scientific expression calculator","category":"Calculators","tab":"calculators","desc":"Defined precedence, constants/functions, radians/degrees; bounded evaluation","icon":"fa-calculator","alias":"math_eval"},{"id":"c02","code":"C02","name":"Percentage","category":"Calculators","tab":"calculators","desc":"Part/whole/percent with explicit solved variable","icon":"fa-calculator"},{"id":"c03","code":"C03","name":"Percentage change","category":"Calculators","tab":"calculators","desc":"Signed increase/decrease, original/new labels","icon":"fa-calculator"},{"id":"c04","code":"C04","name":"Discount","category":"Calculators","tab":"calculators","desc":"Multiple discounts/tax order only if explicitly supported, savings/net","icon":"fa-calculator"},{"id":"c05","code":"C05","name":"Margin/markup","category":"Calculators","tab":"calculators","desc":"Distinguish denominators; solve cost/revenue/target where offered","icon":"fa-calculator"},{"id":"c06","code":"C06","name":"Average/weighted average","category":"Calculators","tab":"calculators","desc":"List/pasted table, weights, missing-value policy","icon":"fa-calculator"},{"id":"c07","code":"C07","name":"Fractions/ratios","category":"Calculators","tab":"calculators","desc":"Exact rational simplification and arithmetic","icon":"fa-calculator"},{"id":"c08","code":"C08","name":"Loan/EMI","category":"Calculators","tab":"calculators","desc":"Fixed-rate monthly payments, **complete** schedule, explicit currency/fees assumptions","icon":"fa-calculator","alias":"loan_emi"},{"id":"c09","code":"C09","name":"Compound growth","category":"Calculators","tab":"calculators","desc":"Correct compounding frequency, contribution timing, fractional durations","icon":"fa-calculator","alias":"compound_interest"},{"id":"c10","code":"C10","name":"Simple interest","category":"Calculators","tab":"calculators","desc":"Principal/rate/time units and exact assumptions","icon":"fa-calculator"},{"id":"c11","code":"C11","name":"VAT/sales tax","category":"Calculators","tab":"calculators","desc":"Forward/reverse arithmetic with supplied rate, no jurisdiction claim","icon":"fa-calculator","alias":"vat_salestax"},{"id":"c12","code":"C12","name":"Freelance rate","category":"Calculators","tab":"calculators","desc":"Take-home/expense/tax/work-time assumptions, scenarios","icon":"fa-calculator","alias":"freelance_rate"},{"id":"c13","code":"C13","name":"Break-even","category":"Calculators","tab":"calculators","desc":"Contribution margin, ceil for indivisible units, optional fractional-unit policy","icon":"fa-calculator"},{"id":"c14","code":"C14","name":"Depreciation","category":"Calculators","tab":"calculators","desc":"Straight-line and explicitly supported methods; book-value schedule","icon":"fa-calculator"},{"id":"c15","code":"C15","name":"ROI","category":"Calculators","tab":"calculators","desc":"Gains/costs/time assumptions and nonannualized label","icon":"fa-calculator"},{"id":"c16","code":"C16","name":"CAGR","category":"Calculators","tab":"calculators","desc":"Start/end/period and domain assumptions","icon":"fa-calculator"},{"id":"c17","code":"C17","name":"Date difference","category":"Calculators","tab":"calculators","desc":"Days/months/years semantics, inclusive option","icon":"fa-calculator"},{"id":"c18","code":"C18","name":"Age","category":"Calculators","tab":"calculators","desc":"As-of date, years/months/days, date-only semantics","icon":"fa-calculator"},{"id":"c19","code":"C19","name":"Business days","category":"Calculators","tab":"calculators","desc":"Workweek and explicit local holiday list/import, no claimed global holiday service","icon":"fa-calculator"},{"id":"c20","code":"C20","name":"Work hours/duration","category":"Calculators","tab":"calculators","desc":"Overnight shifts, breaks, weekly totals","icon":"fa-calculator"},{"id":"c21","code":"C21","name":"Time-zone converter","category":"Calculators","tab":"calculators","desc":"Date-specific zone offsets and DST ambiguity","icon":"fa-calculator"},{"id":"c22","code":"C22","name":"Quadratic solver","category":"Calculators","tab":"calculators","desc":"Real/complex roots, degeneracy and precision","icon":"fa-calculator"},{"id":"c23","code":"C23","name":"GCD/LCM","category":"Calculators","tab":"calculators","desc":"Integer lists, defined zero/negative behavior","icon":"fa-calculator"},{"id":"c24","code":"C24","name":"Descriptive statistics","category":"Calculators","tab":"calculators","desc":"Mean/median/mode/range/variance/stddev; sample/population choice","icon":"fa-calculator"},{"id":"c25","code":"C25","name":"Geometry","category":"Calculators","tab":"calculators","desc":"Coherent 2D/3D shape workbench; labeled inputs/units/formulas","icon":"fa-calculator"},{"id":"u01","code":"U01","name":"Length","category":"Unit Converters","tab":"calculators","desc":"Canonical SI/customary units, aliases and swap","icon":"fa-arrows-left-right","alias":"units_convert"},{"id":"u02","code":"U02","name":"Area","category":"Unit Converters","tab":"calculators","desc":"Squared units, hectares/acres","icon":"fa-arrows-left-right"},{"id":"u03","code":"U03","name":"Volume","category":"Unit Converters","tab":"calculators","desc":"Metric and named US/Imperial distinctions","icon":"fa-arrows-left-right"},{"id":"u04","code":"U04","name":"Mass","category":"Unit Converters","tab":"calculators","desc":"SI/customary, tonne/US/UK ton distinction","icon":"fa-arrows-left-right"},{"id":"u05","code":"U05","name":"Temperature","category":"Unit Converters","tab":"calculators","desc":"Offset formulas and absolute-zero policy","icon":"fa-arrows-left-right"},{"id":"u06","code":"U06","name":"Speed","category":"Unit Converters","tab":"calculators","desc":"Distance/time dimensions","icon":"fa-arrows-left-right"},{"id":"u07","code":"U07","name":"Time duration","category":"Unit Converters","tab":"calculators","desc":"Fixed durations separate from calendar months/years","icon":"fa-arrows-left-right"},{"id":"u08","code":"U08","name":"Digital storage","category":"Unit Converters","tab":"calculators","desc":"Bits/bytes, SI/IEC, case-sensitive ambiguities resolved","icon":"fa-arrows-left-right"},{"id":"u09","code":"U09","name":"Energy","category":"Unit Converters","tab":"calculators","desc":"J/cal/kWh/BTU and variant definitions","icon":"fa-arrows-left-right"},{"id":"u10","code":"U10","name":"Power","category":"Unit Converters","tab":"calculators","desc":"W/kW/horsepower variants","icon":"fa-arrows-left-right"},{"id":"u11","code":"U11","name":"Pressure","category":"Unit Converters","tab":"calculators","desc":"Pa/bar/PSI/atm","icon":"fa-arrows-left-right"},{"id":"u12","code":"U12","name":"Force","category":"Unit Converters","tab":"calculators","desc":"N/lbf/kgf with explicit gravity constant","icon":"fa-arrows-left-right"},{"id":"u13","code":"U13","name":"Frequency","category":"Unit Converters","tab":"calculators","desc":"Hz/kHz/MHz/GHz","icon":"fa-arrows-left-right"},{"id":"u14","code":"U14","name":"Angles","category":"Unit Converters","tab":"calculators","desc":"Degrees/radians/gradians","icon":"fa-arrows-left-right"},{"id":"u15","code":"U15","name":"Colors","category":"Unit Converters","tab":"calculators","desc":"HEX/RGB/HSL/HSV; gamut/alpha rules, CMYK only with defined assumptions","icon":"fa-arrows-left-right"},{"id":"u16","code":"U16","name":"Typography","category":"Unit Converters","tab":"calculators","desc":"px/pt/em/rem with explicit DPI/font/root context","icon":"fa-arrows-left-right"},{"id":"f01","code":"F01","name":"Batch rename","category":"File Utilities","tab":"converter","desc":"Preview/apply/undo, numbering/case/literal/regex only if supported","icon":"fa-folder-gear","alias":"batch_rename"},{"id":"f02","code":"F02","name":"File info","category":"File Utilities","tab":"converter","desc":"Size/timestamps/basic metadata, platform limits","icon":"fa-folder-gear"},{"id":"f03","code":"F03","name":"File type detection","category":"File Utilities","tab":"converter","desc":"Signature/MIME plus extension mismatch","icon":"fa-folder-gear"},{"id":"f04","code":"F04","name":"Folder comparison","category":"File Utilities","tab":"converter","desc":"Relative path/size/optional content hashes, no implicit sync","icon":"fa-folder-gear"},{"id":"f05","code":"F05","name":"File comparison","category":"File Utilities","tab":"converter","desc":"Binary/text distinctions, safe large-file view","icon":"fa-folder-gear"},{"id":"f06","code":"F06","name":"Create ZIP","category":"File Utilities","tab":"converter","desc":"Selected inputs, relative paths, naming, safe output","icon":"fa-folder-gear"},{"id":"f07","code":"F07","name":"Extract ZIP","category":"File Utilities","tab":"converter","desc":"Preview destination, overwrite policy, bounded safe extraction","icon":"fa-folder-gear"},{"id":"f08","code":"F08","name":"Split/join files","category":"File Utilities","tab":"converter","desc":"Binary-safe chunks, manifest/checksum, ordered recombination","icon":"fa-folder-gear"},{"id":"f09","code":"F09","name":"File age finder","category":"File Utilities","tab":"converter","desc":"Selected scope, modified/created availability, inclusive thresholds","icon":"fa-folder-gear"},{"id":"f10","code":"F10","name":"Empty-file finder","category":"File Utilities","tab":"converter","desc":"Zero-byte review, no automatic removal","icon":"fa-folder-gear"},{"id":"f11","code":"F11","name":"Symlink inspector","category":"File Utilities","tab":"converter","desc":"Target/resolution/broken-link state and scope","icon":"fa-folder-gear"},{"id":"f12","code":"F12","name":"Archive inspector","category":"File Utilities","tab":"converter","desc":"Supported ZIP content tree/sizes, no extraction needed","icon":"fa-folder-gear"},{"id":"s01","code":"S01","name":"Volume/disk overview","category":"Storage & Cleanup","tab":"converter","desc":"Native volumes/free/used, permission/platform state","icon":"fa-hard-drive"},{"id":"s02","code":"S02","name":"Folder-size analyzer","category":"Storage & Cleanup","tab":"converter","desc":"Hierarchical totals, partial scan/error reporting, bounded cancellation","icon":"fa-hard-drive","alias":"storage_analyzer"},{"id":"s03","code":"S03","name":"Largest files","category":"Storage & Cleanup","tab":"converter","desc":"Filter/sort size/path/date over scoped scan","icon":"fa-hard-drive"},{"id":"s04","code":"S04","name":"Exact duplicates","category":"Storage & Cleanup","tab":"converter","desc":"Size prefilter + content validation; explain hardlinks/empty files","icon":"fa-hard-drive","alias":"dup_finder"},{"id":"s05","code":"S05","name":"Empty folders","category":"Storage & Cleanup","tab":"converter","desc":"Bottom-up inspection with clear exclusions","icon":"fa-hard-drive"},{"id":"s06","code":"S06","name":"Cleanup review/Trash","category":"Storage & Cleanup","tab":"converter","desc":"Selected findings, exact paths/actions, dry-run, confirm, native Trash and restore where supported","icon":"fa-hard-drive"},{"id":"d01","code":"D01","name":"JSON formatter","category":"Developer Tools","tab":"converter","desc":"Pretty-print options, preserve data semantics, large-input limits","icon":"fa-code","alias":"devtools_format"},{"id":"d02","code":"D02","name":"JSON validator","category":"Developer Tools","tab":"converter","desc":"Location-specific syntax errors and strictness policy","icon":"fa-code"},{"id":"d03","code":"D03","name":"JSON minifier","category":"Developer Tools","tab":"converter","desc":"Whitespace reduction without data loss","icon":"fa-code"},{"id":"d04","code":"D04","name":"JSON comparison","category":"Developer Tools","tab":"converter","desc":"Structural/path diff, order policy","icon":"fa-code"},{"id":"d05","code":"D05","name":"JSON↔YAML","category":"Developer Tools","tab":"converter","desc":"Safe nonexecuting conversion, type/context policy","icon":"fa-code"},{"id":"d06","code":"D06","name":"CSV↔JSON","category":"Developer Tools","tab":"converter","desc":"Preview delimiter/header/type/null mapping","icon":"fa-code","alias":"data_converter"},{"id":"d07","code":"D07","name":"Base64 text codec","category":"Developer Tools","tab":"converter","desc":"Encode/decode, standard/URL-safe, binary-versus-text error","icon":"fa-code"},{"id":"d08","code":"D08","name":"URL codec/parser","category":"Developer Tools","tab":"converter","desc":"Path/query/component semantics, repeated keys, parse results","icon":"fa-code"},{"id":"d09","code":"D09","name":"JWT inspector","category":"Developer Tools","tab":"converter","desc":"Decode/claims/expiry display, explicit unverified state","icon":"fa-code","alias":"jwt_inspector"},{"id":"d10","code":"D10","name":"Timestamp converter","category":"Developer Tools","tab":"converter","desc":"Seconds/milliseconds/ISO/time zones, explicit input type","icon":"fa-code"},{"id":"d11","code":"D11","name":"UUID generator","category":"Developer Tools","tab":"converter","desc":"Standard versions actually supported, bulk/copy/export","icon":"fa-code"},{"id":"d12","code":"D12","name":"Hash/checksum workbench","category":"Developer Tools","tab":"converter","desc":"Text and streaming files, selectable MD5/SHA/CRC, verify comparison","icon":"fa-code","alias":"crypto_hashes"},{"id":"d13","code":"D13","name":"HMAC workbench","category":"Developer Tools","tab":"converter","desc":"Input/secret encoding and supported reviewed algorithm","icon":"fa-code"},{"id":"d14","code":"D14","name":"Password/passphrase generator","category":"Developer Tools","tab":"converter","desc":"Secure RNG, selectable constraints, bounds and strength assumptions","icon":"fa-code"},{"id":"d15","code":"D15","name":"QR generator","category":"Developer Tools","tab":"converter","desc":"Text/URL payload, size/error correction, local PNG/SVG output","icon":"fa-code"},{"id":"d16","code":"D16","name":"Text metrics/case","category":"Developer Tools","tab":"converter","desc":"Defined word/character/line/grapheme counts and casing","icon":"fa-code"},{"id":"d17","code":"D17","name":"Text diff","category":"Developer Tools","tab":"converter","desc":"Readable side-by-side/unified view, whitespace/line-ending policy","icon":"fa-code"},{"id":"n01","code":"N01","name":"System information","category":"System & Network","tab":"calculators","desc":"OS/CPU/memory/basic hardware support, redacted shareable report","icon":"fa-network-wired"},{"id":"n02","code":"N02","name":"Resource overview","category":"System & Network","tab":"calculators","desc":"Actual CPU/memory usage sampling, restrained refresh","icon":"fa-network-wired"},{"id":"n03","code":"N03","name":"Network interface view","category":"System & Network","tab":"calculators","desc":"IPv4/IPv6/VPN/multiple interfaces, private-data warning","icon":"fa-network-wired"},{"id":"n04","code":"N04","name":"DNS lookup","category":"System & Network","tab":"calculators","desc":"Record type/resolver/timeouts, explicit network requirement","icon":"fa-network-wired"},{"id":"n05","code":"N05","name":"Ping diagnostics","category":"System & Network","tab":"calculators","desc":"Safe target validation, latency/loss, supported adapter/permissions","icon":"fa-network-wired"},{"id":"a01","code":"A01","name":"Local dictation","category":"Audio & Dictation","tab":"dictate","desc":"Verified on-device engine, mic permissions, languages and model download explicit; audio import only","icon":"fa-microphone","alias":"dictate_stt"},{"id":"a02","code":"A02","name":"Meeting notes","category":"Audio & Dictation","tab":"dictate","desc":"Editable transcript and evidence-linked actions/decisions; regex mode labelled; semantic model only ","icon":"fa-microphone"}];
+
+    // State
+    let currentScreen = 'home';
+    let currentCategory = 'All';
+    let currentCurrency = 'USD';
+    let currencySymbols = { USD: '$', EUR: '€', GBP: '£', INR: '₹' };
+    let favorites = new Set(['c08', 'screenshot', 'a01', 'a02', 'p02', 's04']);
+    let activeTool = 'select';
+    let isDictating = false;
+    let dictationInterval = null;
+    let sttHudVisible = false;
+    let sttHudInterval = null;
+    let progressTimer = null;
+    let currentProgressVal = 68;
+
+    // Theme Controller
+    function setMockTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+      document.getElementById('btn-theme-light').classList.toggle('active', theme === 'light');
+      document.getElementById('btn-theme-dark').classList.toggle('active', theme === 'dark');
+    }
+
+    // Screen Navigation
+    function switchScreen(screenId) {
+      currentScreen = screenId;
+      const screens = ['home', 'favorites', 'calc', 'media', 'screenshot', 'stt', 'notes', 'storage', 'progress', 'comparison'];
+      
+      screens.forEach(s => {
+        const screenEl = document.getElementById('screen-' + s);
+        if (screenEl) screenEl.style.display = (s === screenId) ? 'block' : 'none';
+
+        const topBtn = document.getElementById('btn-screen-' + s);
+        if (topBtn) topBtn.classList.toggle('active', s === screenId);
+
+        const navBtn = document.getElementById('nav-btn-' + s);
+        if (navBtn) navBtn.classList.toggle('active', s === screenId);
+      });
+
+      if (screenId === 'favorites') {
+        renderFavoritesGrid();
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Favorite Actions
+    function toggleFavorite(toolId, event) {
+      if (event && event.stopPropagation) event.stopPropagation();
+      if (favorites.has(toolId)) {
+        favorites.delete(toolId);
+        showToast('Removed from favorites');
+      } else {
+        favorites.add(toolId);
+        showToast('Saved to favorites');
+      }
+      updateFavoritesUI();
+    }
+
+    function updateFavoritesUI() {
+      const count = favorites.size;
+      const topCountEl = document.getElementById('top-fav-count');
+      const sideCountEl = document.getElementById('sidebar-fav-count');
+      if (topCountEl) topCountEl.textContent = count;
+      if (sideCountEl) sideCountEl.textContent = count;
+
+      // Update stars in all-tools grid
+      document.querySelectorAll('[data-fav-tool-id]').forEach(btn => {
+        const tid = btn.getAttribute('data-fav-tool-id');
+        const isFav = favorites.has(tid);
+        btn.innerHTML = isFav ? '★' : '☆';
+        btn.classList.toggle('starred', isFav);
+      });
+
+      // Update calc favorite button if visible
+      const calcFavBtn = document.getElementById('calc-fav-btn');
+      if (calcFavBtn) {
+        calcFavBtn.innerHTML = favorites.has('c08') ? '★ Favorited' : '☆ Favorite';
+      }
+
+      if (currentScreen === 'favorites') {
+        renderFavoritesGrid();
+      }
+    }
+
+    // Category Emoji Map
+    const categoryEmojis = {
+      'PDF & Documents': '📄',
+      'Images': '🖼️',
+      'Calculators': '💰',
+      'Unit Converters': '📐',
+      'File Utilities': '🗂️',
+      'Storage & Cleanup': '💾',
+      'Developer Tools': '⚡',
+      'System & Network': '🌐',
+      'Audio & Dictation': '🎙️'
+    };
+
+    function renderToolCard(tool) {
+      const isFav = favorites.has(tool.id);
+      const emoji = categoryEmojis[tool.category] || '🛠️';
+      
+      // Determine click destination
+      let clickAction = "showToast('Opened ' + " + JSON.stringify(tool.name) + ")";
+      if (tool.id === 'c08' || tool.alias === 'loan_emi') clickAction = "switchScreen('calc')";
+      else if (tool.id === 'screenshot') clickAction = "switchScreen('screenshot')";
+      else if (tool.id === 'a01' || tool.alias === 'dictate_stt') clickAction = "switchScreen('stt')";
+      else if (tool.id === 'a02') clickAction = "switchScreen('notes')";
+      else if (tool.id === 's04' || tool.alias === 'dup_finder') clickAction = "switchScreen('storage')";
+      else if (tool.category === 'PDF & Documents') clickAction = "switchScreen('media')";
+
+      return `
+        <div onclick="${clickAction}" class="apple-card" style="min-height: 180px;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div class="glyph-icon-box" style="background: var(--bg-input);">
+                ${emoji}
+              </div>
+              <button class="favorite-star ${isFav ? 'starred' : ''}" data-fav-tool-id="${tool.id}" onclick="toggleFavorite('${tool.id}', event)" title="${isFav ? 'Remove from favorites' : 'Add to favorites'}">
+                ${isFav ? '★' : '☆'}
+              </button>
+            </div>
+            <h3 style="margin: 0; font-size: 14.5px; font-weight: 750; color: var(--text-main);">${tool.name}</h3>
+            <p style="margin: 6px 0 0; font-size: 12px; color: var(--text-muted); line-height: 1.4;">${tool.desc}</p>
+          </div>
+          <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim);">
+            <span>${tool.category}</span>
+            <span style="color: var(--accent-color); font-weight: 600;">Open Tool →</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderAllToolsGrid(filteredList) {
+      const container = document.getElementById('all-tools-grid-container');
+      container.innerHTML = filteredList.map(renderToolCard).join('');
+      document.getElementById('catalog-count-label').textContent = 'Showing ' + filteredList.length + ' of 124 tools';
+    }
+
+    function renderFavoritesGrid() {
+      const container = document.getElementById('favorites-grid-container');
+      const emptyState = document.getElementById('favorites-empty-state');
+      const favTools = TOOLS_CATALOG.filter(t => favorites.has(t.id));
+
+      if (favTools.length === 0) {
+        container.style.display = 'none';
+        emptyState.style.display = 'block';
+      } else {
+        container.style.display = 'grid';
+        emptyState.style.display = 'none';
+        container.innerHTML = favTools.map(renderToolCard).join('');
+      }
+    }
+
+    function filterCategory(cat) {
+      currentCategory = cat;
+      const buttons = document.querySelectorAll('#category-filters-group button');
+      buttons.forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.startsWith(cat) || (cat === 'All' && btn.textContent.startsWith('All')));
+      });
+
+      const filtered = (cat === 'All') 
+        ? TOOLS_CATALOG 
+        : TOOLS_CATALOG.filter(t => t.category === cat);
+      
+      document.getElementById('catalog-heading-title').textContent = (cat === 'All') 
+        ? 'All 124 Capabilities' 
+        : cat + ' (' + filtered.length + ' Tools)';
+
+      renderAllToolsGrid(filtered);
+    }
+
+    function handleSearch(query) {
+      const q = query.toLowerCase().trim();
+      if (!q) {
+        filterCategory(currentCategory);
+        return;
+      }
+      
+      if (q === 'loan' || q === 'emi') { switchScreen('calc'); return; }
+      if (q === 'screenshot' || q === 'markup') { switchScreen('screenshot'); return; }
+      if (q === 'stt' || q === 'dictate' || q === 'whisper') { switchScreen('stt'); return; }
+      if (q === 'notes' || q === 'meeting') { switchScreen('notes'); return; }
+      if (q === 'storage' || q === 'duplicate') { switchScreen('storage'); return; }
+      if (q === 'progress' || q === 'task') { switchScreen('progress'); return; }
+
+      const matches = TOOLS_CATALOG.filter(t => 
+        t.name.toLowerCase().includes(q) || 
+        t.desc.toLowerCase().includes(q) || 
+        t.category.toLowerCase().includes(q) || 
+        (t.alias && t.alias.toLowerCase().includes(q))
+      );
+      
+      document.getElementById('catalog-heading-title').textContent = 'Search Results for "' + query + '"';
+      renderAllToolsGrid(matches);
+      if (currentScreen !== 'home') switchScreen('home');
+    }
+
+    // Currency & Loan Calculator
+    function setCurrency(curr) {
+      currentCurrency = curr;
+      ['USD', 'EUR', 'GBP', 'INR'].forEach(c => {
+        const btn = document.getElementById('curr-' + c);
+        if (btn) btn.classList.toggle('active', c === curr);
+      });
+      updateCalculation();
+    }
+
+    function formatMoney(amount) {
+      const sym = currencySymbols[currentCurrency] || '$';
+      return sym + Number(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function updateCalculation() {
+      const p = parseFloat(document.getElementById('slider-principal').value);
+      const rAnnual = parseFloat(document.getElementById('slider-rate').value);
+      const y = parseFloat(document.getElementById('slider-years').value);
+
+      document.getElementById('label-principal-val').textContent = formatMoney(p);
+      document.getElementById('label-rate-val').textContent = rAnnual.toFixed(1) + '%';
+      document.getElementById('label-years-val').textContent = y + ' Years (' + (y * 12) + ' mos)';
+
+      const n = y * 12;
+      const r = rAnnual / 1200;
+      const payment = r === 0 ? p / n : (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+      const total = payment * n;
+      const interest = total - p;
+
+      document.getElementById('hero-payment-val').textContent = formatMoney(payment);
+      document.getElementById('hero-interest-val').textContent = formatMoney(interest);
+      document.getElementById('hero-total-val').textContent = formatMoney(total);
+
+      const principalPct = Math.round((p / total) * 100);
+      const interestPct = 100 - principalPct;
+      document.getElementById('bar-principal').style.width = principalPct + '%';
+      document.getElementById('bar-interest').style.width = interestPct + '%';
+
+      let bal = p;
+      let rowsHTML = '';
+      for (let m = 1; m <= 3; m++) {
+        const mInterest = bal * r;
+        const mPrincipal = payment - mInterest;
+        bal = Math.max(0, bal - mPrincipal);
+        rowsHTML += `
+          <tr style="border-bottom: 1px solid var(--border-subtle);">
+            <td style="text-align: left; padding: 8px 0; font-weight: 700;">${m}</td>
+            <td style="padding: 8px 6px;">${formatMoney(payment)}</td>
+            <td style="padding: 8px 6px; color: var(--text-muted);">${formatMoney(mPrincipal)}</td>
+            <td style="padding: 8px 6px; color: var(--accent-color);">${formatMoney(mInterest)}</td>
+            <td style="padding: 8px 0; font-family: var(--app-mono); font-weight: 600;">${formatMoney(bal)}</td>
+          </tr>
+        `;
+      }
+      document.getElementById('schedule-rows').innerHTML = rowsHTML;
+    }
+
+    // Screenshot Tool Selection
+    function setMarkupTool(toolName) {
+      activeTool = toolName;
+      document.querySelectorAll('.canvas-tool-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('tool-' + toolName);
+      if (activeBtn) activeBtn.classList.add('active');
+      const toolLabels = {
+        select: 'Select (V)', pen: 'Pencil / Freehand (P)', rect: 'Rectangle (R)', circle: 'Circle (O)',
+        arrow: 'Callout Arrow (A)', highlight: 'Highlight (H)', text: 'Text Label (T)', blur: 'Blur PII (B)',
+        redact: 'Opaque Mask (M)', crop: 'Crop Area (C)'
+      };
+      document.getElementById('active-tool-label').textContent = toolLabels[toolName] || toolName;
+      showToast('Switched to ' + (toolLabels[toolName] || toolName));
+    }
+
+    function setMarkupColor(hex) {
+      showToast('Markup color set to ' + hex);
+    }
+
+    // Dictation Simulator
+    function toggleDictation() {
+      const btn = document.getElementById('btn-toggle-dictate');
+      const bars = document.getElementById('waveform-bars')?.children;
+      isDictating = !isDictating;
+
+      if (isDictating) {
+        btn.textContent = '⏹ Stop Dictation';
+        btn.style.background = '#e11d48';
+        showToast('🎙️ Dictating... speak clearly into microphone');
+        toggleSttOverlay(true);
+        if (bars) {
+          dictationInterval = setInterval(() => {
+            for (let bar of bars) {
+              bar.style.height = (Math.random() * 28 + 6) + 'px';
+            }
+          }, 120);
+        }
+      } else {
+        btn.textContent = '🎙️ Start Dictation';
+        btn.style.background = '#f43f5e';
+        if (dictationInterval) clearInterval(dictationInterval);
+        if (bars) {
+          for (let bar of bars) { bar.style.height = '14px'; }
+        }
+        toggleSttOverlay(false);
+        showToast('Dictation stopped. Transcript cleaned and formatted.');
+      }
+    }
+
+    // Floating STT Overlay HUD Logic
+    function toggleSttOverlay(forceState) {
+      sttHudVisible = (typeof forceState === 'boolean') ? forceState : !sttHudVisible;
+      const hud = document.getElementById('stt-floating-hud');
+      if (!hud) return;
+      
+      hud.classList.toggle('hud-hidden', !sttHudVisible);
+      const topBtn = document.getElementById('btn-stt-overlay-toggle');
+      if (topBtn) topBtn.classList.toggle('active', sttHudVisible);
+
+      const waveBars = document.getElementById('hud-waveform-bars')?.children;
+
+      if (sttHudVisible) {
+        showToast('🎙️ Floating Dictation HUD active. Listening...');
+        if (!sttHudInterval && waveBars) {
+          sttHudInterval = setInterval(() => {
+            for (let bar of waveBars) {
+              bar.style.height = (Math.random() * 14 + 4) + 'px';
+            }
+          }, 110);
+        }
+      } else {
+        if (sttHudInterval) {
+          clearInterval(sttHudInterval);
+          sttHudInterval = null;
+        }
+        if (waveBars) {
+          for (let bar of waveBars) bar.style.height = '8px';
+        }
+      }
+    }
+
+    function acceptSttTranscript() {
+      toggleSttOverlay(false);
+      showToast('Speech recognized and inserted into document.');
+    }
+
+    // App Banner 3-Mode Controller
+    let bannerMode = 0;
+    const bannerConfigs = [
+      {
+        cls: 'apple-app-banner',
+        icon: '✨',
+        iconBg: 'rgba(0, 113, 227, 0.15)',
+        iconColor: 'var(--accent-color)',
+        badge: 'OfficeKit 2.5 Pro',
+        badgeBg: 'rgba(0, 113, 227, 0.18)',
+        badgeColor: 'var(--accent-color)',
+        title: 'On-Device Whisper Turbo & Neural Engine Active',
+        desc: 'All 124 tools process files directly on this Mac. Zero network telemetry; zero data retention.',
+        btnText: "What's New →",
+        btnAction: () => switchScreen('stt'),
+        showProgress: false
+      },
+      {
+        cls: 'apple-app-banner banner-task',
+        icon: '⚡',
+        iconBg: 'rgba(245, 158, 11, 0.15)',
+        iconColor: '#f59e0b',
+        badge: 'Task In Progress',
+        badgeBg: 'rgba(245, 158, 11, 0.18)',
+        badgeColor: '#f59e0b',
+        title: 'Storage Optimization Running in Background',
+        desc: 'Reclaiming unlinked cache and duplicate data safely without blocking your work.',
+        btnText: 'View Studio →',
+        btnAction: () => switchScreen('progress'),
+        showProgress: true
+      },
+      {
+        cls: 'apple-app-banner banner-privacy',
+        icon: '🛡️',
+        iconBg: 'rgba(16, 185, 129, 0.15)',
+        iconColor: '#10b981',
+        badge: 'Air-Gapped Shield',
+        badgeBg: 'rgba(16, 185, 129, 0.18)',
+        badgeColor: '#10b981',
+        title: 'Zero Network Boundary Verified',
+        desc: 'Local-first perimeter strictly enforced. No sockets open to external hosts.',
+        btnText: 'Audit Log →',
+        btnAction: () => showToast('Audit verified: 0 outbound connections'),
+        showProgress: false
+      }
+    ];
+
+    function cycleAppBanner() {
+      bannerMode = (bannerMode + 1) % bannerConfigs.length;
+      applyBannerConfig(bannerConfigs[bannerMode]);
+      const banner = document.getElementById('apple-app-banner');
+      if (banner) banner.style.display = 'flex';
+      showToast('Switched to banner state: ' + bannerConfigs[bannerMode].badge);
+    }
+
+    function applyBannerConfig(cfg) {
+      const banner = document.getElementById('apple-app-banner');
+      if (!banner) return;
+      banner.className = cfg.cls;
+      document.getElementById('banner-icon-box').textContent = cfg.icon;
+      document.getElementById('banner-icon-box').style.background = cfg.iconBg;
+      document.getElementById('banner-icon-box').style.color = cfg.iconColor;
+      
+      const badge = document.getElementById('banner-badge');
+      badge.textContent = cfg.badge;
+      badge.style.background = cfg.badgeBg;
+      badge.style.color = cfg.badgeColor;
+
+      document.getElementById('banner-title').textContent = cfg.title;
+      document.getElementById('banner-desc').textContent = cfg.desc;
+
+      const actBtn = document.getElementById('banner-action-btn');
+      actBtn.textContent = cfg.btnText;
+      actBtn.onclick = cfg.btnAction;
+
+      const miniProg = document.getElementById('banner-mini-progress');
+      if (miniProg) miniProg.style.display = cfg.showProgress ? 'block' : 'none';
+    }
+
+    function dismissAppBanner() {
+      const banner = document.getElementById('apple-app-banner');
+      if (banner) banner.style.display = 'none';
+      showToast('App banner dismissed (use "App Banner" pill to restore)');
+    }
+
+    // Progress Bar Simulation Logic
+    function startProgressSimulation() {
+      if (progressTimer) clearInterval(progressTimer);
+      showToast('Running progress simulation...');
+      progressTimer = setInterval(() => {
+        currentProgressVal += 2;
+        if (currentProgressVal > 100) {
+          currentProgressVal = 100;
+          clearInterval(progressTimer);
+          showToast('Batch task completed successfully!');
+        }
+        updateProgressUI(currentProgressVal);
+      }, 100);
+    }
+
+    function pauseProgressSimulation() {
+      if (progressTimer) {
+        clearInterval(progressTimer);
+        progressTimer = null;
+        showToast('Progress simulation paused');
+      }
+    }
+
+    function resetProgressSimulation() {
+      if (progressTimer) clearInterval(progressTimer);
+      currentProgressVal = 0;
+      updateProgressUI(0);
+      showToast('Progress simulation reset to 0%');
+    }
+
+    function updateProgressUI(pct) {
+      const bar = document.getElementById('demo-progress-bar');
+      const label = document.getElementById('demo-pct-label');
+      const filesLabel = document.getElementById('demo-files-label');
+      const bytesLabel = document.getElementById('demo-bytes-label');
+      const etaLabel = document.getElementById('demo-eta-label');
+      
+      if (bar) bar.style.width = pct + '%';
+      if (label) label.textContent = pct + '%';
+      
+      const filesDone = Math.round((pct / 100) * 35);
+      const mbDone = ((pct / 100) * 21.6).toFixed(1);
+      const remainingSec = Math.max(0, Math.round(((100 - pct) / 100) * 8));
+
+      if (filesLabel) filesLabel.textContent = filesDone + ' of 35 files processed';
+      if (bytesLabel) bytesLabel.textContent = mbDone + ' MB / 21.6 MB (' + pct + '%)';
+      if (etaLabel) etaLabel.textContent = remainingSec > 0 ? remainingSec + 's remaining' : 'Complete';
+    }
+
+    // Export Modal & Toast
+    function openExportModal() {
+      const modal = document.getElementById('apple-export-modal');
+      if (modal && modal.showModal) modal.showModal();
+    }
+    function closeExportModal() {
+      const modal = document.getElementById('apple-export-modal');
+      if (modal && modal.close) modal.close();
+    }
+    function simulateExportAction() {
+      closeExportModal();
+      showToast('Report generated & saved to Files.');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('apple-toast');
+      document.getElementById('apple-toast-text').textContent = msg;
+      toast.style.transform = 'translateY(0)';
+      toast.style.opacity = '1';
+      setTimeout(() => {
+        toast.style.transform = 'translateY(80px)';
+        toast.style.opacity = '0';
+      }, 3200);
+    }
+
+    // Keyboard Shortcuts
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        const input = document.getElementById('spotlight-input');
+        if (input) input.focus();
+      }
+      if (e.altKey && e.code === 'Space') {
+        e.preventDefault();
+        toggleSttOverlay();
+      }
+      if (e.key === 'Escape' && sttHudVisible) {
+        toggleSttOverlay(false);
+      }
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === 'd') {
+        e.preventDefault();
+        const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        setMockTheme(next);
+      }
+    });
+
+    // Auto-detect OS dark mode preference on initial load
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setMockTheme('dark');
+    }
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        setMockTheme(e.matches ? 'dark' : 'light');
+      });
+    }
+
+    // Initial render
+    renderAllToolsGrid(TOOLS_CATALOG);
+    updateFavoritesUI();
+    updateCalculation();
+  </script>
+</body>
+</html>

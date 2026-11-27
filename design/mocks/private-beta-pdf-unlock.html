@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit private beta · Unlock PDF</title>
+  <style>
+    :root { color-scheme: light; font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #182235; background: #f5f7fb; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    header { height: 62px; display: flex; align-items: center; gap: 12px; padding: 0 28px; background: #fff; border-bottom: 1px solid #e1e7f0; }
+    .mark { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; background: #4237d5; color: white; font-weight: 800; }
+    .brand { font-size: 19px; font-weight: 750; }
+    .beta { margin-left: auto; color: #5549d8; font-size: 12px; font-weight: 650; }
+    main { width: min(920px, calc(100% - 40px)); margin: 42px auto; }
+    .back { color: #5550b7; font-size: 13px; }
+    h1 { margin: 18px 0 4px; font-size: 30px; letter-spacing: -.7px; }
+    .intro { margin: 0 0 24px; color: #58677e; }
+    .card { padding: 24px; background: white; border: 1px solid #dbe3ef; border-radius: 18px; box-shadow: 0 3px 14px #152b480b; }
+    .label { display: block; margin: 20px 0 7px; font-weight: 650; }
+    .drop { min-height: 126px; padding: 24px; display: grid; place-items: center; text-align: center; background: #f8faff; border: 1px dashed #aebbd0; border-radius: 12px; color: #34445d; }
+    input { width: min(100%, 420px); padding: 11px 12px; border: 1px solid #bdc9da; border-radius: 9px; font: inherit; }
+    .note { margin: 12px 0 0; color: #5b687a; font-size: 13px; }
+    .actions { display: flex; align-items: center; gap: 14px; margin-top: 20px; }
+    button { padding: 11px 18px; border: 0; border-radius: 9px; background: #4338ca; color: #fff; font: inherit; font-weight: 650; }
+    .status { color: #67758a; font-size: 13px; }
+    .result { margin-top: 18px; padding: 14px; background: #eef9f1; border: 1px solid #c6e8cf; border-radius: 11px; }
+    .scope { margin-top: 18px; padding: 13px 15px; background: #fff9ec; border: 1px solid #f0dfb4; border-radius: 10px; color: #71551a; font-size: 13px; }
+    @media (max-width: 580px) { main { margin-top: 26px; } .card { padding: 17px; } .actions { align-items: flex-start; flex-direction: column; } }
+  </style>
+</head>
+<body>
+  <header><div class="mark" aria-hidden="true">OK</div><div class="brand">OfficeKit</div><div class="beta">PRIVATE BETA · 26 TOOLS</div></header>
+  <main>
+    <a class="back" href="#tools">← All tools</a>
+    <h1>Unlock PDF</h1>
+    <p class="intro">Create an unlocked copy of a PDF you can already open.</p>
+    <section class="card" aria-label="Unlock PDF">
+      <strong>Choose a protected PDF</strong>
+      <div class="drop">Select or drop one PDF here<br><small>Up to 64 MiB · your original remains unchanged</small></div>
+      <label class="label" for="password">Existing document password</label>
+      <input id="password" type="password" autocomplete="current-password" placeholder="Enter the password you already know">
+      <p class="note">Password stays on this Mac and is cleared after processing. OfficeKit does not guess or recover passwords.</p>
+      <div class="actions"><button>Unlock PDF</button><span class="status">Choose a PDF to begin.</span></div>
+      <div class="result">Output: <strong>statement_unlocked.pdf</strong> <button style="float:right;padding:7px 12px">Download copy</button></div>
+      <div class="scope">This beta includes PDF unlocking with a known password. Other PDF tools remain unavailable in this beta.</div>
+    </section>
+  </main>
+</body>
+</html>

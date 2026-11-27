@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import test from 'node:test';
+import { loadToolCatalog } from '../scripts/tool-catalog.mjs';
+
+test('first-release audit categorizes every real catalogue entry exactly once', () => {
+  const ids = loadToolCatalog().tools.map(tool => tool.id);
+  const audit = fs.readFileSync('docs/FIRST-MAC-RELEASE.md', 'utf8');
+  const rows = [...audit.matchAll(/^\| `([a-z0-9_]+)` \|/gm)].map(match => match[1]);
+  assert.equal(rows.length, ids.length);
+  assert.equal(new Set(rows).size, rows.length);
+  assert.deepEqual([...rows].sort(), [...ids].sort());
+  const priority = audit.split('## Calculator and developer candidates: 17 tools')[1].split('## Next candidates:')[0];
+  assert.equal([...priority.matchAll(/^\| `([a-z0-9_]+)` \|/gm)].length, 39);
+  assert.match(audit, /## PDF tools enabled for beta: 11 tools/);
+  assert.match(audit, /`pdf_unlock`/);
+  assert.match(audit, /`pdf_merge`/);
+  assert.match(audit, /`pdf_split`/);
+  assert.match(audit, /`pdf_compress`/);
+  assert.match(audit, /`pdf_to_images`/);
+  assert.match(audit, /`pdf_metadata_strip`/);
+  assert.match(audit, /`pdf_table_extractor`/);
+  assert.match(audit, /`pdf_text_extract`/);
+  assert.match(audit, /`pdf_delete_pages`/);
+  assert.match(audit, /`pdf_reorder_pages`/);
+  const holds = audit.split('## Hold back: 12 catalogue entries')[1].split('## Promotion')[0];
+  assert.doesNotMatch(holds, /`bank_statement`/);
+  assert.match(holds, /`media_toolkit`/);
+  assert.match(holds, /`invoice_manager`/);
+  assert.match(audit, /restricted build's catalogue, search, quick access and direct navigation/);
+  assert.match(audit, /hidden tile is not a disabled feature/);
+});

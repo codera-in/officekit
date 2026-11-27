@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit — folder comparison workbench mock</title>
+  <style>
+    :root{color-scheme:light;font:14px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#182331;background:#f3f6fa;--surface:#fff;--surface-soft:#f8fafc;--line:#d8e0e9;--muted:#64758a;--blue:#3456d1;--blue-soft:#edf1ff;--green:#18704b;--green-soft:#eaf7f0;--amber:#815400;--amber-soft:#fff5df;--red:#984b42}
+    :root[data-theme="dark"]{color-scheme:dark;color:#edf2fb;background:#141a24;--surface:#202938;--surface-soft:#18212e;--line:#364456;--muted:#a9b6c8;--blue:#a9b9ff;--blue-soft:#293450;--green:#8ce0b3;--green-soft:#1b3b31;--amber:#ffcf73;--amber-soft:#44361d;--red:#ffaaa0}
+    *{box-sizing:border-box}body{margin:0}header{height:60px;background:var(--surface);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 26px;gap:12px;font-weight:700}.mark{width:32px;height:32px;border-radius:9px;background:#302aa8;color:white;display:grid;place-items:center;font-size:13px}.muted,small{color:var(--muted)}header small{font-weight:500;margin-left:auto}button{font:inherit;cursor:pointer;border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:var(--surface);color:inherit}.primary{background:var(--blue);color:white;border-color:var(--blue)}main{max-width:1320px;margin:28px auto;padding:0 24px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}h1{font-size:24px;margin:0}h2{font-size:18px;margin:0 0 5px}.compare{display:grid;grid-template-columns:.8fr 1.5fr;gap:18px;margin-top:12px}.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:0 2px 8px #1823310a}.before{min-height:590px}.row{border:1px solid var(--line);border-radius:9px;padding:13px;margin:10px 0}.row strong{display:block}.empty{margin:24px 0;padding:20px;text-align:center;border:1px dashed var(--line);border-radius:10px;color:var(--muted)}.workbench-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.tag{font-size:11px;background:var(--blue-soft);color:var(--blue);border-radius:5px;padding:5px 8px}.intro{color:var(--muted);max-width:850px}.safety{background:var(--green-soft);color:var(--green);padding:10px 12px;border-radius:8px;margin:14px 0;font-size:12px}.scopes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}.scope{border:1px solid var(--line);border-radius:9px;padding:12px;background:var(--surface-soft)}.scope label{display:block;font-weight:650;margin-bottom:7px}.scope select{width:100%;height:39px;padding:0 9px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:inherit}.summary{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.metric{background:var(--surface-soft);border:1px solid var(--line);border-radius:9px;padding:10px 13px;min-width:114px}.metric b{display:block;font-size:19px}.metric small{font-size:11px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:9px}.table{border-collapse:collapse;width:100%;min-width:650px;text-align:left}.table th{font-size:11px;color:var(--muted);background:var(--surface-soft);text-transform:uppercase;letter-spacing:.04em}.table th,.table td{padding:10px 12px;border-bottom:1px solid var(--line)}.table tr:last-child td{border-bottom:0}.status{font-size:11px;font-weight:700;padding:4px 7px;border-radius:5px;white-space:nowrap}.same{background:var(--green-soft);color:var(--green)}.changed{background:var(--amber-soft);color:var(--amber)}.only{background:#fbece9;color:var(--red)}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.notice{font-size:12px;color:var(--muted);margin-top:12px}.fine{font-size:12px;color:var(--muted)}@media(max-width:900px){main{margin:18px auto}.compare{grid-template-columns:1fr}.before{min-height:auto}}@media(max-width:580px){header{padding:0 14px}.wide{display:none}main{padding:0 12px}.panel{padding:15px}.scopes{grid-template-columns:1fr}.workbench-head{align-items:flex-start;flex-direction:column}.actions button{flex:1}}
+  </style>
+</head>
+<body>
+  <header><span class="mark" aria-hidden="true">O·K</span><span>OfficeKit</span><span class="wide muted">Files &amp; storage</span><small>Folder comparison · mock only</small><button id="theme-toggle" type="button" aria-pressed="false">Dark mode</button></header>
+  <main>
+    <p class="eyebrow">Before → proposed · local-copy workspace</p>
+    <div class="compare">
+      <section class="panel before" aria-labelledby="before-title">
+        <p class="eyebrow">Before · current workspace tools</p>
+        <h2 id="before-title">Files &amp; storage</h2>
+        <p class="muted">The workspace can rename, scan duplicates and analyze storage. Folder comparison has no destination yet.</p>
+        <div class="row"><strong>Batch file renamer</strong><span class="fine">Preview names and download renamed copies.</span></div>
+        <div class="row"><strong>Duplicate finder</strong><span class="fine">Compare exact file contents.</span></div>
+        <div class="row"><strong>Storage analyzer</strong><span class="fine">Review largest files in this selection.</span></div>
+        <div class="empty">No folder-to-folder report</div>
+      </section>
+      <section class="panel" aria-labelledby="after-title">
+        <p class="eyebrow">After · proposed operation in the same workspace</p>
+        <div class="workbench-head"><h1 id="after-title">Compare folders</h1><span class="tag">Files &amp; storage</span></div>
+        <p class="intro">Compare two selected folder copies by relative path and SHA-256. Originals are never changed; nothing is merged or deleted.</p>
+        <div class="safety" role="note">Local workspace · 2 folders selected · 12 copied files · 18.4 MiB · originals remain unchanged</div>
+        <p class="fine" role="note">Compares file contents and folder structure. Includes empty folders. Filesystem metadata such as dates and permissions is outside this report.</p>
+        <div class="scopes">
+          <div class="scope"><label for="left-folder">Folder A</label><select id="left-folder"><option>before/</option></select></div>
+          <div class="scope"><label for="right-folder">Folder B</label><select id="right-folder"><option>after/</option></select></div>
+        </div>
+        <div class="actions"><button class="primary" type="button">Compare selected folders</button><button type="button">Download CSV report</button><button type="button">Clear temporary copies</button></div>
+        <div class="summary" aria-label="Comparison summary">
+          <div class="metric"><b>8</b><small>Identical</small></div><div class="metric"><b>2</b><small>Changed</small></div><div class="metric"><b>1</b><small>Only in A</small></div><div class="metric"><b>1</b><small>Only in B</small></div>
+        </div>
+        <div class="table-wrap"><table class="table"><thead><tr><th>Relative path</th><th>Folder A</th><th>Folder B</th><th>Result</th></tr></thead><tbody>
+          <tr><td>Invoices/April.csv</td><td>8.2 KB</td><td>8.2 KB</td><td><span class="status same">Identical</span></td></tr>
+          <tr><td>Invoices/May.csv</td><td>9.4 KB</td><td>10.1 KB</td><td><span class="status changed">Changed</span></td></tr>
+          <tr><td>Notes/archive.txt</td><td>1.1 KB</td><td>—</td><td><span class="status only">Only in A</span></td></tr>
+          <tr><td>Reports/new-summary.pdf</td><td>—</td><td>116 KB</td><td><span class="status only">Only in B</span></td></tr>
+        </tbody></table></div>
+        <h2 style="margin-top:18px">Folder structure</h2>
+        <p class="fine">Directory counts are reported separately from file counts. Empty directories are included.</p>
+        <div class="summary" aria-label="Directory comparison summary">
+          <div class="metric"><b>2</b><small>Present in both</small></div><div class="metric"><b>1</b><small>Only in A</small></div><div class="metric"><b>1</b><small>Only in B</small></div>
+        </div>
+        <div class="table-wrap"><table class="table"><thead><tr><th>Relative folder</th><th>Result</th></tr></thead><tbody>
+          <tr><td>Exports/empty-draft</td><td><span class="status only">Only in A · empty folder</span></td></tr>
+          <tr><td>Reports/archive</td><td><span class="status same">Present in both · empty</span></td></tr>
+          <tr><td>Receipts</td><td><span class="status only">Only in B · empty folder</span></td></tr>
+        </tbody></table></div>
+        <p class="notice" role="status">Complete report · files use relative names and content hashes; folders compare by relative path. Download the CSV report, then clear the temporary workspace when finished.</p>
+      </section>
+    </div>
+  </main>
+  <script>
+    document.getElementById('theme-toggle').addEventListener('click', event => {
+      const dark = document.documentElement.dataset.theme !== 'dark';
+      document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      event.currentTarget.setAttribute('aria-pressed', String(dark));
+      event.currentTarget.textContent = dark ? 'Light mode' : 'Dark mode';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit brand mark correction — before and proposed</title>
+  <style>
+    :root { color-scheme: light dark; --canvas:#f3f6f9; --surface:#fff; --text:#223140; --muted:#536477; --line:#dce3eb; --violet:#4f46e5; --amber:#f59e0b; font:15px/1.5 system-ui,sans-serif; }
+    @media (prefers-color-scheme: dark) { :root { --canvas:#141f2c; --surface:#1c2a3a; --text:#eef4fa; --muted:#afbed0; --line:#3b4c60; } }
+    * { box-sizing:border-box } body { margin:0; padding:20px; background:var(--canvas); color:var(--text) }
+    h1 { max-width:840px; margin:0 auto 6px; font-size:21px; line-height:1.25 } .intro { max-width:840px; margin:0 auto 16px; color:var(--muted) }
+    .compare { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; max-width:840px; margin:auto }
+    .panel { min-width:0; overflow:hidden; border:1px solid var(--line); border-radius:12px; background:var(--surface) }
+    .label { padding:9px 12px; border-bottom:1px solid var(--line); color:var(--muted); font-size:12px; font-weight:700 }
+    .topbar { min-height:72px; display:flex; align-items:center; padding:12px; background:var(--surface) }
+    .brand { min-width:0; display:flex; align-items:center; gap:9px; color:var(--text); font-size:18px; font-weight:750; letter-spacing:-.02em; white-space:nowrap }
+    .mark { width:40px; height:40px; flex:none; display:grid; place-items:center; overflow:hidden; border-radius:10px; background:linear-gradient(35deg,#4f46e5,#6366f1,#8b5cf6); box-shadow:0 3px 9px #4f46e533 }
+    .mark svg { width:28px; height:28px; overflow:visible }
+    .old-word { color:#5b55d9; background:linear-gradient(90deg,#4f46e5,#8b5cf6,#7c3aed); background-clip:text; -webkit-text-fill-color:transparent }
+    .badge { margin-left:2px; padding:2px 6px; border:1px solid #c7d2fe; border-radius:999px; color:#4338ca; background:#eef2ff; font-size:9px; letter-spacing:.04em }
+    .proposed .mark { width:42px; height:42px; border-radius:10px; background:var(--violet); box-shadow:none }
+    .proposed .mark svg { width:34px; height:34px }
+    .proposed-word { color:var(--text) }
+    .note { grid-column:1/-1; margin:0; color:var(--muted); font-size:12px }
+    @media(max-width:520px) { body { padding:14px } .compare { gap:8px } .label { padding:8px } .topbar { min-height:76px; padding:8px } .brand { gap:6px; font-size:15px } .mark { width:34px; height:34px; border-radius:8px } .mark svg { width:25px; height:25px } .proposed .mark { width:36px; height:36px } .proposed .mark svg { width:30px; height:30px } .badge { display:none } }
+    :focus-visible { outline:3px solid #185c89; outline-offset:2px }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>OfficeKit mark in the app bar</h1>
+    <p class="intro">The proposed version uses the already selected O/K monogram, gives its strokes clear space, and removes the gradients and version badge from the wordmark.</p>
+  </header>
+  <main class="compare" aria-label="Current and proposed OfficeKit brand mark">
+    <section class="panel" aria-labelledby="current-label">
+      <div class="label" id="current-label">Current</div>
+      <div class="topbar"><div class="brand">
+        <span class="mark" aria-hidden="true"><svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M8 10a7 7 0 0 1 7-7h3v7h-3v20h3v7h-3a7 7 0 0 1-7-7V10Z" fill="#fff"/><path d="M13 11h4v18h-4z" fill="#4f46e5"/><path d="M25 5v30M25 20 36 7M25 20l11 13" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"/><path d="M28 37h9" stroke="#f59e0b" stroke-linecap="round" stroke-width="2"/></svg></span>
+        <span class="old-word">OfficeKit</span><span class="badge">DESKTOP V1.0</span>
+      </div></div>
+    </section>
+    <section class="panel proposed" aria-labelledby="proposed-label">
+      <div class="label" id="proposed-label">Proposed</div>
+      <div class="topbar"><div class="brand">
+        <span class="mark" aria-hidden="true"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><rect width="1024" height="1024" fill="#4f46e5"/><rect x="108" y="220" width="376" height="584" rx="176" fill="#fff"/><rect x="214" y="326" width="164" height="372" rx="70" fill="#4f46e5"/><path d="M570 250v524M578 510 852 242M578 510l274 272" fill="none" stroke="#fff" stroke-width="82" stroke-linecap="round"/><rect x="696" y="858" width="172" height="32" rx="16" fill="#f59e0b"/></svg></span>
+        <span class="proposed-word">OfficeKit</span>
+      </div></div>
+    </section>
+    <p class="note">At 390px, the mark and wordmark remain visible without clipping; the app/version string moves out of the brand lockup.</p>
+  </main>
+</body>
+</html>

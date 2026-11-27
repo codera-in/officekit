@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit duplicate finder partial results</title>
+  <link rel="stylesheet" href="../officekit-tokens.css">
+  <style>
+    *{box-sizing:border-box}body{margin:0;padding:24px;background:var(--ok-bg);color:var(--ok-text);font:15px/1.5 var(--ok-font)}main{max-width:1000px;margin:auto}h1{font-size:24px}section{display:grid;grid-template-columns:1fr 1fr;gap:16px}article{padding:20px;border:1px solid var(--ok-line);border-radius:10px;background:var(--ok-surface)}small{color:var(--ok-muted)}strong{display:block;margin:14px 0 6px}p{margin:5px 0}@media(max-width:700px){section{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main>
+    <small>Files · Duplicate Finder · partial scan state</small>
+    <h1>Make skipped files clear before users rely on the result</h1>
+    <section aria-label="Before and after">
+      <article><small>Before</small><strong>1 files scanned · 0 duplicate groups · partial scan</strong><p>Some files could not be scanned; review the report before relying on it.</p></article>
+      <article><small>After</small><strong>1 file scanned · 0 duplicate groups · partial scan</strong><p>No duplicate groups were found among files OfficeKit could read.</p><p>1 symbolic link was skipped.</p><p>1 file could not be read:</p><p>unreadable.txt: A file could not be read during the duplicate scan.</p></article>
+    </section>
+  </main>
+</body>
+</html>

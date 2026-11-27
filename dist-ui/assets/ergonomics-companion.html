@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>OfficeKit reminder</title>
+  <link rel="stylesheet" href="officekit.css">
+  <link rel="stylesheet" href="ergonomics.css">
+  <script defer src="ergonomics-companion.js"></script>
+</head>
+<body class="ergonomics-overlay">
+  <main id="ergonomics-companion" class="ergonomics-companion" data-corner="bottom-right" hidden>
+    <section class="card card-border ergonomics-bubble" aria-labelledby="companion-title">
+      <h1 id="companion-title">A little moment for you</h1>
+      <p id="companion-copy"></p>
+      <p id="companion-cue" class="ergonomics-cue" hidden></p>
+      <p id="companion-announcement" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+      <div id="companion-dots" class="ergonomics-dots" aria-hidden="true" hidden></div>
+      <p id="companion-countdown" aria-live="off"></p>
+      <div class="ergonomics-actions">
+        <button type="button" class="btn" id="companion-primary">Done</button>
+        <button type="button" class="btn" id="companion-coach" hidden>Coach me</button>
+        <button type="button" class="btn btn-ghost" id="companion-snooze">Snooze</button>
+        <button type="button" class="btn btn-ghost" id="companion-replay" hidden>Replay</button>
+      </div>
+      <button type="button" class="ergonomics-link" id="companion-later" hidden>Not now</button>
+      <button type="button" class="ergonomics-link" id="companion-pause">Pause all · 1 hour</button>
+      <p id="companion-feedback" role="status" aria-live="polite"></p>
+    </section>
+    <canvas id="companion-character" width="400" height="400" role="img" aria-label="Friendly reminder companion"></canvas>
+  </main>
+  <!-- Outside the fading bubble so the close button stays fully visible while a reminder fades in. -->
+  <button type="button" class="ergonomics-close" id="companion-close" aria-label="Close reminder" title="Close (Esc)" hidden>✕</button>
+</body>
+</html>

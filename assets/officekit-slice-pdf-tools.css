@@ -1,0 +1,134 @@
+/* PDF slice (P06, P08, P10, P12–P13, P15–P17) styles. Owned by this slice only.
+   Every colour, radius, spacing and size is a --ok-* token (DESIGN_SYSTEM.md Foundations). */
+
+/* Grouped PDF navigation: five disclosures on wide layouts, one grouped menu when compact. */
+.pdf-nav-wide details.pdf-grp {
+  border-radius: var(--ok-radius-panel);
+}
+
+.pdf-nav-wide details.pdf-grp > summary {
+  display: flex;
+  min-height: var(--ok-control-height);
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ok-space-2);
+  padding: var(--ok-space-1) var(--ok-space-2);
+  cursor: pointer;
+  list-style: none;
+  border-radius: var(--ok-radius-control);
+  font-size: var(--ok-text-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ok-muted);
+}
+
+.pdf-nav-wide details.pdf-grp > summary::-webkit-details-marker {
+  display: none;
+}
+
+.pdf-nav-wide details.pdf-grp > summary::after {
+  content: "›";
+  font-size: var(--ok-text-base);
+  line-height: 1;
+  transition: transform var(--ok-duration);
+}
+
+.pdf-nav-wide details.pdf-grp[open] > summary::after {
+  transform: rotate(90deg);
+}
+
+.pdf-nav-wide .pdf-grp-count {
+  margin-left: auto;
+  margin-right: var(--ok-space-2);
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.pdf-nav-wide .pdf-grp > .pdf-tool-option {
+  min-height: var(--ok-control-height);
+}
+
+.pdf-nav-wide details.pdf-grp > summary:focus-visible {
+  outline: 3px solid var(--ok-focus);
+  outline-offset: 2px;
+}
+
+.pdf-compact-wrap {
+  display: none;
+}
+
+.pdf-compact-label {
+  padding: 0 var(--ok-space-3) var(--ok-space-1);
+  font-size: var(--ok-text-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ok-muted);
+}
+
+.pdf-compact-menu {
+  display: block;
+}
+
+.pdf-compact-menu > summary {
+  display: flex;
+  min-height: var(--ok-control-height-compact);
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ok-space-2);
+  padding: var(--ok-space-2) var(--ok-space-3);
+  border: 1px solid var(--ok-line);
+  border-radius: var(--ok-radius-control);
+  background: var(--ok-surface-raised);
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+.pdf-compact-menu > summary::-webkit-details-marker {
+  display: none;
+}
+
+.pdf-compact-menu > summary:focus-visible {
+  outline: 3px solid var(--ok-focus);
+  outline-offset: 2px;
+}
+
+.pdf-compact-menu .pdf-compact-group {
+  margin: var(--ok-space-2) 0 var(--ok-space-1);
+  padding: 0 var(--ok-space-2);
+  font-size: var(--ok-text-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ok-muted);
+}
+
+.pdf-compact-menu .pdf-tool-option {
+  min-height: var(--ok-control-height-compact);
+}
+
+/* Matches the workbench's lg two-column breakpoint: below it the nav stacks, so use one menu. */
+@media (max-width: 1023px) {
+  .pdf-nav-wide {
+    display: none;
+  }
+
+  .pdf-compact-wrap {
+    display: block;
+    margin-bottom: var(--ok-space-3);
+  }
+}
+
+/* Engine previews sit inside the workbench preview panel and never overflow the page width. */
+#pdf-slice-preview img,
+.pdf-slice-sheet img {
+  max-width: 100%;
+  height: auto;
+}
+
+#pdf-slice-preview table {
+  max-width: 100%;
+}

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit — Dictation key selection</title>
+  <link rel="stylesheet" href="../officekit-tokens.css">
+  <style>
+    body { margin: 0; padding: 2rem; background: var(--surface); color: var(--text); font: 15px/1.5 system-ui, sans-serif; }
+    main { max-width: 850px; margin: auto; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    article { background: var(--surface-raised); border: 1px solid var(--border); border-radius: 16px; padding: 1.25rem; }
+    label { display: block; font-weight: 650; margin: 1rem 0 .35rem; }
+    select, button { min-height: 44px; border: 1px solid var(--border); border-radius: 9px; padding: .6rem .8rem; background: var(--surface); color: var(--text); font: inherit; }
+    select { width: 100%; }
+    .primary { background: #4338ca; color: white; border-color: #4338ca; }
+    .muted { color: var(--text-muted); }
+    .eyebrow { color: var(--text-muted); text-transform: uppercase; letter-spacing: .08em; font-size: .75rem; font-weight: 700; }
+    @media (max-width: 650px) { body { padding: 1rem; } .row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Dictation · before and after</p>
+  <h1>Choose the key that starts speaking</h1>
+  <div class="row">
+    <article>
+      <p class="eyebrow">Current</p>
+      <h2>Hold Fn to dictate anywhere</h2>
+      <p class="muted">Hold Fn, speak, then release to clean and paste the transcript.</p>
+      <p><button class="primary">Enable Fn shortcut</button></p>
+      <p class="muted">Fn key events are unavailable on some keyboards and macOS setups.</p>
+    </article>
+    <article>
+      <p class="eyebrow">Proposed</p>
+      <h2>Choose a push-to-talk shortcut</h2>
+      <p class="muted">Use a modifier key or record a key combination. Hold it while speaking; release it to finish.</p>
+      <label for="ptt-key">Push-to-talk key</label>
+      <select id="ptt-key">
+        <option>Fn</option><option selected>Left Option</option><option>Right Option</option>
+        <option>Left Control</option><option>Right Control</option>
+        <option>Left Command</option><option>Right Command</option>
+        <option>Left Shift</option><option>Right Shift</option><option>Custom key combination…</option>
+      </select>
+      <label for="custom-shortcut">Custom key combination</label>
+      <button id="custom-shortcut" type="button">Record shortcut</button>
+      <p class="muted">Current shortcut: ⌘ + ⇧ + D</p>
+      <p class="muted">Choose a chord that will not type text or trigger another app shortcut. macOS passes the keys through while OfficeKit listens.</p>
+      <p><button class="primary">Enable ⌘ + ⇧ + D shortcut</button></p>
+      <p class="muted">Left Option is the default because Fn events vary by keyboard. Custom combinations are saved on this Mac. Use a modifier with a key, or F13–F20 alone, to avoid triggering while typing.</p>
+    </article>
+  </div>
+</main>
+</body>
+</html>

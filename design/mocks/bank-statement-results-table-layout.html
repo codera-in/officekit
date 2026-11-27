@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit — Bank statement results layout</title>
+  <style>
+    :root { color-scheme: light dark; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; --ink:#172033; --muted:#607086; --line:#d9e1ea; --surface:#fff; --soft:#f5f7fa; --amber:#fff7e5; --amber-ink:#8a4b08; --accent:#5b46d6; }
+    * { box-sizing: border-box; }
+    body { margin:0; padding:24px; color:var(--ink); background:#eef1f5; }
+    h1 { margin:0 0 6px; font-size:24px; } .intro { margin:0 0 22px; color:var(--muted); }
+    .compare { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; align-items:start; }
+    .panel { min-width:0; padding:18px; background:var(--surface); border:1px solid var(--line); border-radius:12px; box-shadow:0 1px 2px #1720330b; }
+    h2 { margin:0 0 14px; font-size:17px; }
+    .banner { padding:12px 14px; margin-bottom:14px; color:var(--amber-ink); background:var(--amber); border:1px solid #f1d18e; border-radius:9px; font-size:13px; line-height:1.45; }
+    .viewport { max-height:286px; overflow:auto; border:1px solid var(--line); border-radius:9px; }
+    table { width:100%; border-collapse:collapse; text-align:left; font-size:12px; }
+    th { position:sticky; top:0; z-index:1; padding:10px 8px; background:var(--soft); border-bottom:1px solid var(--line); text-transform:uppercase; font-size:10px; letter-spacing:.03em; }
+    td { padding:10px 8px; vertical-align:middle; border-bottom:1px solid #e7ebf0; }
+    .old table { min-width:690px; } .old td { padding-top:26px; padding-bottom:26px; }
+    .old .date { min-width:118px; } .old .description { min-width:230px; line-height:1.5; overflow-wrap:anywhere; }
+    .date { width:120px; color:#263247; font-variant-numeric:tabular-nums; }
+    .description { min-width:250px; max-width:360px; color:#40516a; line-height:1.45; }
+    .numbers { min-width:82px; text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; }
+    .status { width:100px; text-align:center; }
+    .badge { display:inline-block; padding:4px 7px; color:#8a4b08; background:#fff0c2; border-radius:6px; line-height:1.15; }
+    .clamp { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; overflow-wrap:anywhere; }
+    .reveal { margin-top:5px; padding:0; color:var(--accent); background:none; border:0; font:inherit; text-decoration:underline; cursor:pointer; }
+    .more { display:block; margin-top:4px; color:var(--accent); text-decoration:underline; }
+    .note { margin:10px 0 0; color:var(--muted); font-size:11px; line-height:1.45; }
+    .actionbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 0 14px; padding:10px; border:1px solid var(--line); border-radius:9px; }
+    .actionbar strong { flex:none; font-size:12px; }
+    .actions { display:flex; flex-wrap:nowrap; gap:8px; }
+    .actions button { min-height:40px; padding:7px 10px; border:1px solid var(--line); border-radius:7px; background:var(--surface); color:var(--ink); font:inherit; font-size:12px; white-space:nowrap; }
+    .actions .primary { background:#2563eb; border-color:#2563eb; color:#fff; }
+    @media (max-width:760px) {
+      body { padding:12px; } .compare { grid-template-columns:1fr; gap:12px; }
+      .panel { padding:12px; } .viewport { max-height:310px; }
+      .after table { min-width:920px; table-layout:fixed; }
+      .after .date { width:140px; } .after .description { width:330px; }
+      .after .numbers { width:105px; } .after .status { width:110px; }
+      .actionbar { align-items:start; flex-direction:column; }
+      .actions { display:grid; width:100%; grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .actions button { min-width:0; min-height:44px; white-space:normal; }
+      .old .actions { display:flex; width:max-content; }
+      .after .actionbar { display:grid; grid-template-columns:1fr; }
+    }
+    @media (prefers-color-scheme:dark) {
+      :root { --ink:#ecf0f7; --muted:#a5b1c2; --line:#344054; --surface:#171c26; --soft:#222a37; --amber:#3a2b16; --amber-ink:#ffd68a; --accent:#aaa0ff; }
+      body { background:#0e1219; } td { border-bottom-color:#303948; } .date { color:#e3e9f2; } .description { color:#bec8d6; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Bank statement results</h1>
+  <p class="intro">Before and after for a statement with merged dates and very long narration. Data and row status stay unchanged.</p>
+  <main class="compare">
+    <section class="panel old" aria-labelledby="before-title">
+      <h2 id="before-title">Before · current table</h2>
+      <div class="banner"><strong>Balance math could not be verified.</strong> Review unchecked rows before relying on this result.</div>
+      <div class="actionbar"><strong>1 Transaction Extracted</strong><div class="actions"><button>Review &amp; correct</button><button class="primary">Export CSV</button><button class="primary">Export Excel (XLSX)</button><button>Legacy Excel (XLS)</button></div></div>
+      <div class="viewport"><table><thead><tr><th>#</th><th>Date</th><th>Description</th><th>Debit</th><th>Credit</th><th>Balance</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td class="date">21/09/26 25/09/26 25/09/26 25/09/26</td><td class="description">FOREIGNINNRPACBINW-TXN000000RO-ORBITX NETWORKGROUPPTELTD-SKYDO NEFTDR-UTIB0004034-JENNIFER ANDERSSON-NETBANK,MUM-HDFC00000000001-BB00N000001 12000000000003 50100000000001-TPT-HDFCAAAA0000001-MARY JANESMITH50100000000002-TPT-HDFCBBBB0000002-JOHNPAULDAWSO</td><td class="numbers">–</td><td class="numbers">–</td><td class="numbers">–</td><td class="status"><span class="badge">Not checked</span></td></tr>
+          <tr><td>2</td><td>STATEMENTSUMMARY:-</td><td>–</td><td>–</td><td>–</td><td>–</td><td class="status"><span class="badge">Not checked</span></td></tr>
+          <tr><td>3</td><td>–</td><td>OpeningBalanceDrCount CrCount Debits Credits ClosingBal</td><td>–</td><td>–</td><td>–</td><td class="status"><span class="badge">Not checked</span></td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Rows expand vertically and the column widths compete, making long text hard to scan.</p>
+    </section>
+    <section class="panel after" aria-labelledby="after-title">
+      <h2 id="after-title">After · bounded, readable rows</h2>
+      <div class="banner"><strong>Balance math could not be verified.</strong> Review unchecked rows before relying on this result.</div>
+      <div class="actionbar"><strong>1 Transaction Extracted</strong><div class="actions"><button>Review &amp; correct</button><button class="primary">Export CSV</button><button class="primary">Export Excel (XLSX)</button><button>Legacy Excel (XLS)</button></div></div>
+      <div class="viewport" role="region" aria-label="Extracted transaction rows" tabindex="0"><table><caption class="note">Extracted rows. Long values can be expanded; exports retain their full text.</caption><thead><tr><th>#</th><th>Date</th><th>Description</th><th>Debit</th><th>Credit</th><th>Balance</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td class="date"><details><summary><span class="clamp">21/09/26 25/09/26 25/09/26 25/09/26</span><span class="more">Show full date</span></summary><div>21/09/26 25/09/26 25/09/26 25/09/26</div></details></td><td class="description"><details><summary><span class="clamp">FOREIGNINNRPACBINW-TXN000000RO-ORBITX NETWORKGROUPPTELTD-SKYDO NEFTDR-UTIB0004034-JENNIFER ANDERSSON-NETBANK,MUM-HDFC00000000001-BB00N000001 12000000000003 50100000000001-TPT-HDFCAAAA0000001-MARY JANESMITH50100000000002-TPT-HDFCBBBB0000002-JOHNPAULDAWSO</span><span class="more">Show full description</span></summary><div>FOREIGNINNRPACBINW-TXN000000RO-ORBITX NETWORKGROUPPTELTD-SKYDO NEFTDR-UTIB0004034-JENNIFER ANDERSSON-NETBANK,MUM-HDFC00000000001-BB00N000001 12000000000003 50100000000001-TPT-HDFCAAAA0000001-MARY JANESMITH50100000000002-TPT-HDFCBBBB0000002-JOHNPAULDAWSO</div></details></td><td class="numbers">–</td><td class="numbers">–</td><td class="numbers">–</td><td class="status"><span class="badge">Not checked</span></td></tr>
+          <tr><td>2</td><td class="date"><div class="clamp">STATEMENTSUMMARY:-</div></td><td class="description">–</td><td class="numbers">–</td><td class="numbers">–</td><td class="numbers">–</td><td class="status"><span class="badge">Not checked</span></td></tr>
+          <tr><td>3</td><td class="date">–</td><td class="description"><div class="clamp">OpeningBalanceDrCount CrCount Debits Credits ClosingBal</div></td><td class="numbers">–</td><td class="numbers">–</td><td class="numbers">–</td><td class="status"><span class="badge">Not checked</span></td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Fixed-width amount columns, a bounded scroll area and two-line text previews keep neighboring rows visible. “Show full date” and “Show full description” reveal the raw values without changing the CSV/XLSX data.</p>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,134 @@
+{
+  "$schema": "https://raw.githubusercontent.com/tauri-apps/tauri/dev/crates/tauri-cli/schema.json",
+  "productName": "OfficeKit",
+  "version": "1.0.123",
+  "identifier": "app.officekit.desktop",
+  "build": {
+    "beforeDevCommand": "npm run build:ui && npm run build:sidecar",
+    "beforeBuildCommand": "npm run build:ui && npm run icons:build && npm run build:sidecar",
+    "frontendDist": "../dist-ui"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "OfficeKit — The Everyday Toolbox for your Computer",
+        "width": 1240,
+        "height": 840,
+        "minWidth": 1100,
+        "minHeight": 760,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ],
+    "security": {
+      "csp": {
+        "default-src": "'self' customprotocol: asset:",
+        "base-uri": "'self'",
+        "connect-src": "ipc: http://ipc.localhost http://127.0.0.1:*",
+        "font-src": "'self' asset: data:",
+        "img-src": "'self' asset: http://asset.localhost blob: data:",
+        "object-src": "'none'",
+        "frame-src": "'self' blob:",
+        "script-src": "'self' 'sha256-XQpTlMl9RgGDH+vMCEqu/Uw7+tQvXgPrLsvRqfVKD5k=' 'sha256-l8SWuTbzRjCKlFLmnWpsb04jb2Nun+o3HERu8+XZHsI=' 'sha256-jAFnZ0gjM/L8Ed4gcw3YtdewHSx64ILVAfdL12Crnqc='",
+        "style-src": "'self' 'unsafe-inline'"
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "macOS": {
+      "entitlements": "Entitlements.plist",
+      "minimumSystemVersion": "14.0"
+    },
+    "externalBin": [
+      "binaries/officekit-backend"
+    ],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "fileAssociations": [
+      {
+        "ext": [
+          "pdf"
+        ],
+        "mimeType": "application/pdf",
+        "name": "PDF document",
+        "role": "Viewer",
+        "rank": "Alternate"
+      },
+      {
+        "ext": [
+          "png",
+          "jpg",
+          "jpeg",
+          "webp",
+          "bmp",
+          "tif",
+          "tiff",
+          "gif",
+          "ico",
+          "svg"
+        ],
+        "name": "Image",
+        "role": "Viewer",
+        "rank": "Alternate"
+      },
+      {
+        "ext": [
+          "csv",
+          "tsv",
+          "tab",
+          "txt",
+          "xlsx",
+          "xls",
+          "json",
+          "yaml",
+          "yml"
+        ],
+        "name": "Data file",
+        "role": "Viewer",
+        "rank": "Alternate"
+      },
+      {
+        "ext": [
+          "zip"
+        ],
+        "mimeType": "application/zip",
+        "name": "ZIP archive",
+        "role": "Viewer",
+        "rank": "Alternate"
+      },
+      {
+        "ext": [
+          "wav",
+          "mp3",
+          "m4a",
+          "aiff",
+          "aif",
+          "flac",
+          "caf"
+        ],
+        "name": "Audio",
+        "role": "Viewer",
+        "rank": "Alternate"
+      },
+      {
+        "ext": [
+          "mp4",
+          "mov",
+          "webm",
+          "mkv"
+        ],
+        "name": "Video",
+        "role": "Viewer",
+        "rank": "Alternate"
+      }
+    ]
+  }
+}

@@ -1,0 +1,158 @@
+[
+  {
+    "id": "future-review-is-not-an-assignment",
+    "transcript": "There will be a design review next week.",
+    "action_items": [],
+    "decisions": []
+  },
+  {
+    "id": "future-availability-is-not-an-assignment",
+    "transcript": "The application will be available Friday.",
+    "action_items": [],
+    "decisions": []
+  },
+  {
+    "id": "no-need-is-not-an-assignment",
+    "transcript": "There is no need to publish before legal sign-off.",
+    "action_items": [],
+    "decisions": []
+  },
+  {
+    "id": "negative-have-to-is-not-an-assignment",
+    "transcript": "Sarah does not have to contact the vendor.",
+    "action_items": [],
+    "decisions": []
+  },
+  {
+    "id": "future-decision-is-not-made",
+    "transcript": "The decision will be made after legal review.",
+    "action_items": [],
+    "decisions": []
+  },
+  {
+    "id": "decision-not-reached",
+    "transcript": "A decision was not reached.",
+    "action_items": [],
+    "decisions": []
+  },
+  {
+    "id": "decision-has-not-been-reached",
+    "transcript": "The decision has not been reached.",
+    "action_items": [],
+    "decisions": []
+  },
+  {
+    "id": "decision-remains-open",
+    "transcript": "The decision will remain open until finance signs off.",
+    "action_items": [],
+    "decisions": []
+  },
+  {
+    "id": "uncertain-approval-is-not-a-decision",
+    "transcript": "The team may have approved the revised price.",
+    "action_items": [],
+    "decisions": []
+  },
+  {
+    "id": "uncertain-supplier-choice-is-not-a-decision",
+    "transcript": "The team might have chosen the new supplier.",
+    "action_items": [],
+    "decisions": []
+  },
+  {
+    "id": "uncertain-decision-announcement-is-not-a-decision",
+    "transcript": "A decision might be announced Monday.",
+    "action_items": [],
+    "decisions": []
+  },
+  {
+    "id": "direct-assignment-is-an-action",
+    "transcript": "Morgan will publish revised pricing by Thursday.",
+    "action_items": ["Morgan will publish revised pricing by Thursday"],
+    "decisions": []
+  },
+  {
+    "id": "explicit-need-is-an-action",
+    "transcript": "We need to decide by Friday.",
+    "action_items": ["We need to decide by Friday"],
+    "decisions": []
+  },
+  {
+    "id": "must-is-an-action",
+    "transcript": "Sarah must review the release checklist.",
+    "action_items": ["Sarah must review the release checklist"],
+    "decisions": []
+  },
+  {
+    "id": "confirmed-approval-is-a-decision",
+    "transcript": "The team approved the revised price.",
+    "action_items": [],
+    "decisions": ["The team approved the revised price"]
+  },
+  {
+    "id": "affirmative-choice-is-a-decision",
+    "transcript": "We decided not to raise prices this quarter.",
+    "action_items": [],
+    "decisions": ["We decided not to raise prices this quarter"]
+  },
+  {
+    "id": "tentative-action-is-not-confirmed",
+    "transcript": "David will probably share the build tomorrow.",
+    "action_items": [],
+    "decisions": []
+  },
+  {
+    "id": "question-is-not-an-action",
+    "transcript": "Will the service restart tonight?",
+    "action_items": [],
+    "decisions": []
+  },
+  {
+    "id": "positive-clause-survives-contrast",
+    "transcript": "We will not ship today, but Sarah will publish the docs tomorrow.",
+    "action_items": ["Sarah will publish the docs tomorrow"],
+    "decisions": []
+  },
+  {
+    "id": "positive-decision-survives-contrast",
+    "transcript": "We have not chosen a launch date, but we approved the privacy approach.",
+    "action_items": [],
+    "decisions": ["we approved the privacy approach"]
+  },
+  {
+    "id": "completed-decision-is-recorded",
+    "transcript": "The team reached a decision to retain the current price.",
+    "action_items": [],
+    "decisions": ["The team reached a decision to retain the current price"]
+  },
+  {
+    "id": "progressive-assignment-is-an-action",
+    "transcript": "Sarah will be reviewing the proposal by Friday.",
+    "action_items": ["Sarah will be reviewing the proposal by Friday"],
+    "decisions": []
+  },
+  {
+    "id": "obligation-to-be-in-a-state-is-not-an-action",
+    "transcript": "We must be ready before review. Sarah must be available for questions. Sarah must be available and review the agenda. The team will review the agenda. Sarah must be ready, and the team will send the agenda.",
+    "action_items": ["Sarah must be available and review the agenda", "The team will review the agenda", "Sarah must be ready, and the team will send the agenda"],
+    "decisions": []
+  },
+  {
+    "id": "negative-directive-is-not-an-action",
+    "transcript": "Let's not publish before legal sign-off.",
+    "action_items": [],
+    "decisions": []
+  },
+  {
+    "id": "positive-action-survives-negative-directive",
+    "transcript": "Let's not publish today, but Sarah will publish the docs tomorrow.",
+    "action_items": ["Sarah will publish the docs tomorrow"],
+    "decisions": []
+  },
+  {
+    "id": "dont-forget-remains-an-action-reminder",
+    "transcript": "Let's not forget to send the invoice by Friday.",
+    "action_items": ["Let's not forget to send the invoice by Friday"],
+    "decisions": []
+  }
+]

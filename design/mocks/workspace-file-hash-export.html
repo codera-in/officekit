@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>OfficeKit — Checksum result actions</title>
+  <style>
+    :root{font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f4f6fb}*{box-sizing:border-box}body{margin:0;padding:32px}.wrap{max-width:980px;margin:auto}h1{font-size:27px;margin:0 0 8px}.lead{color:#65718a;margin:0 0 22px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.card{background:#fff;border:1px solid #dce3ef;border-radius:18px;padding:22px;box-shadow:0 8px 24px #1f2c4810}.eyebrow{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:#71809a}.summary{font-weight:700;margin:16px 0 10px}.file{font-size:13px;font-weight:700;margin-top:14px}.digest{font:12px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;color:#52617c;overflow-wrap:anywhere;background:#f7f8fc;border-radius:8px;padding:9px;margin-top:5px}.buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.button{border:1px solid #cbd5e1;background:#fff;border-radius:9px;padding:9px 12px;font-weight:650;color:#34425b}.primary{background:#493fe1;color:#fff;border-color:#493fe1}.status{font-size:12px;color:#61708a;margin-top:12px}.warning{color:#8b5a13;background:#fff7e8;border-radius:9px;padding:10px;margin-top:12px;font-size:12px}.note{font-size:13px;color:#65718a;margin-top:18px}@media(max-width:760px){body{padding:18px}.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>Checksum result actions</h1>
+    <p class="lead">Small follow-up to the existing checksum workbench. It adds ways to take the generated result with you, without changing how files are selected or hashed.</p>
+    <div class="grid">
+      <section class="card"><div class="eyebrow">Before · result only</div><div class="summary">2 files · 0.00 MiB · SHA-256 checksums</div><div class="file">report.pdf</div><div class="digest">7b2450a8…64 hexadecimal characters</div><div class="file">opaque.bin</div><div class="digest">a1d0d8…64 hexadecimal characters</div><div class="warning">To compare or share a checksum, the user must manually select and copy text.</div></section>
+      <section class="card"><div class="eyebrow">After · result plus actions</div><div class="summary">2 files · 0.00 MiB · SHA-256 checksums</div><div class="file">report.pdf</div><div class="digest">7b2450a8…64 hexadecimal characters</div><div class="file">opaque.bin</div><div class="digest">a1d0d8…64 hexadecimal characters</div><div class="buttons"><button class="button primary">Copy checksum report</button><button class="button">Download .txt</button></div><div class="status">Copied 2 checksums. Source files and temporary copies are unchanged.</div></section>
+    </div>
+    <p class="note">Export includes the selected algorithm, filenames and complete digests. Clipboard failures are reported without hiding the downloadable report.</p>
+  </main>
+</body>
+</html>

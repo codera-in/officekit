@@ -1,0 +1,252 @@
+# OfficeKit design system
+
+Version: 1.9.24 · The Parakeet speech models carry a full CC BY 4.0 credit under the Speech model picker (owner decision 2026-11-27, mock `model-attribution` approved): "Model: NVIDIA Parakeet TDT 0.6B, converted to Core ML by FluidInference. License: CC BY 4.0 (creativecommons.org/licenses/by/4.0)." followed by the existing quality note. It is plain text, so the screen gains no control; Whisper and Qwen3 keep their own lines. Earlier: 1.9.23 · Meetings and calls can be coached (owner decision 2026-11-26, mock `meeting-coach-prompt` approved). The call or started-meeting reminder offers **Record this call**, **Coach me** and Not now (at most three buttons); Coach me starts Listen In with the Live Workspace and records nothing; like Listen In in Quick Controls it turns Speech Coach on and uses the Practice context, and it is refused while a meeting recording or another coached session already has the microphone. It ends about 20 seconds after a call that was there releases the microphone (a meeting not yet joined, or in person, keeps coaching until it is ended from the HUD or Quick Controls). While Speech Coach is on, a meeting recording is also coached, from the microphone only and never system audio, and ends with one Speech Coach note; turning Speech Coach off or pausing it ends the meeting's coaching. Every coach surface (reminder, HUD, Live Workspace) asks macOS to exclude it from screen sharing and recording, which also applies to every other reminder (breaks, eyes, posture) because they share the reminder window; this is checked in source and has not yet been confirmed on an installed build against Zoom, Meet and QuickTime. Each Live Workspace fix also shows the rule behind it (owner decision 2026-11-26, mock `speech-coach-grammar-rules`, option A: always shown, "approved"): a short plain-words rule and one wrong/right example under the fix, with no new button (the card keeps Clear, Copy and Done); the saved note shows the same rule beside a repeated pattern unless that pattern is dismissed. A generic grammar finding with no written rule keeps showing only the checker's hint. Earlier: 1.9.22 · After a run that ended without a normal quit, OfficeKit shows one "OfficeKit closed unexpectedly" dialog on the next launch (owner decision 2026-11-26, mock `crash-notice-on-launch` approved). It lists the OfficeKit version, the macOS version and the time, and offers **Send report** and **Not now** (two buttons; after sending, one **Done**). A "Reopen OfficeKit automatically after a crash" checkbox appears only while that setting is off. Nothing is sent unless Send report is pressed, the report is an ordinary Help & feedback bug, and no crash report file is read. Earlier: 1.9.21 · Help & feedback is send-only (owner decision 2026-11-24, mock `support-send-report` approved): no local draft, no "Reopen a saved draft", no Open draft. One primary **Send report** button (it becomes **Try again** after a failure, keeping the text) plus Cancel and the corner ×, three buttons in all; a "See exactly what is sent" disclosure (text, not a button) lists what leaves the Mac. The Sent state shows the reference and says we will tell the user in the app, and by email when one was given, when a fix ships; an error says nothing was sent. On launch a toast says "Your report OK-n is fixed in OfficeKit x.y.z". Earlier: 1.9.20 · Deactivate this Mac: the licence-details dialog gains a text link, "Deactivate this Mac…" (not counted as a button), that opens a confirm step with the purchase email and licence key fields (the app never stores them), a red Deactivate button and Cancel, plus the corner ×, three buttons in all. Success locks the app and shows the existing "Activate OfficeKit" banner; a service that cannot be reached changes nothing, says so and the button reads "Try again"; Cancel and × return to the details (owner-approved mock 2026-11-21, with the email and key fields chosen over a one-click confirm that could not authenticate). Earlier: 1.9.19 · Activated licence: the header chip reads "Activated" (no device counts) and opens a licence-details dialog (status, edition, devices used of allowed, last verified, works offline, short activation ID; Close and Copy details, two buttons) instead of the activation form; every other state still opens the activation form; email and key are never shown because the app does not keep them (owner-approved mock 2026-11-20). Earlier: 1.9.18 · Merge of the paid-activation work onto main: the licence gate classifies main's newer routes and commands as paid, and main's release-profile (private-beta) gating is kept alongside it. Earlier: Bottom action bar: fixed 64px on every tool, no title, a grey hint left, up to three 168px by 40px buttons right with the primary last; success is a toast (4 seconds, bottom right above the bar) and errors are a popup dialog, never drawn in the bar (owner-approved 2026-11-05). Earlier: 1.9.16 · Calculator work area: the card heading names the open calculator, calculator screens show no bottom bar (Calculate, Save result and Download sit in the card, option A approved 2026-10-25), Calculate sits in one bottom row inside the card with a status line on the left (decision 20), and the card fills the work area above the version footer (decision 20, approved 2026-10-24). Media toolkit: a mixed batch lists its operations under one labelled group per type; each group applies to its own files (decision 19, approved 2026-10-23). PDF editor: the inspector column is capped to its grid track so the sign panel stays inside the window (decision 18, approved 2026-10-23). Media toolkit: the operation type comes from the chosen files, the operation select is labelled "What do you want to do?", Select files is a text link (decision 17, approved 2026-10-23). Screenshot editor: Save is the primary action; Copy image and Optimize edited copy sit under More; Choose image is the only source button, with capture and paste as text links (decision 12, approved 2026-10-22). Voice screen is one section-list screen with Speech Coach as a section, tabs removed (decision 15, approved mock); Home has one search, the header bar (decision 16); Status: one outcome slot for action results (success, working, error, neutral info) used by Ergonomics save, calendar and motion status, converter, image resize, Media toolkit run and cancel, PII, PDF workbench, workspace, ZIP workspace, screenshot export, developer tools, window snap, support, storage, PDF editor, process list, dictation status lines, calculator result actions and result actions; errors use role="alert", approved 2026-10-22 (decision 13); section list beside long Voice transcription screen, approved 2026-10-22 (decision 14); batch renamer asks "How to rename" and shows only the fields that rule uses; archive screen asks "What to do", offers "Make a ZIP" and hides the single-format picker; their Reset control is removed (choosing files replaces the selection), keeping both screens at three buttons (owner-approved mocks 03 and 04, 2026-10-22); each calculator opens on its own screen named as in the catalogue, with one "All tools" back action; the eleven-pill selector is removed (owner-approved direction 2026-10-22, mock 02); bottom action bar hidden on browsing screens and on tool screens with no task action, so the bar only appears when there is something to do (owner request 2026-10-22, applied to all pages); Settings screen with Connect AI agents approved 2026-10-21 (`docs/ui-research/2026-10-21-approved-settings-ai-agents.md`); Apple Pro UI revamp (macOS Sequoia / Sonoma Liquid Glass split-pane materials, specular hairlines, Space Black dark mode optical architecture, floating Siri-style STT HUD overlay, tactile progress bar system, and streamlined in-app system banner) approved 2026-10-17; cross-app Activity monitor with operation insights, background continuation, merged saved-result history, and automatic sidebar collapse on tool entry approved 2026-10-17; duplicate cleanup, recursive scans, folder matching, Finder reveal, header sorting, pagination, shared hierarchy and border-only text-field focus approved 2026-10-16; Ice Blue glass visual direction and daisyUI component-library adoption approved 2026-10-15; system-wide storage analyser and cleaner, transcript history refresh, and persistent bottom action bar approved 2026-10-14; screenshot toolbar refinement and theme/model settings approved 2026-10-13; combined screens and architecture approved with "lgtm", 2026-10-12. Current UI stack: daisyUI 5.7.50 with Tailwind CSS 4.3.3. User direction: Apple Pro craftsmanship, simple, intuitive, appealing and consistent. Acceptance evidence distinguishes source/browser checks from installed/native behavior.
+
+OfficeKit — The everyday toolbox for your computer.
+
+This is the canonical UI specification for OfficeKit. The shared light/dark tokens in [design/officekit-tokens.css](design/officekit-tokens.css) are imported into the production stylesheet. The interaction prototype [design/mocks/officekit-final-flow.html](design/mocks/officekit-final-flow.html) remains a separate reference, and component ownership is described in [design/COMPONENT_STRUCTURE.md](design/COMPONENT_STRUCTURE.md). Do not treat the word “final” in the prototype filename as approval.
+
+## Design intent
+
+The storage tool defaults to the entire computer's readable local disks. Per-volume multicolour bars and labelled legends show mutually exclusive estimated categories, unclassified used space and measured available capacity. Category colours use shared `--ok-storage-*` tokens in both themes; labels/sizes make the chart usable without colour. Largest-file/folder tables remain inspection-only. Cleanup candidates require exact selection, plan review and confirmation, with Trash versus permanent tool effects explicit. Docker usage is an inspection table separate from the host overview; Docker volumes are never cleanup candidates. Scan coverage includes a macOS Full Disk Access settings action, manual permission guidance and no automatic grant or scan. Folder analysis remains an optional scope; system results and cleanup controls are hidden in that scope. Cleanup actions use the shared reserved action area, which never covers results or status.
+
+Make an everyday task feel immediate and its result dependable. The distinctive element is the small Toolkit mark and restrained utility-blue actions; the working area stays quiet. Prefer clear rows, readable numbers and direct labels to decorative dashboards. Offline/local processing is a contextual fact, not a permanent promotional banner. The shell must remain useful with analytics disabled.
+
+Working brand: Utility blue + Toolkit. The user endorsed a beautifully simple desktop-utility approach and selected the OfficeKit monogram app icon; the broader palette and screen remain open for review. Alternative concepts remain in `design/mocks/officekit-branding.html`. No trademark clearance is implied.
+
+## Product principles and app-wide consistency
+
+Text inputs, selects and textareas use their existing border in `--ok-focus` while focused, without an extra outline/ring/shadow or layout change. Composite search fields place daisyUI's `input` class on the enclosing field; inner inputs stay transparent and borderless. Home/catalogue search focus the enclosing border and Quick Search focuses its existing divider. Keep visible keyboard outlines for buttons, checkboxes, radios, ranges and canvas controls. This is the approved refinement in `docs/ui-research/2026-10-16-approved-field-focus.md`.
+
+Action buttons use the existing Font Awesome set with a 16px decorative icon and 8px label gap inside daisyUI controls. Keep labels and accessible names unchanged. Cancel, Clear, Reset and Close stay quiet text actions. Reuse existing icons; preserve affordances through pending and selected-file text updates. Sidebar, tabs, tool cards and canvas tool patterns retain their established treatment. See `docs/ui-research/2026-10-16-approved-action-icons.md` for approval and verification scope.
+
+Tool page titles share the 28px `--ok-title` token and a clear heading weight. Every tool presents task controls, result actions and status in the permanent bottom action area below the scrolling workspace. Reserve its actual wrapped height so results remain visible. Preserve existing control handlers, form ownership and immutable result snapshots. Browsing screens show no empty bar. Field-specific editing controls remain beside their content. Duplicate cleanup uses neutral outlined selection/Trash controls and an explicit error-outlined final confirmation; keep a verified file in each group. The durable approved decision is `docs/ui-research/2026-10-16-approved-duplicate-cleanup.md`, mirrored in the local review folder.
+
+Duplicate Finder always includes subfolders in desktop searches. Find selects identical files or identical folders; folder matches are inspection-only and include exact relative names, empty-directory structure and file contents. Names and locations expose full local paths on hover; each row provides Show in Finder using scan-bound native identity resolution. Name, Date modified and Size headers sort whole groups in either direction using accessible buttons and aria-sort; remove separate sort dropdown/direction controls. Paginate 10/25/50/100 groups per page and preserve file selections across pages/sorting. Keep file-selection controls before the table and pagination after it. The table scrolls with the workspace; task/result actions remain in the reserved bottom bar. Use a compact chooser and result heading with Complete/Partial badge; matching rules, coverage and Finder/path explanations live under Details. Select all duplicates spans every page while retaining one verified file per group; disclose the 10,000-copy batch limit when applicable. Recursive scope follows `docs/ui-research/2026-10-16-approved-duplicate-finder-navigation.md`; the latest layout follows `docs/ui-research/2026-10-16-approved-persistent-tool-actions.md`.
+
+The Activity destination combines running work, recent operation results, saved results and recent tools. Long-running file, storage and PDF workspace jobs expose their current phase and operation-specific counters; file duplicate scans distinguish potential recovery from actual bytes moved to Trash, and storage estimates are labelled as estimates. Continue in background leaves the job running while navigating within the open app; the Activity destination and compact monitor keep it observable and cancellable. Jobs and their live monitor state are held only for the current app session, so closing OfficeKit ends in-progress work. Activity replaces the separate History navigation entry; old History routes forward to Activity. Quick access duplicates global search and the category list, so it is omitted. Entering a tool screen automatically collapses the sidebar while the user can still expand it manually for navigation. Desktop windows require at least 1100×760 logical pixels to protect the workspace and persistent action area. Approved implementation direction and exact approval are recorded in `docs/ui-research/2026-10-17-approved-persistent-activity.md`.
+
+The primary audience is people using a desktop toolbox to complete everyday document, image, file and dictation tasks. The app must feel capable without requiring knowledge of engines, APIs, temporary storage or internal workspaces. Keep the existing monogram and semantic roles; use the selected Ice Blue palette and restrained glass materials to create a fresh, spacious shell while preserving clear task hierarchy and readable controls.
+
+| Principle | Required behavior | Review evidence |
+| --- | --- | --- |
+| Simple | One primary action per task state; show essential inputs first; advanced controls use one labelled Details section | Count primary actions and visible fields on the complete screen |
+| Intuitive | Controls use concrete verbs and familiar placement; selected input → run → inspect result → copy/download | A first-use walkthrough completes without implementation instructions |
+| Appealing | Shared tokens, aligned edges, consistent density and quiet canvas; no per-tool decorative palette | Compare complete screens in both themes against the token reference |
+| Consistent | Same meaning uses the same label, icon, location, state and feedback across tools | Registry-wide UI/action matrix, not isolated screenshot review |
+| Direct | Act on selected originals; keep complete results usable immediately | No mandatory workspace-copy/import step in desktop filesystem tasks |
+
+Every screen MUST use shared navigation, control, field, result, status and dialog patterns. Consistency applies to behavior as well as appearance. Different result types retain meaningful differences; do not force an image canvas into a calculator form or expose a universal list of irrelevant formats.
+
+## Component library
+
+Use daisyUI 5.7.50 components for reusable controls and patterns that it provides: buttons, inputs, selects, textareas, checkboxes, switches, radios, ranges, tabs, alerts, badges, cards, dialogs and tables. Apply the library classes in both static markup and runtime-created UI. Do not create or maintain parallel custom versions of an available library component. Keep custom markup and styling only for product-specific interactions the library does not provide, such as the PDF editing workspace, screenshot annotation canvas and file dropzone; use daisyUI controls inside those surfaces.
+
+Use three tool layouts only:
+
+1. **Compute/text:** heading, essential form, one Calculate/Convert/Generate action, result. Side-by-side when space permits; stacked inputs then result on narrow layouts.
+2. **Files/batches:** choose original files/folders, task options, one named action, summary and per-item results. Preview precedes in-place mutations. Output destinations are explicit.
+3. **Canvas/live work:** persistent task actions, compact relevant tools, working area and contextual settings. Recording/capture state stays visible; configuration does not displace the working area.
+
+Exceptions MUST name the user need and the shared behaviors they retain. They cannot invent a second Copy/Download convention, color system or feedback model.
+
+## Before and after
+
+| Existing pattern (source review) | Required direction |
+| --- | --- |
+| Bank statement landing screen | Neutral Tools landing with local search and personal shortcuts |
+| Broad tab search destinations | Exact tool ID and usable route; no placeholder listings |
+| Pricing/update/license controls in task header | Settings owns administration; navigation owns destinations |
+| Temporary calculator output | Result snapshot with Copy, Export and Save result |
+| Separate colored export buttons | One Export entry, meaningful format choices in a dialog |
+| Dollar-only labels | Explicit currency, units, assumptions and display precision |
+| Browser alerts and raw crash report as routine feedback | Inline field errors, actionable operation errors, optional technical details |
+| Operation error rendered in an unrelated section | Dismissible app-wide toast plus persistent recovery message beside the operation that failed |
+| Local support ticket described as delivered | Local draft versus remotely acknowledged submission |
+
+This is a comparison of code behavior, not a visual before/after screenshot. The prior reconstruction remains in `design/mocks/officekit-ux-review.html`.
+
+## Foundations and theme
+
+Use semantic `--ok-*` tokens; no literal colors, spacing, radius or type sizes in production components except inside token definitions. The reference CSS includes every value for both themes. Mode choice: System / Light / Dark, default System; persist only the user's explicit override. Observe OS changes only in System. Theme affects app chrome, not the report background. Resolve the stored preference before first paint; map shared Tailwind utility surfaces and native controls across every tool; keep image pixels and exported paper readable and faithful. Test every registered tool destination, all settings and dialogs, plus desktop and compact widths.
+
+### Apple Pro optical architecture & Space Black dark mode
+
+The visual revamp follows Apple Human Interface Guidelines for desktop utilities on macOS Sequoia / Sonoma:
+
+1. **Optical specular hairline lighting (`--hairline`):** In place of heavy, solid 1px borders (`border-slate-300`, `border-slate-800`), surfaces utilize subtle edge reflections (`inset 0 1px 0 rgba(255, 255, 255, 0.90)` in Light Glass and `inset 0 1px 0 rgba(255, 255, 255, 0.12)` in Space Black). This simulates physical glass edges catching overhead ambient lighting, producing crisp squircle elevation without visual fatigue.
+2. **Liquid Glass split-pane materials:** App window chrome, sidebar navigation and persistent status overlays use frosted translucency (`backdrop-filter: blur(28px) saturate(180%)`).
+3. **Space Black contrast engine:** Dark mode adopts deep obsidian canvas (`#090E17`), elevated glass cards (`rgba(24, 34, 48, 0.85)`), and an automatic primary accent shift from San Francisco Blue (`#0284c7`) in Light Glass to Electric Azure (`#38bdf8`) in Space Black, meeting WCAG AAA contrast requirements against dark backgrounds.
+4. **Design invariants:** Standard button height is 40px on desktop and $\ge 44$px at compact/touch widths (900px and below); page titles consistently inherit the 28px `--ok-title` token; zero horizontal document overflow is enforced across all viewports.
+
+| Role | Light Glass | Space Black |
+| --- | --- | --- |
+| Canvas | #EDF2F7 (`--bg-canvas`) | #090E17 (`--bg-canvas`) |
+| Window surface | rgba(255, 255, 255, 0.88) | rgba(18, 26, 38, 0.90) |
+| Sidebar surface | rgba(246, 248, 251, 0.78) | rgba(14, 20, 30, 0.85) |
+| Card / Panel surface | rgba(255, 255, 255, 0.92) | rgba(24, 34, 48, 0.85) |
+| Input well / track | rgba(238, 242, 246, 0.90) | rgba(30, 42, 58, 0.92) |
+| Hairline reflection | inset 0 1px 0 rgba(255,255,255,0.90) | inset 0 1px 0 rgba(255,255,255,0.12) |
+| Text | #0F172A | #F8FAFC |
+| Muted text | #475569 | #94A3B8 |
+| Accent | #0284C7 (San Francisco Blue) | #38BDF8 (Electric Azure) |
+| Text on accent | #FFFFFF | #090E17 |
+
+Success, warning and error have independent semantic tokens and always a textual label. Accent never means “success.” Decorative separators may be subtle; interactive input boundaries and focus indicators must meet nontext contrast requirements.
+
+Typography: bundled/native system sans stack, 15px body with 1.5 line-height, 13px secondary labels, 12px only for supplementary timestamps/captions, 18px section heading, 28px page title (`--ok-title`), 42px main numeric result. Use tabular numerals for money/tables, natural sentence case, and a real minus sign for negative values. Body copy stays under 78 characters per line. One principal result has visual emphasis; subsidiary values are smaller. Locale-format numbers, dates, decimal separators and currency; store unformatted numeric values with explicit units. Do not round intermediate calculations merely to match displayed precision.
+
+Spacing scale: 4 / 8 / 12 / 16 / 20 / 24 / 32 / 40px. Standard buttons, single-line inputs and selects are 40px high on desktop and at least 44px high at compact/touch widths (900px and below). Icon-only buttons use the same height and a square minimum width. Buttons with intentionally wrapped labels may grow to fit; their minimum height and padding stay shared. Textareas use a 160px minimum height and may be taller when the task needs more visible writing space. Range, color, checkbox and radio controls retain their native/library-specific dimensions. Radii: 8px control, 14px panel, 18px dialog, squircle card corners (`rounded-2xl`). Use restrained translucency, backdrop blur and hairline highlights on app chrome, navigation, panels, and transient overlays; keep document paper, image pixels and dense data surfaces opaque and faithful. Soft atmospheric color may sit behind app chrome, but task surfaces must not use decorative gradients. Short 140ms color transitions may acknowledge interaction; reduced motion disables them.
+
+## Brand use
+
+The selected app mark is a geometric O/K monogram: a white rounded O loop and K strokes on a full-bleed violet field, with one short amber underline. Use the vector silhouette, not a font glyph or emoji, in generated platform assets. Wordmark: OfficeKit, one word, no alternate capitalization, no version badge attached. Clear space around the mark equals one quarter of its width. Keep the O counter and K gap open at small system sizes; the 16px and 32px macOS ICNS renditions have been inspected after decoding. `scripts/build-app-icons.mjs` is the single artwork source; `npm run icons:build` regenerates `app-icon.png`, Tauri PNGs, the Windows ICO and the macOS ICNS using the pinned Tauri CLI encoder. The native build runs this generator before bundling so installers cannot silently retain stale platform images, and tests assert shared asset parity and compare Apple-decoded ICNS sizes against Tauri-generated output. Reinstall a rebuilt app to refresh macOS's cached Login Items icon. Keep the app icon separate from UI accent tokens while the broader palette remains under review. Do not add shadows or outlines. App icons are dedicated platform assets with platform-appropriate masks and safe areas, not browser favicons stretched to installer size.
+
+## Shell and navigation
+
+Desktop rail: 196px expanded, 64px collapsed. Main column: at most 1080px for forms/reports, left aligned, 32px page padding; canvas and wide tables may use available width. Navigation: Home, All tools, Favorites, Recent tools, History; Help & feedback and Settings at the bottom. History includes All and Saved filters; tool history is another filter of the same dataset, not a separate storage system. Recent tools are deduplicated tool shortcuts, not recent results.
+
+Home MUST show at most five distinct recent tools, newest first, beside favorites where width permits. All tools owns catalogue filters/Gallery/List. Favorites and Recent tools have full views. Empty states provide one useful next action. Never fill Home with the entire history or catalogue.
+
+Title bar, notice when present and navigation MUST remain visible while main content scrolls. Size the shell from actual layout; no hardcoded banner offsets. Sidebar categories may scroll independently. The sidebar has an explicit Collapse/Expand button, accessible icon names/tooltips when collapsed, preserved focus and remembered explicit preference. Tool entry may collapse the rail by default until the user chooses otherwise. Route changes and collapse MUST preserve drafts, active jobs and result state.
+
+At 900–1100px, reduce rail/padding and stack the result form if needed. Below 760px, use a compact navigation row or drawer with textual labels; do not rely on hover or unlabelled icons. The mock uses a wrapping row to inspect compact behavior. Support 200% zoom without clipping actions. Actual desktop minimum width is 900px; inspect 390px as a resilience case, not a new mobile-product commitment.
+
+One back/breadcrumb control per screen. Title, Favorite tool and Tool history serve different roles and never duplicate another destination. Search is local, supports aliases, and opens a specific tool. Cmd/Ctrl+K focuses search; display the platform-appropriate shortcut. Enter opens the first matching tool; production arrow-key selection needs a complete accessible list pattern. Escape dismisses transient UI. Cmd/Ctrl+B toggles navigation; proposed Option/Alt+R and Option/Alt+F open recent tools and favorites, subject to platform-conflict checks. Bare-letter tool shortcuts work only in that workspace outside editable controls, composition and modified key events. Every shortcut has a visible control equivalent. Do not invent an LLM or online search to browse tools.
+
+### Liquid Glass In-App System Banner
+
+The app banner is a frosted glass status surface (`backdrop-filter: blur(24px)`) integrated into the app header, replacing legacy rigid gradient stripes. It features:
+- **Three dynamic modes:** Release announcement mode (features/updates with action link), Quick Tip mode (workflow shortcuts), and Active Task mode (asynchronous job tracking).
+- **Embedded mini progress bar:** Shows active task percentage during batch processing, storage scans, or OCR pipelines without displacing main view content.
+- **Translucent frosted styling:** Bordered with subtle glass hairline highlights (`--hairline`), easily dismissible with a quiet action button.
+
+### Floating Siri-Style Speech-to-Text (STT) Overlay HUD
+
+A floating Dynamic Island / Siri HUD overlay anchored to the bottom-center of the window:
+- **Global accessibility:** Summoned globally via `⌥ Space` (Option+Space) or toolbar microphone trigger; dismissible instantly via `Esc` or clicking outside.
+- **Live auditory feedback:** Dynamic pulsing waveform soundbars animate in real-time with mic input volume and live transcription text.
+- **Spatial elevation:** Translucent obsidian pill (`rgba(18, 20, 26, 0.92)`) with ambient radial cyan/indigo blur halo (`box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 35px rgba(0, 113, 227, 0.35)`).
+
+### Tactile Progress Bar System
+
+Asynchronous tasks (batch conversion, storage scanning, duplicate finder, OCR) use an Apple HIG multi-state progress feedback system:
+- **Shimmering electric neon track:** Gradient fill from San Francisco Blue (`#0071e3`) to Electric Azure (`#38bdf8`) on deep recessed tracks (`rgba(30, 42, 58, 0.92)`).
+- **Multistage pipeline states:** Discrete stage nodes (e.g., Scan $\to$ Hash $\to$ Classify $\to$ Complete) with glowing pulse rings on the active stage.
+- **Indeterminate mode:** Smooth bidirectional shimmer pulse for unmeasured phases (e.g. disk directory walk).
+
+## Tool gallery and list
+
+Tools is a Mac-style gallery grouped by category, with a List view over the same registry. Search and personal favorite/recent shortcuts stay on this page. Use category headings and available-tool counts; gallery tiles show the icon, tool name, one-line purpose and favorite control. List rows expose the same tool/action metadata with less vertical space. One category filter and Gallery/List controls affect the same data, preserving the query and ordering when switched. Retain the user's preferred view locally in production. Omit empty categories and unavailable tools; no invented catalogue size, price/rating badges, promotional heroes or storefront clutter.
+
+Default category groups: PDF & Documents, Images, Calculators, Unit & Data Converters, Files, Storage & Cleanup, Privacy & Security, Developer & Data, Network and System. Spreadsheet/data tools and developer utilities share Developer & Data. Existing Dictation may have its own group. Sort tools alphabetically within each group by default. A user can favorite/open a tool in either view; search has an explicit empty state and Clear search. Native app-gallery inspiration is about familiarity and discoverability, not copying another product's branding/assets. The prototype illustrates three categories; only the calculator flow runs.
+
+## Tool and result anatomy
+
+Tool heading → essential inputs → one execution action → result. Use a split form/result view when width permits; otherwise stack in that order. Advanced input options belong in Details, not another settings screen. Field labels stay visible, help is specific and units explicit. Keep form values across recoverable failure.
+
+The result includes: principal value, supporting values, input/assumption summary, optional detailed table, shared action toolbar. Calculate is the primary action before a result; Download is the primary result action after completion. Save result is secondary and visibly toggles Saved. Copy copies meaningful plain text with input context, unless the control explicitly says Copy value. A star means favorite tool; a bookmark means saved operation. Never interchange them.
+
+Every computed result MUST expose one action row with Copy result and Download… (or explicit type-specific labels). Primary task actions and result actions stay in one persistent bottom action dock for long tool flows; status feedback sits beside its controls. Shared result actions use the same bottom placement. Do not duplicate controls. Keep field-specific correction and annotation controls with their work area. Copy and Download operate on the same immutable completed snapshot. The full result is the default scope, even when the preview is shortened. Selection exports MUST say Selected results and show the count.
+
+| Result | Clipboard default | Download capabilities |
+| --- | --- | --- |
+| Scalar/calculation | Value with units and meaningful inputs/assumptions | Implemented text/JSON/report serializers |
+| Text/transcript/code | Complete text with original line breaks | Appropriate TXT/Markdown/source/JSON formats |
+| Table/list/report | Tab-separated rows with headers; all rows by default | Implemented CSV/XLSX/JSON/report formats |
+| Image/canvas | Rendered image with current edits | Supported PNG/JPEG/native image formats |
+| Binary file/archive/PDF | Explicitly labelled Copy summary when clipboard file support is unavailable | Original generated file; ZIP only for meaningful multiple-file bundles |
+| Secret | Explicit user-requested value only | Tool-specific explicit download; no automatic history/metadata retention |
+
+Formats come from actual capabilities, never from a universal menu. With one format, download directly; with multiple formats, one Download dialog shows format, scope and filename/extension. Do not place separate colored buttons for every format. Desktop uses native Save As where appropriate; browser initiation feedback says Download started, not Saved. Clipboard/save feedback MUST await the actual write and distinguish cancellation from failure. Copy must never silently mean filename/path.
+
+Changing an input after calculation marks the displayed result as “Inputs changed — calculate to update.” Copy, export and save still refer to the displayed snapshot, with its original inputs, never a mixed stale/current state. Calculating again creates a new operation and never mutates an existing saved snapshot. Reopening displays the original snapshot and version; Use these inputs prepares a new run without executing it. Name edits change a saved label only. Saving a file result retains a local artifact or clearly marks an external reference; never promise retention for temporary downloads.
+
+History rows display a meaningful title, tool/time, short outcome and saved state. Open the row through a semantic button/link; avoid nesting clickable controls. Missing output: “File unavailable” plus Locate file. Removing history/bookmarks does not remove user-owned files. Clearing history excludes saved results by default; provide an explicit option for them. No confirmation for harmless bookmark toggles; confirm destructive actions according to their actual impact.
+
+Dictation history uses compact transcript cards with source and timestamp, a short readable preview, and clearly labelled Open, Copy, Download and Remove actions. Users may enable automatic cleanup at 7, 30 or 90 days; it defaults off. When enabled, cleanup runs on app launch and periodically while the app is open. State the expiry on each transcript and keep Clear history available independently of this setting. Transcript retention applies only to local dictation history, not saved meeting notes or source audio.
+
+## Shared states
+
+| State | Behavior |
+| --- | --- |
+| Operation error | Show a dismissible app-wide alert toast independent of scroll position; keep recovery context beside the action that failed until retry or dismissal. Field validation stays inline. |
+| Empty tools/favorites/history | One next action; no fabricated examples in production |
+| Invalid field | Inline message linked by aria-describedby, aria-invalid; focus first invalid field |
+| Queued/running | Stable result frame, honest progress; Cancel only when supported |
+| Partial completion | Per-item successes/errors; retry failed subset without rerunning successes |
+| Recoverable error | What failed, retained input, explicit retry or correction; technical details collapsed |
+| Cancelled | Distinct terminal state; explain output handling |
+| Missing artifact | Preserve summary and identify which output is unavailable |
+| Offline | Local tools work; online actions show queued draft or connection requirement |
+| Empty search | Query context, Clear search, optional feature request; do not collect query via analytics |
+
+The synchronous calculator mock intentionally has no fake progress spinner/cancellation. Long-job states must receive their own approved mocks before implementation.
+
+## Export rules
+
+Extend meaningful result exports with Markdown, self-contained HTML, editable PPTX, JSON and selected ZIP bundles. Prepare for AI chat is a local context-pack preset with a preview and explicit omission/redaction choices, not a network AI feature. Preserve input/assumption/provenance context; distinguish original/export times. Markdown/code fences and HTML must safely represent untrusted content; no hidden instructions, scripts or remote resources. PPTX needs a designed readable slide sequence with editable data, not screenshots of app chrome. Export choices appear through capability metadata for the result type, not every format for every tool. These additions need updated approved export mocks before product implementation.
+
+One Download dialog with format, preview when meaningful, content options and attribution. Export is the underlying operation; Download is the consistent visible action for computed results. PDF is a report with text/tables, CSV is interoperable data, JPEG/PNG is a designed summary—not a screenshot of the app. PNG is preferred for sharp text, JPEG remains available. Default report background is white regardless of app theme. PDF table pagination repeats headers and footer without overlapping content. CSV money fields carry currency codes; decimal separator remains explicit and interoperable; prevent spreadsheet formula execution when arbitrary text is included.
+
+## Direct filesystem interaction
+
+Desktop filesystem tools MUST read approved selected originals directly, using streaming I/O and bounded buffers/workers. Keep path grants, manifests and job state in memory; do not clone input folders into an OfficeKit workspace or load complete inputs into RAM. Native picker grants and validated local processing boundaries are prerequisites; browser upload inputs are not a substitute for usable native file references.
+
+The visible flow is Choose files/folders → named task action → inspect → Copy/Download. Remove Copy selection to workspace, Selected copies and Clear temporary workspace. Reset selection releases references and never deletes originals or outputs. Batch rename previews and applies changes in the same folder with collision-aware rollback/recovery. Split/join and archives write to an explicit destination. Small operation-specific temporary output files may support atomic publication; source-tree duplication is prohibited. File permissions, changes during execution and partial completion receive item-specific recovery. Keep existing path/symlink/archive protections.
+
+## Screenshot and annotation workspace
+
+Keep Save visible above the working canvas, with Copy image and Optimize edited copy under More. The screen shows at most three buttons (AGENTS.md); the tool palette is a tool tray and is not counted. Source actions, Undo/Redo, selection/delete and fit/zoom belong in stable toolbars. Only selected-tool settings appear; Select/Crop/Mask have no unrelated inspector settings, and Blur uses fixed strong blur without a strength slider. Mask stays fully opaque.
+
+Show Choose image in the empty state, with capture area and paste from clipboard as text links. Once an image is loaded, remove those source actions from the primary workspace and show the image name instead; replacement and clearing live in the image overflow menu. Keep the canvas as the main working area with one compact top toolbar grouping annotation, privacy, history and output actions. Show only the selected tool's color and stroke controls. Put precise-region and text options in a labelled disclosure so they do not compete with the canvas.
+
+Text, highlights, arrows, circle, rectangle and freehand remain individually selectable and editable until export. Select shows handles; drag moves; arrow keys nudge 1px, Shift+arrow 10px; Delete removes outside text editing; Undo/Redo restores state. Click to place/type text and double-click to edit. Provide a keyboard alternative for drawing/placing geometry; no drag-only critical action.
+
+Two independent colors are mandatory: text fill + outer outline; translucent highlight fill + outer border; shape/arrow/freehand stroke + outer outline. Outer width is adjustable. A soft glow may accompany the outline but does not replace the second color. Inspector edits apply to the selected annotation, and defaults affect new annotations. Selection handles are not exported. Preview, copied image and downloaded image MUST agree on crop-relative coordinates, fonts, colors, strokes and outer outlines. Delete removes annotation objects without damaging original pixels.
+
+## Shared component and content rules
+
+Use the shared control dimensions and radii defined in Foundations and theme; those tokens are the only source of truth. A local padding/height utility must not silently create a new button size. Primary actions use the Ice Blue accent in both themes. Green is reserved for success feedback and completed states; warnings and errors use their semantic tokens. Use one accent family across tools rather than choosing a color per tool. Text labels are sentence case and task verbs are specific: Compare folders, Calculate payment, Convert image. Avoid Run tool, Submit, Create download and storage implementation terms in user flows. Keep input labels above fields; hints sit below and only explain a meaningful choice. Required fields, validation and disabled reasons follow one pattern.
+
+No extra bordered card around every field. Group by user purpose with 24px section gaps and 12–16px field gaps; use borders for actual groups and shadows only for overlays. Icons use one family and never convey an action alone without an accessible name. Preserve the existing platform monogram; broad accent/branding changes require review.
+
+Success appears beside the action in a stable status area, not a modal. Field errors appear below the field and focus the first invalid input. Operation errors retain local recovery plus the existing app-wide toast. Long jobs show actual progress where measurable, safe Cancel where supported and per-item partial outcomes. Show feedback within 100ms; after 300ms show busy status; beyond 3s show useful progress or elapsed state without fabricated estimates. Never claim completion from a requested event alone, including native paste.
+
+## Adoption and verification
+
+Before app-wide rollout, create a registry-wide matrix for each tool: layout family, input controls, action labels, result snapshot source, Copy representation, Download formats, long-job/error/empty behavior and justified exceptions. Review every available screen and registered tool route at desktop and 900px compact widths; verify standard field/button dimensions and primary-action color in the rendered DOM, then inspect 390px reflow, both themes and 200% zoom. Contrast floors are 4.5:1 normal text and 3:1 large text/necessary boundaries. Keyboard focus cannot be hidden by fixed chrome or sticky action rows. Motion honors reduced motion and uses transform/opacity only. Keep route-wide layout checks in `ui-tests/design-consistency.spec.mjs` so local padding or color utilities cannot silently reintroduce drift.
+
+Migrate shared patterns first, then representative calculator, text, table, file and canvas tools, then all remaining registry entries. Do not add a new framework solely for consistency. Keep the production source/build relationship intact. Passing a few representative mocks is not proof of registry-wide adoption.
+
+Current review mock: `design/mocks/workspace-and-annotation-refresh.html`. Durable scope and implementation handoff: `review/workspace-and-annotation-refresh/requirements.md` and `handoff.md`. Temporary mocks are removed after approved decisions have been captured, per repository workflow. Production implementation remains subject to mock and architecture gates.
+
+Optional removable footer: “Generated with OfficeKit · officekit.app.” Optional timestamp includes timezone. No watermark over results. Footer attribution can default on for reports; creator metadata defaults off. Plain CSV has no extra promotional row/comment; optional metadata goes into a separate JSON file in a selected ZIP bundle. Converted user PDFs/images remain clean unless the user explicitly requests a report/watermark. The current mock is an export preview only; no actual files are generated.
+
+ReportSnapshot stores original result time separately from export time, engine/tool version, inputs, units, assumptions, allowed output sections and table data. Never export passwords, JWTs, license keys, usernames, full paths, device IDs or secrets through generic metadata. Actual sensitive user content explicitly selected for export is handled by the specific tool, not accidentally attached by the shared report system.
+
+## Privacy and communications
+
+Sharing defaults off. Two independent choices: anonymous usage counts and a coarse activity heartbeat. No event recording before consent, no retrospective collection, no persistent identity in the proposed payload. Server infrastructure sees source IPs; disclose this and minimize operational logs. Opt-out stops sends and purges queues. Consent controls must be equally accessible and must not imply a tradeoff in access to paid/local features. See `design/officekit-branding-and-privacy-plan.md` for payload, retention and server proposals. The mock performs no network operations or durable storage.
+
+Feedback choices: Report a bug, Request a feature, Leave a testimonial. Diagnostics are optional, previewable and redacted. Publication permission for a testimonial is separate. Only remote acknowledgement earns a Sent/Received state. Do not label a locally saved draft as triaged. Keep update, license, feedback and analytics purposes distinct.
+
+## Locked-app state
+
+While the app is not active (checking, locked, expired, revoked) the announcement slot shows one `role="status"` licence notice (no button, no dismiss; accent, warning for expired, error for revoked) and the header badge reads Checking, Activate, Reactivate or Activate. Locked tools carry a warning-token "Locked" chip (lock icon plus the word) and an `aria-label` "Open <name>, locked: activation needed"; they stay enabled and open the activation modal with the status line "Activate OfficeKit to use <name>." Free categories (Calculators, Unit Converters, Developer & Data in the catalog) never carry a chip, except Clipboard & Snippets Studio, which sits in Developer & Data but is a locked Pro studio by owner decision (2026-10-22). The banner shows only the approved title and "keep free" line: no extra sentence for Checking or Expired. Sub-modes of the mixed Converter tab (Media Toolkit, Image Resize, Image Metadata) are held by the same guard as every other way in, so "Open Media Toolkit" opens the activation modal while locked. The first-run App Tour keeps every step while locked but does not switch to a paid tab, so no modal opens over the tour. Chips on Home quick-start cards sit on the title row so a locked card is the same height as a free one. The sidebar studios and Settings take the chip too (it replaces the decorative count; hidden in the collapsed rail, where the label still names the lock). The update button and its dot are hidden. Checking shows no chips. Styles are `.ok-lock-chip` and `.ok-lock-notice*` in `assets/officekit.input.css`; the guard is `requireLicensedTool()` in `index.html`.
+
+## Accessibility and implementation gate
+
+Use WCAG 2.2 AA as the target: normal text 4.5:1, large text 3:1, necessary UI boundaries/focus 3:1. Verify the actual combinations, not just token swatches. Semantic headings/buttons/forms; visible labels, accessible icon names, logical tab order, focus return after dialogs, polite success status and assertive actionable error status. Focus is not removed for aesthetics. Avoid color-only status and screen-reader-only information needed by sighted users. Native select/details/dialog are preferred when they satisfy behavior. Keyboard and screen-reader checks complement static contrast calculations.
+
+Before product code: approve the exact mock/brand, record the user's words and date, declare contracts, and verify complete screens at desktop/compact widths in both themes. Existing source/production code is untouched by this design proposal. Subsequent changes to this spec require a version bump and `docs/VERSION-HISTORY.md` entry. Every new tool follows the existing shared anatomy; exceptions need a task-specific reason and approved mock.
+
+## Review checklist
+
+- Can a first-time user find and complete the task with no instructions?
+- Do inputs, result snapshot, export and saved state refer to the same operation?
+- Does every extra control earn its space, with no duplicate destination/actions?
+- Are failures, missing artifacts, empty states and offline use understandable?
+- Do theme, keyboard, contrast, zoom and localization work across the whole screen?
+- Are reports usable without branding, and telemetry truly optional?
+- Does the implemented screen match an approved artifact rather than a verbal direction?

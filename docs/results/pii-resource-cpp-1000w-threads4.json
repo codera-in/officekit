@@ -1,0 +1,47 @@
+{
+  "backend": "knowledgator-gliner-onnx-int8",
+  "environment": {
+    "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "processor": "arm",
+    "cpu_count": 10,
+    "runtime": "cpp",
+    "onnxruntime_python_version": "1.25.1"
+  },
+  "model": {
+    "onnx_bytes": 45820894,
+    "onnx_sha256": "988acb03456b26e2d9f2521016d820310c2ed64deb4a846297d3289f0c2eb7e4",
+    "tokenizer_bytes": 3583593,
+    "tokenizer_sha256": "84b3a9b18f04a0ccd03b72d9f871b7e0bec40fd7021ef50bc30a7c3693c11205",
+    "cpp_binary_sha256": "674d953e2851deae1877836a0815bf973cac11c51c1f0b5ee3ea175f21b825d4"
+  },
+  "warm_process": {
+    "threads": 4,
+    "word_count": 1000,
+    "load_seconds": 0.23916720796842128,
+    "first_prediction_seconds": 0.3993619999382645,
+    "warm_repeats": 30,
+    "warm_mean_seconds": 0.36241784850523495,
+    "warm_p50_seconds": 0.35986218752805144,
+    "warm_p95_seconds": 0.40840062499046326,
+    "process_cpu_seconds": 0.01669799999999999,
+    "process_tree_cpu_seconds": 44.13,
+    "baseline_rss_mb": 27.796875,
+    "loaded_rss_mb": 285.984375,
+    "rss_increase_mb": 258.1875,
+    "peak_rss_mb": 26.328125,
+    "sampled_peak_process_tree_rss_mb": 285.984375,
+    "sampled_incremental_peak_process_tree_rss_mb": 258.1875,
+    "incremental_peak_rss_mb": 0.015625,
+    "rss_samples_mb_every_10_scans": [
+      27.796875,
+      284.734375,
+      285.984375,
+      285.984375,
+      285.984375
+    ],
+    "rss_drift_mb_over_repeats": 1.25
+  },
+  "cold_processes": []
+}

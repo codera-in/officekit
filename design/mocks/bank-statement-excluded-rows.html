@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit — statement rows needing review</title>
+  <style>
+    :root { font: 14px/1.5 Inter, -apple-system, BlinkMacSystemFont, sans-serif; color: #172033; background: #f6f7fb; --brand:#4f46e5; --line:#e2e7ef; --muted:#667085; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { width: min(100% - 32px, 1000px); margin: 36px auto; }
+    .brand { color:#1e3a5f; font-size:20px; font-weight:800; }
+    .brand span { color:var(--brand); }
+    .crumb { margin-top:22px; color:var(--muted); font-size:12px; }
+    h1 { margin:5px 0 2px; font-size:26px; letter-spacing:-.025em; }
+    p { margin:0; color:var(--muted); }
+    .file { display:flex; align-items:center; gap:12px; margin:18px 0 14px; padding:12px 14px; border:1px solid var(--line); border-radius:12px; background:#fff; }
+    .file-icon { display:grid; place-items:center; width:36px; height:36px; border-radius:9px; background:#eef2ff; color:var(--brand); font-weight:800; }
+    .file small { display:block; color:var(--muted); }
+    .warning { border:1px solid #fedf89; border-radius:12px; background:#fffaeb; color:#7a2e0e; padding:14px 16px; }
+    .warning strong { display:block; color:#92400e; }
+    .warning p { margin-top:3px; color:#7a2e0e; }
+    details { margin-top:9px; }
+    summary { width:fit-content; cursor:pointer; color:#3730a3; font-weight:650; }
+    .omitted { margin-top:8px; padding:10px 12px; border-left:3px solid #f0b429; background:#fff; overflow-wrap:anywhere; }
+    .omitted dl { display:grid; grid-template-columns:100px minmax(0,1fr); gap:4px 12px; margin:0; }
+    .omitted dt { color:var(--muted); }
+    .omitted dd { margin:0; }
+    .table { margin-top:14px; border:1px solid var(--line); border-radius:12px; overflow:auto; background:white; }
+    table { width:100%; border-collapse:collapse; min-width:680px; }
+    th,td { padding:11px 13px; border-bottom:1px solid #eef0f4; text-align:left; }
+    th { background:#fafbfc; color:#667085; font-size:11px; text-transform:uppercase; }
+    td { font-size:13px; }
+    .num { text-align:right; font-variant-numeric:tabular-nums; }
+    .status { color:#475467; white-space:nowrap; }
+    .foot { margin-top:11px; max-width:760px; font-size:12px; }
+    @media(max-width:600px) { main { width:calc(100% - 24px); margin:20px auto; } h1 { font-size:22px; } .omitted dl { grid-template-columns:1fr; gap:1px; } .omitted dd { margin-bottom:7px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand">Office<span>Kit</span></div>
+    <div class="crumb">All tools / PDF &amp; Documents / Statement extraction</div>
+    <h1>Review extracted transactions</h1>
+    <p>Check the result before you download it.</p>
+    <div class="file"><span class="file-icon" aria-hidden="true">PDF</span><div><strong>statement.pdf</strong><small>Processed on this Mac · original unchanged</small></div></div>
+
+    <section class="warning" role="status" aria-live="polite" aria-labelledby="warning-title">
+      <strong id="warning-title">One source row was left out of the transaction list</strong>
+      <p>Its Date cell contains several dates, so OfficeKit could not match it to one transaction. It is not included in CSV or Excel exports.</p>
+      <details>
+        <summary>Review the excluded row</summary>
+        <div class="omitted">
+          <dl>
+            <dt>Extracted dates</dt><dd>21/09/26 · 25/09/26 · 25/09/26 · 25/09/26</dd>
+            <dt>Description</dt><dd>FOREIGN INWARD REMITTANCE … NETBANK</dd>
+          </dl>
+        </div>
+      </details>
+    </section>
+
+    <div class="table" role="region" aria-label="Verified transaction rows; scroll horizontally on narrow screens" tabindex="0">
+      <table>
+        <thead><tr><th>Date</th><th>Description</th><th class="num">Debit</th><th class="num">Credit</th><th class="num">Balance</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>21/09/26</td><td>Opening balance</td><td class="num">—</td><td class="num">—</td><td class="num">1,000.00</td><td class="status">Starting balance</td></tr>
+          <tr><td>26/09/26</td><td>Monthly service fee</td><td class="num">10.00</td><td class="num">—</td><td class="num">990.00</td><td class="status">Balance matched</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="foot">Review the original statement before relying on extracted values. A balance check confirms arithmetic only.</p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,26 @@
+title = "OfficeKit gitleaks configuration"
+
+[extend]
+useDefault = true
+
+# Every entry below was reviewed by hand on 2026-11-27 and is not a credential. Keep this list narrow: add a
+# value only after checking it, and never allow a whole directory of source.
+
+[[allowlists]]
+description = "Published model checksums and a git revision in benchmark results and the PII evaluation fixture"
+paths = [
+  '''docs/results/pii-resource-.*\.json''',
+  '''tests/fixtures/pii-eval/candidates\.json''',
+]
+
+[[allowlists]]
+description = "Sample tokens, passwords and keys used as test input"
+regexTarget = "secret"
+regexes = [
+  '''^0123456789abcdef0123456789abcdef''',
+  '''^eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6''',
+  '''^MySecretPass2026$''',
+  '''^Ab3Cd4Ef5Gh6Ij7Kl8Mn''',
+  '''^AS-T1-ABCD-EF12-3456$''',
+  '''^empty/invalid$''',
+]

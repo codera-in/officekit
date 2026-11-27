@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "officekit-coach-workspace",
+  "description": "The Speech Coach Live Workspace can only query and act on its own memory-only transcript, and be dragged by its header.",
+  "windows": ["coach-workspace"],
+  "permissions": ["core:window:allow-start-dragging"]
+}

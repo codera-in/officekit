@@ -1,0 +1,6 @@
+{
+  "$schema": "https://raw.githubusercontent.com/tauri-apps/tauri/dev/crates/tauri-cli/schema.json",
+  "bundle": {
+    "resources": ["resources/officekit-backend/**/*", "resources/OfficeKit Optimize Image.workflow/**/*", "resources/Open in OfficeKit.workflow/**/*","binaries/officekit-media"]
+  }
+}

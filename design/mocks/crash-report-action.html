@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit · Crash report action</title>
+  <style>
+    :root{color-scheme:light;--ok-canvas:#f3f6f9;--ok-surface:#fff;--ok-text:#223140;--ok-muted:#536477;--ok-line:#dbe3eb;--ok-accent:#185c89;--ok-error:#9f2636;--ok-space-3:12px;--ok-space-4:16px;--ok-radius-2:10px;--ok-radius-3:14px;font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    *{box-sizing:border-box}body{margin:0;padding:24px;background:var(--ok-canvas);color:var(--ok-text)}h1{font-size:24px;margin:0 0 4px}.intro{color:var(--ok-muted);margin:0 0 20px}.compare{display:grid;grid-template-columns:repeat(2,minmax(320px,1fr));gap:16px;max-width:1020px;margin:auto}.panel{background:var(--ok-surface);border:1px solid var(--ok-line);border-radius:var(--ok-radius-3);padding:20px;box-shadow:0 2px 8px #22314012}.label{font-size:12px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;color:var(--ok-muted)}h2{font-size:18px;margin:8px 0}.summary{padding:12px;background:#fff3f2;border:1px solid #efd2d0;border-radius:var(--ok-radius-2);color:var(--ok-error);margin:16px 0}.trace{background:#182530;color:#d7e8f2;padding:14px;border-radius:var(--ok-radius-2);font:12px/1.5 ui-monospace,monospace;min-height:90px;overflow:auto}.note{font-size:13px;color:var(--ok-muted);margin:14px 0}.privacy{padding:10px 12px;border:1px solid var(--ok-line);border-radius:var(--ok-radius-2);font-size:13px}.actions{margin-top:16px;display:flex;justify-content:flex-end;gap:8px}button{min-height:42px;padding:8px 14px;border:1px solid var(--ok-line);border-radius:8px;background:#f5f8fb;color:var(--ok-text);font:inherit;cursor:pointer}.primary{background:var(--ok-accent);color:#fff;border-color:var(--ok-accent)}.status{min-height:22px;margin:10px 0 0;text-align:right;color:var(--ok-muted);font-size:13px}.status.error{color:var(--ok-error)}@media(max-width:760px){body{padding:12px}.compare{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.panel{padding:10px}.label{font-size:10px}h2{font-size:15px}.note,.privacy{font-size:11px}.summary{padding:8px;margin:8px 0}.trace{padding:8px;font-size:10px}.actions{display:block}.actions button{width:100%;font-size:11px;padding:8px 4px}}
+  </style>
+</head>
+<body>
+  <h1>Crash report action</h1>
+  <p class="intro">One truthful recovery path for a failed operation. Compare at desktop and compact widths by resizing the page.</p>
+  <main class="compare">
+    <section class="panel" aria-labelledby="before-title">
+      <span class="label">Before</span>
+      <h2 id="before-title">OfficeKit Problem Report</h2>
+      <p class="note">Copy the diagnostic report below or email it directly to engineering for a rapid fix.</p>
+      <div class="summary"><strong>Error summary:</strong> PDF operation failed</div>
+      <div class="label">System diagnostic trace</div>
+      <pre class="trace">PDF processing failed at /Users/name/Documents/private.pdf</pre>
+      <div class="privacy">No personal financial data included in report</div>
+      <div class="actions"><button>Copy Report</button><button class="primary">Send to Developers</button></div>
+    </section>
+    <section class="panel" aria-labelledby="after-title">
+      <span class="label">After</span>
+      <h2 id="after-title">This operation didn’t finish</h2>
+      <p class="note">Your details stay on this Mac. Review them before copying into a bug report.</p>
+      <div class="summary"><strong>Error:</strong> PDF operation failed</div>
+      <details>
+        <summary class="label">Technical details</summary>
+        <pre class="trace">PDF processing failed at /Users/name/Documents/private.pdf</pre>
+      </details>
+      <div class="privacy">The copied report may contain local file paths. Nothing is sent automatically.</div>
+      <div class="actions"><button class="primary">Copy diagnostic details</button></div>
+      <p class="status" role="status">Copy status appears here, including if clipboard access is unavailable.</p>
+    </section>
+  </main>
+</body>
+</html>

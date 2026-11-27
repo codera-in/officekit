@@ -1,0 +1,6 @@
+<!doctype html><meta charset="utf-8"><title>OfficeKit floating dictation overlay</title>
+<style>body{background:#e9edf4;font:14px system-ui;color:#222;padding:40px}.panel{width:320px;background:#191923;color:white;border:1px solid #42424d;border-radius:16px;margin:40px auto;box-shadow:0 12px 40px #0004}.text{padding:16px;border-bottom:1px solid #ffffff20}.controls{display:flex;align-items:center;justify-content:space-between;padding:12px 16px}.cancel{background:#ef426c;color:white;border:0;border-radius:50%;width:28px;height:28px}.wave{letter-spacing:4px;color:#b6a7ff}small{color:#bdbdc9}</style>
+<h1>Floating dictation overlay</h1><p>Before: only the macOS microphone indicator. After: a panel above the focused app, without taking keyboard focus.</p>
+<div class="panel"><div class="text">Listening… <small>Esc to cancel</small></div><div class="controls"><button class="cancel" aria-label="Cancel dictation">■</button><span class="wave">▂▃▆▅▇▃▂</span><span>🎙</span></div></div>
+<div class="panel"><div class="text">Transcribing… <small>Esc to cancel</small></div><div class="controls"><button class="cancel">■</button><span>Processing on this Mac</span><span>🎙</span></div></div>
+<p>Escape discards recording or pending transcription. Text is shown only when the speech model produces it; the current models do not stream partial text.</p>

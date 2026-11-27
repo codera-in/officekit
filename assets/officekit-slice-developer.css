@@ -1,0 +1,52 @@
+/* Developer slice (D04, D10–D11, D15–D17) styles. Owned by this slice only. */
+
+/* In-text links (Clear, Swap, Use now, Add zone) are not buttons for the 3-button limit. */
+.ok-text-link { background: none; border: 0; padding: 0; min-height: 0; color: var(--ok-accent); font: 600 13px/1.4 var(--ok-font); text-decoration: underline; cursor: pointer; }
+.ok-text-link:focus-visible { outline: 2px solid var(--ok-focus); outline-offset: 2px; }
+/* Segmented toggles (JSON or Text, Side by side or Unified) are tabs, not counted. */
+.ok-segment { background: transparent; border: 0; color: var(--ok-text); cursor: pointer; }
+.ok-segment[aria-pressed="true"] { background: var(--ok-accent-wash); color: var(--ok-accent); }
+
+/* Panel tokens: surfaces and text come from the --ok-* theme, so light and dark follow the app theme. */
+.ok-dev-panel { border: 1px solid var(--ok-line); border-radius: var(--ok-radius-panel); background: var(--ok-surface-raised); color: var(--ok-text); box-shadow: var(--ok-hairline); container-type: inline-size; }
+.ok-dev-title { font-size: var(--ok-title); line-height: 1.2; font-weight: 700; color: var(--ok-text); }
+.ok-dev-surface { background: var(--ok-surface-raised); }
+.ok-dev-surface-muted { background: var(--ok-surface-glass); }
+.ok-dev-text { color: var(--ok-text); }
+.ok-dev-muted { color: var(--ok-muted); }
+.ok-dev-line { border-color: var(--ok-line); }
+.ok-dev-control-line { border-color: var(--ok-control-line); }
+.ok-dev-divide > * + * { border-top: 1px solid var(--ok-line); }
+.ok-dev-error { color: var(--ok-error); }
+.ok-dev-success { color: var(--ok-success); }
+.ok-dev-warning { color: var(--ok-warning); }
+.ok-dev-del { background: var(--ok-error-wash); }
+.ok-dev-ins { background: var(--ok-success-wash); }
+.ok-dev-mark-del { background: var(--ok-error-wash); color: var(--ok-error); }
+.ok-dev-mark-ins { background: var(--ok-success-wash); color: var(--ok-success); }
+.ok-dev-panel input, .ok-dev-panel select, .ok-dev-panel textarea { border: 1px solid var(--ok-control-line); border-radius: var(--ok-radius-control); background: var(--ok-surface-raised); color: var(--ok-text); }
+.ok-dev-panel textarea[readonly] { background: var(--ok-surface-glass); }
+
+.ok-chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--ok-line); border-radius: 999px; padding: 3px 10px; font-size: var(--ok-text-xs); color: var(--ok-text); background: var(--ok-surface-glass); }
+.ok-row-action { background: none; border: 0; padding: 0; color: var(--ok-muted); cursor: pointer; }
+.ok-dev-alert { border-radius: var(--ok-radius-control); padding: 10px 12px; margin-top: 12px; font-size: var(--ok-text-sm); }
+.ok-dev-alert-warn { background: var(--ok-warning-wash); color: var(--ok-warning); }
+.ok-dev-alert-err { background: var(--ok-error-wash); color: var(--ok-error); }
+.ok-dev-invisible { visibility: hidden; }
+.ok-dev-details { margin-top: 12px; border: 1px solid var(--ok-line); border-radius: var(--ok-radius-control); padding: 8px 12px; }
+.ok-dev-details summary { cursor: pointer; font-size: var(--ok-text-sm); font-weight: 650; color: var(--ok-text); }
+.ok-dev-stat { border: 1px solid var(--ok-line); border-radius: var(--ok-radius-control); padding: 10px; background: var(--ok-surface-glass); }
+.ok-dev-stat b { display: block; font-size: var(--ok-text-lg); font-variant-numeric: tabular-nums; color: var(--ok-text); }
+.ok-dev-stat span { font-size: var(--ok-text-xs); color: var(--ok-muted); }
+.ok-dev-table { width: 100%; border-collapse: collapse; font-size: var(--ok-text-sm); margin-top: 10px; }
+.ok-dev-table th, .ok-dev-table td { text-align: left; padding: 8px; border-top: 1px solid var(--ok-line); vertical-align: top; color: var(--ok-text); }
+.ok-dev-badge { display: inline-block; font-size: var(--ok-text-xs); font-weight: 700; padding: 1px 7px; border-radius: 999px; }
+.ok-dev-badge-add { background: var(--ok-success-wash); color: var(--ok-success); }
+.ok-dev-badge-rem { background: var(--ok-error-wash); color: var(--ok-error); }
+.ok-dev-badge-chg { background: var(--ok-warning-wash); color: var(--ok-warning); }
+.ok-dev-badge-type { background: var(--ok-accent-wash); color: var(--ok-accent); }
+
+/* Touch targets: 44px at 900px and below for every panel button, toggle and in-text link. */
+@media (max-width: 900px) {
+.ok-dev-panel button, .ok-dev-panel select, .ok-dev-panel input, .ok-segment, .ok-text-link, #developer-tools-action-dock button { min-height: 44px; }
+}

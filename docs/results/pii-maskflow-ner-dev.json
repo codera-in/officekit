@@ -1,0 +1,3639 @@
+{
+  "corpus": {
+    "path": "tests/fixtures/pii-eval/manifest.jsonl",
+    "sha256": "1e3b0d388f3672ba34791e8b3ff445cc1698236702fa66afc3bb4e458781d002",
+    "version": "1.1.0"
+  },
+  "detector": "officekit+maskflow-full-ner",
+  "model_path": "/tmp/officekit-knowledgator-pii-edge",
+  "threshold": 0.5,
+  "split": "dev",
+  "language": null,
+  "environment": {
+    "python": "3.11.12 (main, Apr  8 2025, 14:15:29) [Clang 16.0.0 (clang-1600.0.26.6)]",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "machine": "arm64",
+    "cpu_count": 10
+  },
+  "timing": {
+    "model_load_seconds": 0.2276452920632437,
+    "mean_seconds_per_document": 0.22248586241621524,
+    "p95_seconds_per_document": 0.03638095792848617
+  },
+  "metrics": {
+    "raw": {
+      "micro": {
+        "precision": 0.38613861386138615,
+        "recall": 0.43333333333333335,
+        "f1": 0.4083769633507853,
+        "support": 90,
+        "tp": 39,
+        "fp": 62,
+        "fn": 51
+      },
+      "per_language_entity": {
+        "ar/address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ar/date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "ar/dob": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ar/email": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "support": 1,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "ar/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "ar/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ar/person": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "ar/phone": {
+          "precision": 0.3333333333333333,
+          "recall": 1.0,
+          "f1": 0.5,
+          "support": 1,
+          "tp": 1,
+          "fp": 2,
+          "fn": 0
+        },
+        "ar/tax_id": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ar/username": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "de/address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "de/date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "de/dob": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "de/email": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "support": 1,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "de/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "de/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "de/person": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "de/phone": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "support": 1,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "de/tax_id": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "de/username": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "en/address": {
+          "precision": 0.16666666666666666,
+          "recall": 0.3333333333333333,
+          "f1": 0.2222222222222222,
+          "support": 3,
+          "tp": 1,
+          "fp": 5,
+          "fn": 2
+        },
+        "en/dob": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "support": 2,
+          "tp": 2,
+          "fp": 2,
+          "fn": 0
+        },
+        "en/email": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "support": 3,
+          "tp": 3,
+          "fp": 3,
+          "fn": 0
+        },
+        "en/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "en/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "en/person": {
+          "precision": 0.3333333333333333,
+          "recall": 1.0,
+          "f1": 0.5,
+          "support": 3,
+          "tp": 3,
+          "fp": 6,
+          "fn": 0
+        },
+        "en/phone": {
+          "precision": 0.42857142857142855,
+          "recall": 1.0,
+          "f1": 0.6,
+          "support": 3,
+          "tp": 3,
+          "fp": 4,
+          "fn": 0
+        },
+        "en/tax_id": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "en/username": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "es/address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "es/date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "es/dob": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "es/email": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "support": 1,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "es/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "es/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "es/person": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 5,
+          "fn": 1
+        },
+        "es/phone": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "support": 1,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "es/tax_id": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "es/username": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "fr/address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "fr/date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "fr/dob": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "fr/email": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "support": 1,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "fr/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "fr/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "fr/person": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 4,
+          "fn": 1
+        },
+        "fr/phone": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "support": 1,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "fr/tax_id": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "fr/username": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "hi/address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "hi/date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "hi/dob": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "hi/email": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "support": 1,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "hi/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "hi/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "hi/person": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "hi/phone": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "support": 1,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "hi/tax_id": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "hi/username": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ja/address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ja/date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "ja/dob": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ja/email": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "support": 1,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "ja/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "ja/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ja/person": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ja/phone": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "support": 1,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "ja/tax_id": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ja/username": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "pt/address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "pt/date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "pt/dob": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "pt/email": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "support": 1,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "pt/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "pt/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "pt/person": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 5,
+          "fn": 1
+        },
+        "pt/phone": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "support": 1,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "pt/tax_id": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "pt/username": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "zh/address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "zh/card": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0
+        },
+        "zh/date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "zh/dob": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "zh/email": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "support": 1,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "zh/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "zh/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "zh/person": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "zh/phone": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "support": 1,
+          "tp": 1,
+          "fp": 1,
+          "fn": 0
+        },
+        "zh/tax_id": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "zh/username": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        }
+      },
+      "by_text_kind": {
+        "clean": {
+          "precision": 0.4057971014492754,
+          "recall": 0.6222222222222222,
+          "f1": 0.49122807017543857,
+          "support": 45,
+          "tp": 28,
+          "fp": 41,
+          "fn": 17,
+          "false_positives_per_1000_words": 222.82608695652175
+        },
+        "ocr_like": {
+          "precision": 0.34375,
+          "recall": 0.24444444444444444,
+          "f1": 0.2857142857142857,
+          "support": 45,
+          "tp": 11,
+          "fp": 21,
+          "fn": 34,
+          "false_positives_per_1000_words": 106.5989847715736
+        }
+      },
+      "sensitive_character_coverage": 0.6931287525016678,
+      "false_positives_per_1000_words_by_language": {
+        "ar": 125.0,
+        "de": 88.23529411764706,
+        "en": 227.27272727272728,
+        "es": 210.52631578947367,
+        "fr": 166.66666666666666,
+        "hi": 78.94736842105263,
+        "ja": 96.7741935483871,
+        "pt": 205.12820512820514,
+        "zh": 161.29032258064515
+      },
+      "documents_with_miss": 19,
+      "document_count": 20,
+      "false_positives_per_1000_words": 162.72965879265092,
+      "per_record": [
+        {
+          "id": "en-intake-card",
+          "language": "en",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 9,
+          "tp": 4,
+          "fp": 5,
+          "fn": 0
+        },
+        {
+          "id": "es-intake-card",
+          "language": "es",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 8,
+          "tp": 2,
+          "fp": 6,
+          "fn": 2
+        },
+        {
+          "id": "fr-intake-card",
+          "language": "fr",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 7,
+          "tp": 2,
+          "fp": 5,
+          "fn": 2
+        },
+        {
+          "id": "de-intake-card",
+          "language": "de",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 4,
+          "tp": 3,
+          "fp": 1,
+          "fn": 1
+        },
+        {
+          "id": "pt-intake-card",
+          "language": "pt",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 8,
+          "tp": 2,
+          "fp": 6,
+          "fn": 2
+        },
+        {
+          "id": "ar-intake-card",
+          "language": "ar",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 4,
+          "tp": 2,
+          "fp": 2,
+          "fn": 2
+        },
+        {
+          "id": "hi-intake-card",
+          "language": "hi",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 3,
+          "tp": 2,
+          "fp": 1,
+          "fn": 2
+        },
+        {
+          "id": "zh-intake-card",
+          "language": "zh",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 5,
+          "tp": 2,
+          "fp": 3,
+          "fn": 2
+        },
+        {
+          "id": "ja-intake-card",
+          "language": "ja",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 3,
+          "tp": 2,
+          "fp": 1,
+          "fn": 2
+        },
+        {
+          "id": "en-identity-form",
+          "language": "en",
+          "split": "dev",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 7,
+          "tp": 3,
+          "fp": 4,
+          "fn": 2
+        },
+        {
+          "id": "es-identity-form",
+          "language": "es",
+          "split": "dev",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 3,
+          "tp": 1,
+          "fp": 2,
+          "fn": 4
+        },
+        {
+          "id": "fr-identity-form",
+          "language": "fr",
+          "split": "dev",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 3,
+          "tp": 1,
+          "fp": 2,
+          "fn": 4
+        },
+        {
+          "id": "de-identity-form",
+          "language": "de",
+          "split": "dev",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 3,
+          "tp": 1,
+          "fp": 2,
+          "fn": 4
+        },
+        {
+          "id": "pt-identity-form",
+          "language": "pt",
+          "split": "dev",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 3,
+          "tp": 1,
+          "fp": 2,
+          "fn": 4
+        },
+        {
+          "id": "ar-identity-form",
+          "language": "ar",
+          "split": "dev",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 4,
+          "tp": 1,
+          "fp": 3,
+          "fn": 4
+        },
+        {
+          "id": "hi-identity-form",
+          "language": "hi",
+          "split": "dev",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 3,
+          "tp": 1,
+          "fp": 2,
+          "fn": 4
+        },
+        {
+          "id": "zh-identity-form",
+          "language": "zh",
+          "split": "dev",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 3,
+          "tp": 1,
+          "fp": 2,
+          "fn": 4
+        },
+        {
+          "id": "ja-identity-form",
+          "language": "ja",
+          "split": "dev",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 3,
+          "tp": 1,
+          "fp": 2,
+          "fn": 4
+        },
+        {
+          "id": "en-email-thread",
+          "language": "en",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 8,
+          "tp": 3,
+          "fp": 5,
+          "fn": 1
+        },
+        {
+          "id": "en-profile-narrative",
+          "language": "en",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 5,
+          "predicted": 10,
+          "tp": 4,
+          "fp": 6,
+          "fn": 1
+        }
+      ]
+    },
+    "resolved": {
+      "micro": {
+        "precision": 0.5507246376811594,
+        "recall": 0.4222222222222222,
+        "f1": 0.47798742138364775,
+        "support": 90,
+        "tp": 38,
+        "fp": 31,
+        "fn": 52
+      },
+      "per_language_entity": {
+        "ar/address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ar/date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "ar/dob": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ar/email": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "ar/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "ar/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ar/person": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 1,
+          "fn": 1
+        },
+        "ar/phone": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "ar/tax_id": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ar/username": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "de/address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "de/date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "de/dob": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "de/email": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "de/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "de/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "de/person": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "de/phone": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "de/tax_id": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "de/username": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "en/address": {
+          "precision": 0.25,
+          "recall": 0.3333333333333333,
+          "f1": 0.28571428571428575,
+          "support": 3,
+          "tp": 1,
+          "fp": 3,
+          "fn": 2
+        },
+        "en/dob": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 2,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        },
+        "en/email": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 3,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "en/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "en/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "en/person": {
+          "precision": 0.2857142857142857,
+          "recall": 0.6666666666666666,
+          "f1": 0.4,
+          "support": 3,
+          "tp": 2,
+          "fp": 5,
+          "fn": 1
+        },
+        "en/phone": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 3,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        },
+        "en/tax_id": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "en/username": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "es/address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "es/date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "es/dob": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "es/email": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "es/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "es/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "es/person": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 5,
+          "fn": 1
+        },
+        "es/phone": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "es/tax_id": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "es/username": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "fr/address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "fr/date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "fr/dob": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "fr/email": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "fr/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "fr/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "fr/person": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 4,
+          "fn": 1
+        },
+        "fr/phone": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "fr/tax_id": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "fr/username": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "hi/address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "hi/date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "hi/dob": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "hi/email": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "hi/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "hi/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "hi/person": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "hi/phone": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "hi/tax_id": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "hi/username": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ja/address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ja/date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "ja/dob": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ja/email": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "ja/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "ja/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ja/person": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ja/phone": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "ja/tax_id": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "ja/username": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "pt/address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "pt/date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "pt/dob": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "pt/email": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "pt/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "pt/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "pt/person": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 5,
+          "fn": 1
+        },
+        "pt/phone": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "pt/tax_id": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "pt/username": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "zh/address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "zh/date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0,
+          "tp": 0,
+          "fp": 1,
+          "fn": 0
+        },
+        "zh/dob": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "zh/email": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "zh/iban": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "zh/ip_address": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "zh/person": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "zh/phone": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support": 1,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        },
+        "zh/tax_id": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        },
+        "zh/username": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1,
+          "tp": 0,
+          "fp": 0,
+          "fn": 1
+        }
+      },
+      "by_text_kind": {
+        "clean": {
+          "precision": 0.574468085106383,
+          "recall": 0.6,
+          "f1": 0.5869565217391305,
+          "support": 45,
+          "tp": 27,
+          "fp": 20,
+          "fn": 18,
+          "false_positives_per_1000_words": 108.69565217391305
+        },
+        "ocr_like": {
+          "precision": 0.5,
+          "recall": 0.24444444444444444,
+          "f1": 0.3283582089552239,
+          "support": 45,
+          "tp": 11,
+          "fp": 11,
+          "fn": 34,
+          "false_positives_per_1000_words": 55.83756345177665
+        }
+      },
+      "sensitive_character_coverage": 0.6931287525016678,
+      "false_positives_per_1000_words_by_language": {
+        "ar": 50.0,
+        "de": 29.41176470588235,
+        "en": 90.9090909090909,
+        "es": 157.89473684210526,
+        "fr": 119.04761904761905,
+        "hi": 26.31578947368421,
+        "ja": 32.25806451612903,
+        "pt": 153.84615384615384,
+        "zh": 32.25806451612903
+      },
+      "documents_with_miss": 20,
+      "document_count": 20,
+      "false_positives_per_1000_words": 81.36482939632546,
+      "per_record": [
+        {
+          "id": "en-intake-card",
+          "language": "en",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 4,
+          "tp": 3,
+          "fp": 1,
+          "fn": 1
+        },
+        {
+          "id": "es-intake-card",
+          "language": "es",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 7,
+          "tp": 2,
+          "fp": 5,
+          "fn": 2
+        },
+        {
+          "id": "fr-intake-card",
+          "language": "fr",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 6,
+          "tp": 2,
+          "fp": 4,
+          "fn": 2
+        },
+        {
+          "id": "de-intake-card",
+          "language": "de",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 3,
+          "tp": 3,
+          "fp": 0,
+          "fn": 1
+        },
+        {
+          "id": "pt-intake-card",
+          "language": "pt",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 7,
+          "tp": 2,
+          "fp": 5,
+          "fn": 2
+        },
+        {
+          "id": "ar-intake-card",
+          "language": "ar",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 2,
+          "tp": 2,
+          "fp": 0,
+          "fn": 2
+        },
+        {
+          "id": "hi-intake-card",
+          "language": "hi",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 2,
+          "tp": 2,
+          "fp": 0,
+          "fn": 2
+        },
+        {
+          "id": "zh-intake-card",
+          "language": "zh",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 2,
+          "tp": 2,
+          "fp": 0,
+          "fn": 2
+        },
+        {
+          "id": "ja-intake-card",
+          "language": "ja",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 2,
+          "tp": 2,
+          "fp": 0,
+          "fn": 2
+        },
+        {
+          "id": "en-identity-form",
+          "language": "en",
+          "split": "dev",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 5,
+          "tp": 3,
+          "fp": 2,
+          "fn": 2
+        },
+        {
+          "id": "es-identity-form",
+          "language": "es",
+          "split": "dev",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 2,
+          "tp": 1,
+          "fp": 1,
+          "fn": 4
+        },
+        {
+          "id": "fr-identity-form",
+          "language": "fr",
+          "split": "dev",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 2,
+          "tp": 1,
+          "fp": 1,
+          "fn": 4
+        },
+        {
+          "id": "de-identity-form",
+          "language": "de",
+          "split": "dev",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 2,
+          "tp": 1,
+          "fp": 1,
+          "fn": 4
+        },
+        {
+          "id": "pt-identity-form",
+          "language": "pt",
+          "split": "dev",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 2,
+          "tp": 1,
+          "fp": 1,
+          "fn": 4
+        },
+        {
+          "id": "ar-identity-form",
+          "language": "ar",
+          "split": "dev",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 3,
+          "tp": 1,
+          "fp": 2,
+          "fn": 4
+        },
+        {
+          "id": "hi-identity-form",
+          "language": "hi",
+          "split": "dev",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 2,
+          "tp": 1,
+          "fp": 1,
+          "fn": 4
+        },
+        {
+          "id": "zh-identity-form",
+          "language": "zh",
+          "split": "dev",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 2,
+          "tp": 1,
+          "fp": 1,
+          "fn": 4
+        },
+        {
+          "id": "ja-identity-form",
+          "language": "ja",
+          "split": "dev",
+          "text_kind": "ocr_like",
+          "gold": 5,
+          "predicted": 2,
+          "tp": 1,
+          "fp": 1,
+          "fn": 4
+        },
+        {
+          "id": "en-email-thread",
+          "language": "en",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 4,
+          "predicted": 6,
+          "tp": 3,
+          "fp": 3,
+          "fn": 1
+        },
+        {
+          "id": "en-profile-narrative",
+          "language": "en",
+          "split": "dev",
+          "text_kind": "clean",
+          "gold": 5,
+          "predicted": 6,
+          "tp": 4,
+          "fp": 2,
+          "fn": 1
+        }
+      ]
+    },
+    "resolution_outcomes": {
+      "totals": {
+        "exact_duplicate_pairs": 18,
+        "nested_overlap_pairs": 14,
+        "partial_overlap_pairs": 1,
+        "merged_components": 32,
+        "incorrect_primary_type_overrides": 0
+      },
+      "per_record": {
+        "en-intake-card": {
+          "exact_duplicate_pairs": 2,
+          "nested_overlap_pairs": 2,
+          "partial_overlap_pairs": 1,
+          "merged_components": 5,
+          "incorrect_primary_type_overrides": 0
+        },
+        "es-intake-card": {
+          "exact_duplicate_pairs": 1,
+          "nested_overlap_pairs": 0,
+          "partial_overlap_pairs": 0,
+          "merged_components": 1,
+          "incorrect_primary_type_overrides": 0
+        },
+        "fr-intake-card": {
+          "exact_duplicate_pairs": 1,
+          "nested_overlap_pairs": 0,
+          "partial_overlap_pairs": 0,
+          "merged_components": 1,
+          "incorrect_primary_type_overrides": 0
+        },
+        "de-intake-card": {
+          "exact_duplicate_pairs": 1,
+          "nested_overlap_pairs": 0,
+          "partial_overlap_pairs": 0,
+          "merged_components": 1,
+          "incorrect_primary_type_overrides": 0
+        },
+        "pt-intake-card": {
+          "exact_duplicate_pairs": 1,
+          "nested_overlap_pairs": 0,
+          "partial_overlap_pairs": 0,
+          "merged_components": 1,
+          "incorrect_primary_type_overrides": 0
+        },
+        "ar-intake-card": {
+          "exact_duplicate_pairs": 2,
+          "nested_overlap_pairs": 0,
+          "partial_overlap_pairs": 0,
+          "merged_components": 2,
+          "incorrect_primary_type_overrides": 0
+        },
+        "hi-intake-card": {
+          "exact_duplicate_pairs": 1,
+          "nested_overlap_pairs": 0,
+          "partial_overlap_pairs": 0,
+          "merged_components": 1,
+          "incorrect_primary_type_overrides": 0
+        },
+        "zh-intake-card": {
+          "exact_duplicate_pairs": 2,
+          "nested_overlap_pairs": 2,
+          "partial_overlap_pairs": 0,
+          "merged_components": 3,
+          "incorrect_primary_type_overrides": 0
+        },
+        "ja-intake-card": {
+          "exact_duplicate_pairs": 1,
+          "nested_overlap_pairs": 0,
+          "partial_overlap_pairs": 0,
+          "merged_components": 1,
+          "incorrect_primary_type_overrides": 0
+        },
+        "en-identity-form": {
+          "exact_duplicate_pairs": 1,
+          "nested_overlap_pairs": 1,
+          "partial_overlap_pairs": 0,
+          "merged_components": 2,
+          "incorrect_primary_type_overrides": 0
+        },
+        "es-identity-form": {
+          "exact_duplicate_pairs": 0,
+          "nested_overlap_pairs": 1,
+          "partial_overlap_pairs": 0,
+          "merged_components": 1,
+          "incorrect_primary_type_overrides": 0
+        },
+        "fr-identity-form": {
+          "exact_duplicate_pairs": 0,
+          "nested_overlap_pairs": 1,
+          "partial_overlap_pairs": 0,
+          "merged_components": 1,
+          "incorrect_primary_type_overrides": 0
+        },
+        "de-identity-form": {
+          "exact_duplicate_pairs": 0,
+          "nested_overlap_pairs": 1,
+          "partial_overlap_pairs": 0,
+          "merged_components": 1,
+          "incorrect_primary_type_overrides": 0
+        },
+        "pt-identity-form": {
+          "exact_duplicate_pairs": 0,
+          "nested_overlap_pairs": 1,
+          "partial_overlap_pairs": 0,
+          "merged_components": 1,
+          "incorrect_primary_type_overrides": 0
+        },
+        "ar-identity-form": {
+          "exact_duplicate_pairs": 0,
+          "nested_overlap_pairs": 1,
+          "partial_overlap_pairs": 0,
+          "merged_components": 1,
+          "incorrect_primary_type_overrides": 0
+        },
+        "hi-identity-form": {
+          "exact_duplicate_pairs": 0,
+          "nested_overlap_pairs": 1,
+          "partial_overlap_pairs": 0,
+          "merged_components": 1,
+          "incorrect_primary_type_overrides": 0
+        },
+        "zh-identity-form": {
+          "exact_duplicate_pairs": 0,
+          "nested_overlap_pairs": 1,
+          "partial_overlap_pairs": 0,
+          "merged_components": 1,
+          "incorrect_primary_type_overrides": 0
+        },
+        "ja-identity-form": {
+          "exact_duplicate_pairs": 0,
+          "nested_overlap_pairs": 1,
+          "partial_overlap_pairs": 0,
+          "merged_components": 1,
+          "incorrect_primary_type_overrides": 0
+        },
+        "en-email-thread": {
+          "exact_duplicate_pairs": 2,
+          "nested_overlap_pairs": 0,
+          "partial_overlap_pairs": 0,
+          "merged_components": 2,
+          "incorrect_primary_type_overrides": 0
+        },
+        "en-profile-narrative": {
+          "exact_duplicate_pairs": 3,
+          "nested_overlap_pairs": 1,
+          "partial_overlap_pairs": 0,
+          "merged_components": 4,
+          "incorrect_primary_type_overrides": 0
+        }
+      }
+    }
+  },
+  "predictions": {
+    "raw": {
+      "en-intake-card": [
+        {
+          "type": "person",
+          "start": 9,
+          "end": 18,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "email",
+          "start": 26,
+          "end": 51,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 59,
+          "end": 74,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "address",
+          "start": 89,
+          "end": 116,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "person",
+          "start": 9,
+          "end": 13,
+          "score": 0.6,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "person",
+          "start": 14,
+          "end": 24,
+          "score": 0.75,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "email",
+          "start": 26,
+          "end": 51,
+          "score": 0.95,
+          "_source": "structural",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 59,
+          "end": 74,
+          "score": 0.99,
+          "_source": "structural",
+          "_validation": "format"
+        },
+        {
+          "type": "address",
+          "start": 89,
+          "end": 102,
+          "score": 0.99,
+          "_source": "structural",
+          "_validation": "format"
+        }
+      ],
+      "es-intake-card": [
+        {
+          "type": "email",
+          "start": 31,
+          "end": 59,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 70,
+          "end": 85,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "person",
+          "start": 0,
+          "end": 8,
+          "score": 0.75,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "person",
+          "start": 16,
+          "end": 22,
+          "score": 0.6,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "email",
+          "start": 31,
+          "end": 59,
+          "score": 0.95,
+          "_source": "structural",
+          "_validation": "format"
+        },
+        {
+          "type": "person",
+          "start": 60,
+          "end": 68,
+          "score": 0.75,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "person",
+          "start": 103,
+          "end": 107,
+          "score": 0.6,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "person",
+          "start": 112,
+          "end": 126,
+          "score": 0.75,
+          "_source": "structural",
+          "_validation": "context"
+        }
+      ],
+      "fr-intake-card": [
+        {
+          "type": "email",
+          "start": 34,
+          "end": 63,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 75,
+          "end": 92,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "person",
+          "start": 17,
+          "end": 23,
+          "score": 0.6,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "person",
+          "start": 24,
+          "end": 32,
+          "score": 0.75,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "email",
+          "start": 34,
+          "end": 63,
+          "score": 0.95,
+          "_source": "structural",
+          "_validation": "format"
+        },
+        {
+          "type": "person",
+          "start": 113,
+          "end": 118,
+          "score": 0.6,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "person",
+          "start": 120,
+          "end": 133,
+          "score": 0.75,
+          "_source": "structural",
+          "_validation": "context"
+        }
+      ],
+      "de-intake-card": [
+        {
+          "type": "email",
+          "start": 34,
+          "end": 64,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 74,
+          "end": 91,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "person",
+          "start": 11,
+          "end": 25,
+          "score": 0.85,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "email",
+          "start": 34,
+          "end": 64,
+          "score": 0.95,
+          "_source": "structural",
+          "_validation": "format"
+        }
+      ],
+      "pt-intake-card": [
+        {
+          "type": "email",
+          "start": 32,
+          "end": 61,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 72,
+          "end": 88,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "person",
+          "start": 0,
+          "end": 8,
+          "score": 0.75,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "person",
+          "start": 10,
+          "end": 30,
+          "score": 0.95,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "email",
+          "start": 32,
+          "end": 61,
+          "score": 0.95,
+          "_source": "structural",
+          "_validation": "format"
+        },
+        {
+          "type": "person",
+          "start": 97,
+          "end": 100,
+          "score": 0.6,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "person",
+          "start": 104,
+          "end": 107,
+          "score": 0.6,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "person",
+          "start": 112,
+          "end": 126,
+          "score": 0.75,
+          "_source": "structural",
+          "_validation": "context"
+        }
+      ],
+      "ar-intake-card": [
+        {
+          "type": "email",
+          "start": 25,
+          "end": 53,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 62,
+          "end": 78,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "email",
+          "start": 25,
+          "end": 53,
+          "score": 0.95,
+          "_source": "structural",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 62,
+          "end": 78,
+          "score": 0.85,
+          "_source": "structural",
+          "_validation": "format"
+        }
+      ],
+      "hi-intake-card": [
+        {
+          "type": "email",
+          "start": 24,
+          "end": 52,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 59,
+          "end": 74,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "email",
+          "start": 24,
+          "end": 52,
+          "score": 0.95,
+          "_source": "structural",
+          "_validation": "format"
+        }
+      ],
+      "zh-intake-card": [
+        {
+          "type": "email",
+          "start": 12,
+          "end": 38,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 43,
+          "end": 60,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "card",
+          "start": 44,
+          "end": 60,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "checksum"
+        },
+        {
+          "type": "email",
+          "start": 12,
+          "end": 38,
+          "score": 0.95,
+          "_source": "structural",
+          "_validation": "format"
+        },
+        {
+          "type": "card",
+          "start": 44,
+          "end": 60,
+          "score": 0.97,
+          "_source": "structural",
+          "_validation": "checksum"
+        }
+      ],
+      "ja-intake-card": [
+        {
+          "type": "email",
+          "start": 14,
+          "end": 41,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 46,
+          "end": 62,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "email",
+          "start": 14,
+          "end": 41,
+          "score": 0.95,
+          "_source": "structural",
+          "_validation": "format"
+        }
+      ],
+      "en-identity-form": [
+        {
+          "type": "tax_id",
+          "start": 8,
+          "end": 20,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "dob",
+          "start": 26,
+          "end": 36,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "iban",
+          "start": 51,
+          "end": 78,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "checksum"
+        },
+        {
+          "type": "phone",
+          "start": 61,
+          "end": 78,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "address",
+          "start": 114,
+          "end": 124,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "person",
+          "start": 0,
+          "end": 3,
+          "score": 0.6,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "dob",
+          "start": 26,
+          "end": 36,
+          "score": 0.7,
+          "_source": "structural",
+          "_validation": "context"
+        }
+      ],
+      "es-identity-form": [
+        {
+          "type": "date",
+          "start": 36,
+          "end": 46,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "iban",
+          "start": 64,
+          "end": 91,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "checksum"
+        },
+        {
+          "type": "phone",
+          "start": 74,
+          "end": 91,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        }
+      ],
+      "fr-identity-form": [
+        {
+          "type": "date",
+          "start": 44,
+          "end": 54,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "iban",
+          "start": 72,
+          "end": 99,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "checksum"
+        },
+        {
+          "type": "phone",
+          "start": 82,
+          "end": 99,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        }
+      ],
+      "de-identity-form": [
+        {
+          "type": "date",
+          "start": 38,
+          "end": 48,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "iban",
+          "start": 60,
+          "end": 87,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "checksum"
+        },
+        {
+          "type": "phone",
+          "start": 70,
+          "end": 87,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        }
+      ],
+      "pt-identity-form": [
+        {
+          "type": "date",
+          "start": 30,
+          "end": 40,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "iban",
+          "start": 57,
+          "end": 84,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "checksum"
+        },
+        {
+          "type": "phone",
+          "start": 67,
+          "end": 84,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        }
+      ],
+      "ar-identity-form": [
+        {
+          "type": "date",
+          "start": 37,
+          "end": 47,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "iban",
+          "start": 63,
+          "end": 90,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "checksum"
+        },
+        {
+          "type": "phone",
+          "start": 73,
+          "end": 90,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "person",
+          "start": 0,
+          "end": 13,
+          "score": 0.75,
+          "_source": "structural",
+          "_validation": "context"
+        }
+      ],
+      "hi-identity-form": [
+        {
+          "type": "date",
+          "start": 33,
+          "end": 43,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "iban",
+          "start": 55,
+          "end": 82,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "checksum"
+        },
+        {
+          "type": "phone",
+          "start": 65,
+          "end": 82,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        }
+      ],
+      "zh-identity-form": [
+        {
+          "type": "date",
+          "start": 23,
+          "end": 33,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "iban",
+          "start": 40,
+          "end": 67,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "checksum"
+        },
+        {
+          "type": "phone",
+          "start": 50,
+          "end": 67,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        }
+      ],
+      "ja-identity-form": [
+        {
+          "type": "date",
+          "start": 25,
+          "end": 35,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "iban",
+          "start": 42,
+          "end": 69,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "checksum"
+        },
+        {
+          "type": "phone",
+          "start": 52,
+          "end": 69,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        }
+      ],
+      "en-email-thread": [
+        {
+          "type": "email",
+          "start": 18,
+          "end": 44,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 63,
+          "end": 78,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "person",
+          "start": 6,
+          "end": 16,
+          "score": 0.85,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "email",
+          "start": 18,
+          "end": 44,
+          "score": 0.95,
+          "_source": "structural",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 63,
+          "end": 78,
+          "score": 0.69,
+          "_source": "structural",
+          "_validation": "format"
+        },
+        {
+          "type": "address",
+          "start": 88,
+          "end": 103,
+          "score": 0.69,
+          "_source": "structural",
+          "_validation": "format"
+        },
+        {
+          "type": "person",
+          "start": 105,
+          "end": 114,
+          "score": 0.75,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "person",
+          "start": 144,
+          "end": 148,
+          "score": 0.6499999999999999,
+          "_source": "structural",
+          "_validation": "context"
+        }
+      ],
+      "en-profile-narrative": [
+        {
+          "type": "dob",
+          "start": 58,
+          "end": 68,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "email",
+          "start": 86,
+          "end": 112,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 116,
+          "end": 131,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "address",
+          "start": 150,
+          "end": 174,
+          "score": 1.0,
+          "_source": "baseline",
+          "_validation": "format"
+        },
+        {
+          "type": "person",
+          "start": 0,
+          "end": 10,
+          "score": 0.85,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "dob",
+          "start": 58,
+          "end": 68,
+          "score": 0.7,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "person",
+          "start": 76,
+          "end": 82,
+          "score": 0.6,
+          "_source": "structural",
+          "_validation": "context"
+        },
+        {
+          "type": "email",
+          "start": 86,
+          "end": 112,
+          "score": 0.95,
+          "_source": "structural",
+          "_validation": "format"
+        },
+        {
+          "type": "phone",
+          "start": 116,
+          "end": 131,
+          "score": 0.85,
+          "_source": "structural",
+          "_validation": "format"
+        },
+        {
+          "type": "address",
+          "start": 150,
+          "end": 161,
+          "score": 0.99,
+          "_source": "structural",
+          "_validation": "format"
+        }
+      ]
+    },
+    "resolved": {
+      "en-intake-card": [
+        {
+          "type": "person",
+          "start": 9,
+          "end": 24,
+          "score": 1.0
+        },
+        {
+          "type": "email",
+          "start": 26,
+          "end": 51,
+          "score": 1.0
+        },
+        {
+          "type": "phone",
+          "start": 59,
+          "end": 74,
+          "score": 1.0
+        },
+        {
+          "type": "address",
+          "start": 89,
+          "end": 116,
+          "score": 1.0
+        }
+      ],
+      "es-intake-card": [
+        {
+          "type": "person",
+          "start": 0,
+          "end": 8,
+          "score": 0.75
+        },
+        {
+          "type": "person",
+          "start": 16,
+          "end": 22,
+          "score": 0.6
+        },
+        {
+          "type": "email",
+          "start": 31,
+          "end": 59,
+          "score": 1.0
+        },
+        {
+          "type": "person",
+          "start": 60,
+          "end": 68,
+          "score": 0.75
+        },
+        {
+          "type": "phone",
+          "start": 70,
+          "end": 85,
+          "score": 1.0
+        },
+        {
+          "type": "person",
+          "start": 103,
+          "end": 107,
+          "score": 0.6
+        },
+        {
+          "type": "person",
+          "start": 112,
+          "end": 126,
+          "score": 0.75
+        }
+      ],
+      "fr-intake-card": [
+        {
+          "type": "person",
+          "start": 17,
+          "end": 23,
+          "score": 0.6
+        },
+        {
+          "type": "person",
+          "start": 24,
+          "end": 32,
+          "score": 0.75
+        },
+        {
+          "type": "email",
+          "start": 34,
+          "end": 63,
+          "score": 1.0
+        },
+        {
+          "type": "phone",
+          "start": 75,
+          "end": 92,
+          "score": 1.0
+        },
+        {
+          "type": "person",
+          "start": 113,
+          "end": 118,
+          "score": 0.6
+        },
+        {
+          "type": "person",
+          "start": 120,
+          "end": 133,
+          "score": 0.75
+        }
+      ],
+      "de-intake-card": [
+        {
+          "type": "person",
+          "start": 11,
+          "end": 25,
+          "score": 0.85
+        },
+        {
+          "type": "email",
+          "start": 34,
+          "end": 64,
+          "score": 1.0
+        },
+        {
+          "type": "phone",
+          "start": 74,
+          "end": 91,
+          "score": 1.0
+        }
+      ],
+      "pt-intake-card": [
+        {
+          "type": "person",
+          "start": 0,
+          "end": 8,
+          "score": 0.75
+        },
+        {
+          "type": "person",
+          "start": 10,
+          "end": 30,
+          "score": 0.95
+        },
+        {
+          "type": "email",
+          "start": 32,
+          "end": 61,
+          "score": 1.0
+        },
+        {
+          "type": "phone",
+          "start": 72,
+          "end": 88,
+          "score": 1.0
+        },
+        {
+          "type": "person",
+          "start": 97,
+          "end": 100,
+          "score": 0.6
+        },
+        {
+          "type": "person",
+          "start": 104,
+          "end": 107,
+          "score": 0.6
+        },
+        {
+          "type": "person",
+          "start": 112,
+          "end": 126,
+          "score": 0.75
+        }
+      ],
+      "ar-intake-card": [
+        {
+          "type": "email",
+          "start": 25,
+          "end": 53,
+          "score": 1.0
+        },
+        {
+          "type": "phone",
+          "start": 62,
+          "end": 78,
+          "score": 1.0
+        }
+      ],
+      "hi-intake-card": [
+        {
+          "type": "email",
+          "start": 24,
+          "end": 52,
+          "score": 1.0
+        },
+        {
+          "type": "phone",
+          "start": 59,
+          "end": 74,
+          "score": 1.0
+        }
+      ],
+      "zh-intake-card": [
+        {
+          "type": "email",
+          "start": 12,
+          "end": 38,
+          "score": 1.0
+        },
+        {
+          "type": "phone",
+          "start": 43,
+          "end": 60,
+          "score": 1.0
+        }
+      ],
+      "ja-intake-card": [
+        {
+          "type": "email",
+          "start": 14,
+          "end": 41,
+          "score": 1.0
+        },
+        {
+          "type": "phone",
+          "start": 46,
+          "end": 62,
+          "score": 1.0
+        }
+      ],
+      "en-identity-form": [
+        {
+          "type": "person",
+          "start": 0,
+          "end": 3,
+          "score": 0.6
+        },
+        {
+          "type": "tax_id",
+          "start": 8,
+          "end": 20,
+          "score": 1.0
+        },
+        {
+          "type": "dob",
+          "start": 26,
+          "end": 36,
+          "score": 1.0
+        },
+        {
+          "type": "iban",
+          "start": 51,
+          "end": 78,
+          "score": 1.0
+        },
+        {
+          "type": "address",
+          "start": 114,
+          "end": 124,
+          "score": 1.0
+        }
+      ],
+      "es-identity-form": [
+        {
+          "type": "date",
+          "start": 36,
+          "end": 46,
+          "score": 1.0
+        },
+        {
+          "type": "iban",
+          "start": 64,
+          "end": 91,
+          "score": 1.0
+        }
+      ],
+      "fr-identity-form": [
+        {
+          "type": "date",
+          "start": 44,
+          "end": 54,
+          "score": 1.0
+        },
+        {
+          "type": "iban",
+          "start": 72,
+          "end": 99,
+          "score": 1.0
+        }
+      ],
+      "de-identity-form": [
+        {
+          "type": "date",
+          "start": 38,
+          "end": 48,
+          "score": 1.0
+        },
+        {
+          "type": "iban",
+          "start": 60,
+          "end": 87,
+          "score": 1.0
+        }
+      ],
+      "pt-identity-form": [
+        {
+          "type": "date",
+          "start": 30,
+          "end": 40,
+          "score": 1.0
+        },
+        {
+          "type": "iban",
+          "start": 57,
+          "end": 84,
+          "score": 1.0
+        }
+      ],
+      "ar-identity-form": [
+        {
+          "type": "person",
+          "start": 0,
+          "end": 13,
+          "score": 0.75
+        },
+        {
+          "type": "date",
+          "start": 37,
+          "end": 47,
+          "score": 1.0
+        },
+        {
+          "type": "iban",
+          "start": 63,
+          "end": 90,
+          "score": 1.0
+        }
+      ],
+      "hi-identity-form": [
+        {
+          "type": "date",
+          "start": 33,
+          "end": 43,
+          "score": 1.0
+        },
+        {
+          "type": "iban",
+          "start": 55,
+          "end": 82,
+          "score": 1.0
+        }
+      ],
+      "zh-identity-form": [
+        {
+          "type": "date",
+          "start": 23,
+          "end": 33,
+          "score": 1.0
+        },
+        {
+          "type": "iban",
+          "start": 40,
+          "end": 67,
+          "score": 1.0
+        }
+      ],
+      "ja-identity-form": [
+        {
+          "type": "date",
+          "start": 25,
+          "end": 35,
+          "score": 1.0
+        },
+        {
+          "type": "iban",
+          "start": 42,
+          "end": 69,
+          "score": 1.0
+        }
+      ],
+      "en-email-thread": [
+        {
+          "type": "person",
+          "start": 6,
+          "end": 16,
+          "score": 0.85
+        },
+        {
+          "type": "email",
+          "start": 18,
+          "end": 44,
+          "score": 1.0
+        },
+        {
+          "type": "phone",
+          "start": 63,
+          "end": 78,
+          "score": 1.0
+        },
+        {
+          "type": "address",
+          "start": 88,
+          "end": 103,
+          "score": 0.69
+        },
+        {
+          "type": "person",
+          "start": 105,
+          "end": 114,
+          "score": 0.75
+        },
+        {
+          "type": "person",
+          "start": 144,
+          "end": 148,
+          "score": 0.6499999999999999
+        }
+      ],
+      "en-profile-narrative": [
+        {
+          "type": "person",
+          "start": 0,
+          "end": 10,
+          "score": 0.85
+        },
+        {
+          "type": "dob",
+          "start": 58,
+          "end": 68,
+          "score": 1.0
+        },
+        {
+          "type": "person",
+          "start": 76,
+          "end": 82,
+          "score": 0.6
+        },
+        {
+          "type": "email",
+          "start": 86,
+          "end": 112,
+          "score": 1.0
+        },
+        {
+          "type": "phone",
+          "start": 116,
+          "end": 131,
+          "score": 1.0
+        },
+        {
+          "type": "address",
+          "start": 150,
+          "end": 174,
+          "score": 1.0
+        }
+      ]
+    }
+  }
+}

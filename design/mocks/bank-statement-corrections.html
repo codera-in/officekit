@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit — Correct extracted statement rows</title>
+  <link rel="stylesheet" href="../officekit-tokens.css">
+  <style>
+    body { margin: 0; padding: 1.5rem; background: var(--surface); color: var(--text); font: 14px/1.45 system-ui,sans-serif; }
+    main { max-width: 1260px; margin: auto; }
+    h1 { font-size: 1.7rem; margin: .4rem 0; }
+    .muted { color: var(--text-muted); }
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+    article { min-width: 0; padding: 1rem; border: 1px solid var(--border); border-radius: 14px; background: var(--surface-raised); }
+    .banner,.excluded { padding: .75rem; border: 1px solid #f2d18c; border-radius: 10px; background: #fff8e8; margin: .7rem 0; }
+    .bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .5rem; margin: .8rem 0; }
+    button,input { min-height: 38px; border: 1px solid var(--border); border-radius: 8px; padding: .4rem .6rem; background: var(--surface); color: var(--text); font: inherit; }
+    button.primary { border-color: #4338ca; background: #4338ca; color: white; }
+    button { cursor: pointer; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; min-width: 800px; border-collapse: collapse; }
+    th,td { padding: .55rem .4rem; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+    th { font-size: .72rem; text-transform: uppercase; }
+    td input { width: 100%; box-sizing: border-box; }
+    .row-actions { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .55rem; }
+    .foot { margin-top: .8rem; font-size: .76rem; color: var(--text-muted); }
+    @media (max-width: 760px) { body { padding: .75rem; } .compare { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<main>
+  <p class="muted">Bank statement extraction · before and after</p>
+  <h1>Correct a misread row before you export</h1>
+  <p class="muted">The original statement stays unchanged. Corrections are recalculated by the local statement engine.</p>
+  <div class="compare">
+    <article>
+      <p class="muted">Current</p>
+      <h2>Read-only extraction</h2>
+      <div class="banner"><strong>2 rows left out</strong><p>Rows with multiple dates need review and cannot be exported as transactions.</p></div>
+      <div class="bar"><strong>4 Transactions Extracted</strong><button>Export CSV</button></div>
+      <div class="table-wrap"><table><thead><tr><th>Date</th><th>Description</th><th>Debit</th><th>Credit</th><th>Balance</th><th>Status</th></tr></thead>
+        <tbody><tr><td>21/09/26 25/09/26 25/09/26</td><td>FOREIGN INWARD REMITTANCE TXN000000RO NETBANK…</td><td>—</td><td>—</td><td>—</td><td>Not checked</td></tr></tbody>
+      </table></div>
+      <p class="foot">A wrong value can be inspected, but not corrected in the app. Export uses extracted values as-is.</p>
+    </article>
+    <article>
+      <p class="muted">Proposed · inline correction and recheck</p>
+      <h2>Review the rows before export</h2>
+      <div class="banner"><strong>2 source rows still need review</strong><p>Correct a row into one or more transactions, or confirm that it is not a transaction. Unresolved rows keep the result partial.</p></div>
+      <div class="bar"><strong>Correct extracted transactions</strong><span class="muted">4 current rows · originals untouched</span></div>
+      <div class="table-wrap"><table><thead><tr><th>Date</th><th>Description</th><th>Debit</th><th>Credit</th><th>Balance</th></tr></thead>
+        <tbody><tr><td><input aria-label="Transaction date" value="2026-09-21"></td><td><input aria-label="Transaction description" value="Foreign inward remittance"></td><td><input aria-label="Debit amount" inputmode="decimal" value=""></td><td><input aria-label="Credit amount" inputmode="decimal" value="1250.00"></td><td><input aria-label="Running balance" inputmode="decimal" value="8250.00"></td></tr></tbody>
+      </table></div>
+      <div class="excluded"><strong>Source row 1 · multiple dates detected</strong><p>21/09/26 25/09/26 25/09/26 25/09/26 · FOREIGN INWARD REMITTANCE TXN000000RO…</p>
+        <div class="row-actions"><button>Add corrected transaction</button><button>Confirm not a transaction</button></div>
+      </div>
+      <div class="bar"><button>Add transaction</button><span class="muted">Dates and amounts are checked again by OfficeKit.</span></div>
+      <div class="bar"><button>Cancel</button><button class="primary">Recheck and apply</button></div>
+      <div class="bar"><strong>Partial · 3 movements checked · 1 row unresolved</strong><button>Export CSV</button></div>
+      <p class="foot">Rows stay local. A balance check confirms arithmetic only; it does not verify a statement’s authenticity or extraction accuracy.</p>
+    </article>
+  </div>
+</main>
+</body>
+</html>

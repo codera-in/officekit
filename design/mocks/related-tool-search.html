@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit related-tool search mock</title>
+  <style>
+    :root { color-scheme: light; font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #172033; background: #eef1f6; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 28px 18px 40px; }
+    h1 { max-width: 1100px; margin: 0 auto 8px; font-size: 22px; }
+    .intro { max-width: 1100px; margin: 0 auto 22px; color: #5f6d83; }
+    .boards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; align-items: start; }
+    .board { min-width: 0; }
+    .label { display: flex; justify-content: space-between; align-items: baseline; margin: 0 0 9px; color: #536178; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; }
+    .label small { color: #8190a7; font-weight: 500; letter-spacing: 0; text-transform: none; }
+    .screen { min-height: 535px; padding: 74px 14px 18px; border-radius: 18px; background: linear-gradient(#dfe4ed 0 50px, #f8fafc 50px); box-shadow: 0 14px 35px #18243a1a; }
+    .modal { overflow: hidden; width: 100%; max-width: 560px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 19px; background: white; box-shadow: 0 18px 44px #18243a26; }
+    .search { display: flex; align-items: center; gap: 11px; padding: 14px 16px; border-bottom: 1px solid #edf0f5; }
+    .glass { color: #8393aa; font-size: 20px; }
+    .query { flex: 1; min-width: 0; padding: 0; border: 0; outline: 0; color: #182033; font: inherit; font-size: 15px; }
+    .esc { padding: 4px 8px; border: 1px solid #dbe2ec; border-radius: 6px; color: #718098; font-size: 11px; }
+    .rows { padding: 5px 8px; }
+    .row { display: grid; grid-template-columns: 36px minmax(0,1fr) 16px; gap: 11px; align-items: center; min-height: 76px; padding: 10px 10px; border-radius: 12px; }
+    .row + .row { border-top: 1px solid #f0f2f6; }
+    .icon { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 10px; color: #4338ca; background: #eef0ff; font-size: 13px; font-weight: 800; }
+    .name { margin: 0; color: #1b2435; font-size: 12px; font-weight: 750; }
+    .chips { display: inline-flex; gap: 5px; margin-left: 6px; vertical-align: 1px; }
+    .chip { padding: 2px 5px; border-radius: 4px; color: #53627a; background: #f0f3f8; font-size: 8px; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
+    .desc { margin: 3px 0 0; color: #718098; font-size: 11px; }
+    .chev { color: #aab6c7; }
+    .group-title { padding: 10px 10px 3px; color: #64748b; font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .compact .row { min-height: 61px; }
+    .compact .desc { line-height: 1.3; }
+    .note { margin: 13px 2px 0; color: #67758a; font-size: 11px; }
+    .footer { display: flex; justify-content: space-between; padding: 12px 13px; border-top: 1px solid #edf0f5; color: #8a98ad; font-size: 10px; }
+    @media (max-width: 760px) {
+      body { padding: 18px 12px 28px; }
+      .boards { grid-template-columns: 1fr; gap: 22px; }
+      .screen { min-height: auto; padding: 45px 9px 12px; }
+      .modal { max-width: none; }
+      .row { grid-template-columns: 32px minmax(0,1fr) 12px; gap: 8px; padding-inline: 7px; }
+      .icon { width: 31px; height: 31px; }
+      .chips { margin-left: 3px; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Related-tool search: “PDF TO”</h1>
+  <p class="intro">A focused before/after for the search modal. The result set puts the requested output formats first, explains the supported scope, and keeps other PDF actions available as related tools.</p>
+  <main class="boards">
+    <section class="board" aria-labelledby="before-label">
+      <h2 class="label" id="before-label">Before <small>current screenshot behavior</small></h2>
+      <div class="screen">
+        <div class="modal">
+          <div class="search"><span class="glass" aria-hidden="true">⌕</span><div class="query">PDF TO</div><span class="esc">ESC</span></div>
+          <div class="rows">
+            <article class="row"><span class="icon">▣</span><div><p class="name">Merge PDFs <span class="chips"><span class="chip">PDF &amp; documents</span></span></p><p class="desc">Reorder source files, preview page totals, preserve supported structure and originals.</p></div><span class="chev">›</span></article>
+            <article class="row"><span class="icon">▣</span><div><p class="name">Resize PDF pages <span class="chips"><span class="chip">PDF &amp; documents</span></span></p><p class="desc">Standard/custom dimensions and explicit scale-versus-canvas choice.</p></div><span class="chev">›</span></article>
+          </div>
+          <div class="footer"><span>Navigate directly to an offline tool</span><span>Press ESC to close</span></div>
+        </div>
+      </div>
+      <p class="note">The query suggests format conversion, but the first results are unrelated operations and omit CSV / Excel / image outputs.</p>
+    </section>
+
+    <section class="board" aria-labelledby="after-label">
+      <h2 class="label" id="after-label">After <small>proposed grouped results</small></h2>
+      <div class="screen">
+        <div class="modal">
+          <div class="search"><span class="glass" aria-hidden="true">⌕</span><div class="query">PDF TO</div><span class="esc">ESC</span></div>
+          <div class="rows compact">
+            <div class="group-title">PDF → spreadsheets</div>
+            <article class="row"><span class="icon">CSV</span><div><p class="name">Bank statement PDF → CSV <span class="chips"><span class="chip">Supported statements</span></span></p><p class="desc">Extract transactions, review balance checks, then export CSV.</p></div><span class="chev">›</span></article>
+            <article class="row"><span class="icon">XLSX</span><div><p class="name">Bank statement PDF → Excel (XLSX)</p><p class="desc">Extract supported statements to a typed workbook. Legacy .xls is not currently exported.</p></div><span class="chev">›</span></article>
+            <div class="group-title">PDF → images</div>
+            <article class="row"><span class="icon">PNG</span><div><p class="name">PDF pages → PNG</p><p class="desc">Choose DPI; export selected pages as ordered image files.</p></div><span class="chev">›</span></article>
+            <article class="row"><span class="icon">JPG</span><div><p class="name">PDF pages → JPEG</p><p class="desc">Choose DPI and quality; export pages in one ZIP.</p></div><span class="chev">›</span></article>
+            <div class="group-title">Related PDF tools</div>
+            <article class="row"><span class="icon">PDF</span><div><p class="name">Merge · Split · Compress · Unlock · Protect · Metadata</p><p class="desc">Related document operations remain discoverable for this query.</p></div><span class="chev">›</span></article>
+          </div>
+          <div class="footer"><span>Choose an exact output path</span><span>Use ↑ ↓ and Enter</span></div>
+        </div>
+      </div>
+      <p class="note">No generic “PDF to spreadsheet” promise: CSV/XLSX extraction is labeled for supported bank statements. PNG/JPEG are page renders. .xls is called out as unsupported.</p>
+    </section>
+  </main>
+</body>
+</html>

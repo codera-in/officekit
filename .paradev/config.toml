@@ -1,0 +1,5 @@
+[install]
+run = ["npm ci"]
+
+[setup]
+run = ["./.paradev/setup.sh"]

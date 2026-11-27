@@ -1,0 +1,3 @@
+# Data-converter workbook fixtures
+
+These tiny synthetic workbooks contain no customer data. `formatted-values.xlsx` has a numeric account cell displayed with a six-digit zero mask and an Excel date cell; conversion to JSON must preserve the account's displayed identifier and emit an ISO date. `formatted-numeric-displays.xlsx` covers currency, percent, grouped negative, zero-dash and half-up rounded cells through the authenticated packaged sidecar's CSV route. `oversized-dimension.xlsx` changes only the worksheet dimension reference to exceed Excel's row/column limits; import must return the converter's fixed 422 response before pandas reads the sheet.

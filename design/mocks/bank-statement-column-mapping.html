@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit — Bank statement column mapping</title>
+  <link rel="stylesheet" href="../officekit-tokens.css">
+  <style>
+    body { margin: 0; padding: 24px; background: var(--ok-bg); color: var(--ok-text); font: var(--ok-text-base)/1.5 var(--ok-font); }
+    main { max-width: 1120px; margin: auto; }
+    h1 { margin: 4px 0; font-size: 28px; }
+    .muted { color: var(--ok-muted); }
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+    article { min-width: 0; padding: 20px; border: 1px solid var(--ok-line); border-radius: var(--ok-radius-panel); background: var(--ok-surface-raised); }
+    .banner { margin: 14px 0; padding: 12px; border: 1px solid var(--ok-warning); border-radius: var(--ok-radius-panel); background: var(--ok-warning-wash); }
+    .field-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin: 16px 0; }
+    label { display: grid; gap: 6px; font-weight: 600; }
+    select,button { min-height: 44px; padding: 8px 12px; border: 1px solid var(--ok-control-line); border-radius: var(--ok-radius-control); background: var(--ok-surface); color: var(--ok-text); font: inherit; }
+    button { cursor: pointer; }
+    button.primary { border-color: var(--ok-accent); background: var(--ok-accent); color: var(--ok-on-accent); }
+    .bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-top: 16px; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; min-width: 520px; border-collapse: collapse; }
+    th,td { padding: 8px 6px; border-bottom: 1px solid var(--ok-line); text-align: left; vertical-align: top; }
+    th { color: var(--ok-muted); font-size: var(--ok-text-xs); text-transform: uppercase; }
+    .foot { margin-top: 14px; font-size: var(--ok-text-sm); color: var(--ok-muted); }
+    @media (max-width: 760px) { body { padding: 12px; } .compare { grid-template-columns: 1fr; } .field-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<main>
+  <p class="muted">Bank statement extraction · before and proposed</p>
+  <h1>Match your statement’s columns</h1>
+  <p class="muted">Use the original local file to re-read columns, then review the rows before export.</p>
+  <div class="compare">
+    <article>
+      <p class="muted">Current</p>
+      <h2>Automatic mapping only</h2>
+      <div class="banner"><strong>Some values may be in the wrong column.</strong><br>OfficeKit guessed which source columns contain dates and amounts.</div>
+      <div class="table-wrap"><table><thead><tr><th>Detected as</th><th>Source header</th><th>Example value</th></tr></thead><tbody>
+        <tr><td>Date</td><td>Value date</td><td>25/09/26</td></tr><tr><td>Description</td><td>Reference</td><td>TXN000000RO</td></tr><tr><td>Debit</td><td>Closing balance</td><td>1,337,613.76</td></tr>
+      </tbody></table></div>
+      <div class="bar"><button>Review &amp; correct</button><button>Export CSV</button></div>
+      <p class="foot">You can edit individual results, but cannot correct which source columns were read.</p>
+    </article>
+    <article>
+      <p class="muted">Proposed · inside the existing Review &amp; correct panel</p>
+      <h2>Map source columns</h2>
+      <div class="banner"><strong>Re-read the original file with these choices.</strong><br>Nothing is uploaded; edits apply to this extraction only.</div>
+      <div class="field-grid">
+        <label>Date<select><option>Transaction Date</option></select></label>
+        <label>Description<select><option>Narration</option></select></label>
+        <label>Debit<select><option>Withdrawal Amount</option></select></label>
+        <label>Credit<select><option>Deposit Amount</option></select></label>
+        <label>Balance<select><option>Closing Balance</option></select></label>
+        <label>Combined amount <select><option>Not mapped</option></select></label>
+      </div>
+      <p class="muted">A source column can map to only one field. Use Debit/Credit or Combined amount.</p>
+      <div class="bar"><button>Cancel</button><button class="primary">Re-read &amp; recalculate</button></div>
+      <div class="table-wrap"><table><thead><tr><th>Date</th><th>Description</th><th>Debit</th><th>Credit</th><th>Balance</th></tr></thead><tbody>
+        <tr><td>2026-09-25</td><td>TRANSFER TO MERCHANT · TXN000000RO</td><td>200,000.00</td><td>—</td><td>1,537,613.76</td></tr>
+      </tbody></table></div>
+      <p class="foot">Reconciliation is recalculated from the mapped rows. Review every row; a math check does not verify statement authenticity.</p>
+    </article>
+  </div>
+</main>
+</body>
+</html>

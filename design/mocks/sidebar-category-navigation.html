@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OfficeKit · Sidebar category navigation</title>
+<style>
+  :root { color-scheme: light; font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #223140; background: #f3f6f9; }
+  body { margin: 0; padding: 32px; }
+  h1 { margin: 0 0 8px; font-size: 24px; }
+  p { color: #536477; }
+  .frames { display: grid; grid-template-columns: repeat(2,minmax(320px,1fr)); gap: 20px; max-width: 900px; }
+  .frame { min-height: 570px; overflow: hidden; border: 1px solid #d8e0e8; border-radius: 10px; background: #fff; }
+  .caption { padding: 14px 18px; border-bottom: 1px solid #e1e7ed; font-weight: 700; }
+  aside { width: 196px; height: 520px; padding: 20px 12px; overflow: auto; }
+  .label { margin: 16px 12px 6px; color: #718398; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  button { width: 100%; min-height: 40px; padding: 8px 12px; border: 0; border-radius: 6px; background: transparent; color: inherit; text-align: left; font: inherit; }
+  .active { background: #eaf2f8; color: #185c89; font-weight: 700; }
+  .icon { display: inline-block; width: 24px; color: #536477; }
+  .after aside { width: auto; }
+  .rail { height: 520px; overflow-y: auto; }
+  @media (max-width: 720px) { body { padding: 16px; } .frames { grid-template-columns: 1fr; } }
+</style>
+<h1>Sidebar navigation</h1>
+<p>Make the existing tool groups directly discoverable from the navigation rail.</p>
+<main class="frames">
+  <section class="frame"><div class="caption">Before · shortcuts only</div><aside>
+    <div class="label">Workspace</div><button class="active">▦ &nbsp; All Tools</button><button>★ &nbsp; Favorites</button><button>◷ &nbsp; History</button>
+    <div class="label">Quick access</div><button>▤ &nbsp; Statements</button><button>▣ &nbsp; JSON &amp; text tools</button><button>▦ &nbsp; Calculators</button>
+  </aside></section>
+  <section class="frame after"><div class="caption">After · searchable-by-category destinations</div><nav class="rail" aria-label="OfficeKit tool categories">
+    <div class="label">Workspace</div><button class="active">▦ &nbsp; All Tools</button><button>★ &nbsp; Favorites</button><button>◷ &nbsp; History</button>
+    <div class="label">Categories</div><button><span class="icon">▣</span>PDF &amp; Documents</button><button><span class="icon">▧</span>Images</button><button><span class="icon">▤</span>Finance &amp; Documents</button><button><span class="icon">▦</span>Calculators</button><button><span class="icon">⇄</span>Unit Converters</button><button><span class="icon">▱</span>File Utilities</button><button><span class="icon">◫</span>Storage &amp; Cleanup</button><button><span class="icon">⌘</span>Developer &amp; Data</button><button><span class="icon">◉</span>System</button><button><span class="icon">◖</span>Audio &amp; Dictation</button>
+  </nav></section>
+</main>
+</html>

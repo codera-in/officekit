@@ -1,0 +1,7 @@
+# EXIF Viewer: explicit location visibility
+
+Added a dedicated UI regression that injects a synthetic metadata report for a JPEG with GPS values. It verifies coordinates are hidden initially, default Copy details contains the non-location metadata only, keyboard activation of Show location reveals the coordinates and includes them in Copy, and keyboard activation of Hide removes them from the screen and subsequent copy again. The test checks the three-button limit and captures empty/hidden/revealed/hidden-again states when the browser is available.
+
+Real API evidence remains separate from the UI stub: fresh metadata route checks pass 3/3 and engine privacy/report tests pass 13/13. `node --test tests/image-metadata-ui.test.mjs` passes 4/4; the new browser spec passes `node --check`. Playwright execution and fresh screenshots remain blocked because WebKit 2359 aborts before setup. Existing screenshots are under `docs/verification/tool-unification/after/image_exif_view-*`.
+
+The UI test uses a controlled report response, so it does not substitute for real EXIF parsing; the route and engine tests cover that boundary. Exact Copy output, privacy toggling and keyboard interaction are now specified for the screen. Compact behavior and installed/native behavior remain open; `/Applications/OfficeKit.app` fails with `kLSNoExecutableErr`, direct execution exits 134, and CUA cannot attach to an OfficeKit window.

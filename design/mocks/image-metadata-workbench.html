@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>OfficeKit · Image metadata mock review</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ok-bg: #f3f6f9; --ok-surface: #fff; --ok-raised: #fff;
+      --ok-text: #223140; --ok-muted: #536477; --ok-line: #d4dde6;
+      --ok-control: #7a8c9e; --ok-accent: #185c89; --ok-on-accent: #fff;
+      --ok-wash: #e8f1f8; --ok-success: #216742; --ok-success-wash: #e9f4ed;
+      --ok-shadow: 0 14px 34px #172c4418;
+      --ok-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --ok-bg: #141f2c; --ok-surface: #1c2a3a; --ok-raised: #233348;
+      --ok-text: #eef4fa; --ok-muted: #afbed0; --ok-line: #3b4c60;
+      --ok-control: #768b9f; --ok-accent: #91caf0; --ok-on-accent: #142c40;
+      --ok-wash: #253f55; --ok-success: #91d5ad; --ok-success-wash: #213e31;
+      --ok-shadow: 0 14px 34px #0003;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--ok-bg); color: var(--ok-text); font: 15px/1.5 var(--ok-font); }
+    header.review { max-width: 1120px; margin: 0 auto; padding: 26px 24px 18px; }
+    header.review h1 { margin: 0 0 4px; font-size: 23px; letter-spacing: -.4px; }
+    header.review p { margin: 0; color: var(--ok-muted); }
+    .toolbar { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+    .toolbar button, .button { min-height: 40px; border: 1px solid var(--ok-control); border-radius: 7px; padding: 8px 13px; background: var(--ok-surface); color: var(--ok-text); font: inherit; font-weight: 650; }
+    .toolbar button:focus-visible, .button:focus-visible { outline: 3px solid var(--ok-accent); outline-offset: 2px; }
+    .compare { max-width: 1120px; margin: 0 auto; padding: 4px 24px 36px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; align-items: start; }
+    .version h2 { margin: 0 0 9px; font-size: 14px; letter-spacing: .04em; text-transform: uppercase; color: var(--ok-muted); }
+    .device { width: min(100%, 390px); min-height: 735px; margin: 0 auto; overflow: hidden; background: var(--ok-bg); border: 1px solid var(--ok-line); border-radius: 17px; box-shadow: var(--ok-shadow); }
+    .appbar { display: flex; align-items: center; gap: 9px; min-height: 55px; padding: 10px 14px; border-bottom: 1px solid var(--ok-line); background: var(--ok-surface); }
+    .logo { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; background: var(--ok-accent); color: var(--ok-on-accent); font-weight: 800; }
+    .brand { font-weight: 750; font-size: 15px; }
+    .appnav { margin-left: auto; display: flex; gap: 4px; }
+    .appnav span { padding: 6px 7px; border-radius: 6px; color: var(--ok-muted); font-size: 11px; }
+    .appnav .active { background: var(--ok-wash); color: var(--ok-accent); font-weight: 700; }
+    .screen { padding: 19px 15px 24px; }
+    .crumb { margin: 0 0 7px; color: var(--ok-muted); font-size: 12px; }
+    .screen h3 { margin: 0; font-size: 22px; line-height: 1.25; letter-spacing: -.35px; }
+    .lead { margin: 7px 0 17px; color: var(--ok-muted); font-size: 13px; }
+    .panel { border: 1px solid var(--ok-line); border-radius: 11px; padding: 14px; background: var(--ok-surface); }
+    .panel + .panel { margin-top: 12px; }
+    .upload { border: 1px dashed var(--ok-control); border-radius: 9px; padding: 15px 12px; text-align: center; background: var(--ok-bg); }
+    .upload .glyph { display: grid; place-items: center; width: 38px; height: 38px; margin: 0 auto 8px; border-radius: 11px; background: var(--ok-wash); color: var(--ok-accent); font-size: 20px; }
+    .upload strong { display: block; font-size: 13px; }
+    .upload small, small { color: var(--ok-muted); font-size: 12px; }
+    .button { width: 100%; display: inline-flex; justify-content: center; align-items: center; gap: 7px; margin-top: 12px; cursor: default; }
+    .primary { border-color: var(--ok-accent); background: var(--ok-accent); color: var(--ok-on-accent); }
+    .field { display: grid; gap: 5px; margin-top: 13px; }
+    label { font-size: 12px; font-weight: 700; }
+    .select { display: flex; justify-content: space-between; align-items: center; min-height: 40px; border: 1px solid var(--ok-control); border-radius: 7px; padding: 8px 10px; background: var(--ok-surface); font-size: 13px; }
+    .hint { margin: 8px 0 0; color: var(--ok-muted); font-size: 12px; }
+    .toolcard { display: grid; grid-template-columns: 36px 1fr auto; align-items: center; gap: 10px; padding: 11px 0; border-top: 1px solid var(--ok-line); }
+    .toolcard:first-of-type { margin-top: 7px; }
+    .toolicon { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 9px; background: var(--ok-wash); color: var(--ok-accent); font-size: 17px; }
+    .toolcard strong { display: block; font-size: 13px; }
+    .toolcard small { display: block; line-height: 1.35; }
+    .open { border: 0; padding: 7px 0 7px 7px; color: var(--ok-accent); background: transparent; font: inherit; font-size: 12px; font-weight: 700; }
+    .local { display: inline-flex; align-items: center; gap: 5px; color: var(--ok-success); font-size: 12px; font-weight: 700; }
+    .file { display: flex; align-items: center; gap: 10px; margin-top: 14px; padding: 10px; border: 1px solid var(--ok-line); border-radius: 8px; background: var(--ok-surface); }
+    .preview { display: grid; place-items: center; width: 52px; height: 52px; flex: 0 0 52px; border-radius: 7px; background: linear-gradient(145deg, #bad5df 0 45%, #e5c68b 46% 62%, #687e65 63%); color: #223140; font-size: 10px; font-weight: 700; }
+    .file strong { display: block; font-size: 12px; overflow-wrap: anywhere; }
+    .privacy { margin-top: 12px; padding: 10px; border-radius: 8px; background: var(--ok-wash); color: var(--ok-text); font-size: 12px; }
+    .privacy strong { display: block; margin-bottom: 2px; }
+    .result { margin-top: 13px; padding: 11px; border: 1px solid var(--ok-line); border-radius: 8px; background: var(--ok-success-wash); color: var(--ok-text); font-size: 12px; }
+    .result strong { display: block; color: var(--ok-success); }
+    .status { margin-top: 12px; color: var(--ok-muted); font-size: 12px; }
+    @media (max-width: 760px) { .compare { grid-template-columns: 1fr; padding-inline: 14px; } header.review { padding-inline: 16px; } .device { min-height: auto; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body data-theme="light">
+  <header class="review">
+    <h1>Image metadata removal · screen review</h1>
+    <p>Current generic image-converter entry compared with a dedicated EXIF-cleanup flow, using the existing OfficeKit shell.</p>
+    <div class="toolbar">
+      <button type="button" id="theme-toggle" aria-pressed="false">Preview dark theme</button>
+      <small>Each screen preview is 390 px wide.</small>
+    </div>
+  </header>
+  <main class="compare" aria-label="Current and proposed OfficeKit image tool screens">
+    <section class="version" aria-labelledby="before-title">
+      <h2 id="before-title">Before · current image converter</h2>
+      <div class="device">
+        <div class="appbar"><span class="logo" aria-hidden="true">O</span><span class="brand">OfficeKit</span><nav class="appnav" aria-label="Main navigation"><span class="active">Tools</span><span>Favorites</span><span>History</span></nav></div>
+        <div class="screen">
+          <p class="crumb">Tools / Images</p>
+          <h3>Any-to-Any Universal Converter</h3>
+          <p class="lead">Convert image and spreadsheet formats.</p>
+          <div class="panel">
+            <div class="upload"><span class="glyph" aria-hidden="true">↑</span><strong>Choose or drag any file here</strong><small>Image, spreadsheet, or JSON file</small><button class="button" type="button">Select file…</button></div>
+            <div class="field"><label>Selected file</label><div class="file"><span class="preview" aria-hidden="true">IMG</span><div><strong>weekend-camping.jpg</strong><small>4.8 MB · JPG image</small></div></div></div>
+            <div class="field"><label>Select target format</label><div class="select">PNG <span aria-hidden="true">⌄</span></div></div>
+            <button class="button primary" type="button">Convert &amp; download</button>
+            <p class="status">There is no dedicated action to remove EXIF/GPS metadata.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="version" aria-labelledby="after-title">
+      <h2 id="after-title">After · exact EXIF-removal destination</h2>
+      <div class="device">
+        <div class="appbar"><span class="logo" aria-hidden="true">O</span><span class="brand">OfficeKit</span><nav class="appnav" aria-label="Main navigation"><span class="active">Tools</span><span>Favorites</span><span>History</span></nav></div>
+        <div class="screen">
+          <p class="crumb">Tools / Images / Remove image metadata</p>
+          <h3>Remove image metadata</h3>
+          <p class="lead">Create a clean copy without camera or location EXIF. Your original stays unchanged.</p>
+          <div class="panel">
+            <span class="local"><span aria-hidden="true">●</span> Processed locally</span>
+            <div class="file"><span class="preview" aria-hidden="true">IMG</span><div><strong>weekend-camping.jpg</strong><small>4.8 MB · JPEG</small></div></div>
+            <div class="privacy"><strong>What this removes</strong>EXIF fields such as camera details, capture time and GPS coordinates.</div>
+            <p class="hint">JPEG orientation and image quality are preserved. Animated GIF/WebP frames and TIFF pages stay intact.</p>
+            <button class="button primary" type="button">Remove EXIF metadata</button>
+            <div class="result"><strong>Clean copy ready</strong>weekend-camping_metadata_removed.jpg · 4.8 MB<br>Original file unchanged.</div>
+            <button class="button" type="button">Download clean copy</button>
+            <p class="status">No account or network connection required. Recents record the tool only; image content is not saved.</p>
+          </div>
+          <div class="panel">
+            <span class="local">Also find it in Images</span>
+            <div class="toolcard"><span class="toolicon" aria-hidden="true">▧</span><div><strong>Remove image metadata</strong><small>Strip EXIF from JPG, PNG, WebP, BMP, TIFF and GIF copies.</small></div><button class="open" type="button">Open</button></div>
+            <p class="hint">Search terms: EXIF, GPS metadata, remove photo location, image metadata.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    document.getElementById('theme-toggle').addEventListener('click', event => {
+      const dark = document.body.dataset.theme !== 'dark';
+      document.body.dataset.theme = dark ? 'dark' : 'light';
+      event.currentTarget.setAttribute('aria-pressed', String(dark));
+      event.currentTarget.textContent = dark ? 'Preview light theme' : 'Preview dark theme';
+    });
+  </script>
+</body>
+</html>

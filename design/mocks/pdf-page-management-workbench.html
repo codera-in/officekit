@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>OfficeKit — PDF page management mock</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --canvas: #f3f6f9;
+      --surface: #fff;
+      --surface-soft: #f8fafc;
+      --text: #223140;
+      --muted: #536477;
+      --line: #d8e0e8;
+      --accent: #185c89;
+      --accent-soft: #e8f1f7;
+      --success: #176b50;
+      --warning: #875414;
+      --warning-soft: #fff4df;
+      --danger: #9a3434;
+      --focus: #1d77b4;
+      --radius-panel: 10px;
+      --radius-control: 6px;
+      font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: var(--canvas);
+    }
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --canvas: #141f2c;
+      --surface: #1c2a3a;
+      --surface-soft: #223346;
+      --text: #eef4fa;
+      --muted: #afbed0;
+      --line: #405164;
+      --accent: #91caf0;
+      --accent-soft: #273f53;
+      --success: #79d3b2;
+      --warning: #f0c679;
+      --warning-soft: #473a25;
+      --danger: #ff9c9c;
+      --focus: #a6dcff;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; background: var(--canvas); }
+    button { font: inherit; color: inherit; cursor: pointer; }
+    button:focus-visible, [tabindex]:focus-visible {
+      outline: 3px solid var(--focus); outline-offset: 2px;
+    }
+    .app { min-height: 100vh; }
+    .topbar {
+      min-height: 64px; display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; padding: 10px clamp(16px, 4vw, 48px); background: var(--surface);
+      border-bottom: 1px solid var(--line);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 750; }
+    .mark {
+      width: 34px; height: 34px; display: block; border-radius: 8px; object-fit: cover;
+    }
+    .top-actions { display: flex; align-items: center; gap: 8px; }
+    .quiet, .nav-tool, .page-action {
+      border: 1px solid transparent; border-radius: var(--radius-control); background: transparent;
+    }
+    .quiet { padding: 7px 10px; color: var(--muted); }
+    .quiet:hover, .page-action:hover { background: var(--surface-soft); }
+    main { width: min(1280px, 100%); margin: auto; padding: 30px clamp(16px, 4vw, 48px) 48px; }
+    .crumb { margin: 0 0 5px; color: var(--muted); font-size: 13px; }
+    h1 { margin: 0; font-size: clamp(25px, 3vw, 30px); letter-spacing: -.035em; }
+    .lede { max-width: 68ch; margin: 6px 0 0; color: var(--muted); }
+    .workbench { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 20px; margin-top: 24px; }
+    .tool-list, .workspace { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-panel); }
+    .tool-list { height: fit-content; padding: 10px; }
+    .tool-list h2 { margin: 8px 10px 7px; color: var(--muted); font-size: 12px; font-weight: 650; }
+    .nav-tool { width: 100%; min-height: 40px; padding: 8px 10px; text-align: left; }
+    .nav-tool[aria-current="page"] { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+    .workspace { padding: clamp(16px, 2.5vw, 26px); }
+    .workspace-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+    .workspace-head h2 { margin: 0; font-size: 19px; }
+    .workspace-head p { margin: 4px 0 0; max-width: 66ch; color: var(--muted); }
+    .local-tag { flex: none; color: var(--success); font-size: 13px; }
+    .file-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      margin-top: 20px; padding: 11px 12px; border: 1px solid var(--line); border-radius: 8px;
+      background: var(--surface-soft);
+    }
+    .file-details { min-width: 0; }
+    .file-name { display: block; overflow-wrap: anywhere; font-weight: 650; }
+    .file-meta { color: var(--muted); font-size: 13px; }
+    .change-file { flex: none; min-height: 36px; padding: 5px 10px; border: 1px solid var(--line); border-radius: var(--radius-control); background: var(--surface); }
+    .instruction-row { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; margin: 16px 0 12px; }
+    .instruction-row h3 { margin: 0; font-size: 15px; }
+    .instruction-row p { margin: 0; color: var(--muted); font-size: 13px; }
+    .page-grid { display: grid; grid-template-columns: repeat(3, minmax(112px, 1fr)); gap: 12px; }
+    .page-card {
+      position: relative; min-width: 0; padding: 10px; border: 1px solid var(--line);
+      border-radius: 8px; background: var(--surface); text-align: left;
+    }
+    .page-card:hover { border-color: var(--accent); }
+    .page-card.is-selected { border: 2px solid var(--accent); padding: 9px; background: var(--accent-soft); }
+    .page-card.is-removed { border-color: var(--danger); background: color-mix(in srgb, var(--danger) 7%, var(--surface)); }
+    .page-visual {
+      aspect-ratio: 0.76; display: grid; align-content: start; gap: 8px; padding: 14% 12%;
+      border: 1px solid var(--line); border-radius: 3px; background: var(--surface);
+      box-shadow: 0 1px 2px #0b203010;
+    }
+    .page-visual.landscape { aspect-ratio: 1.22; align-content: center; }
+    .page-visual.short { aspect-ratio: .88; }
+    .page-visual span { display: block; height: 3px; border-radius: 2px; background: var(--line); }
+    .page-visual span:nth-child(2) { width: 82%; }
+    .page-visual span:nth-child(3) { width: 67%; }
+    .page-visual span:nth-child(4) { width: 91%; margin-top: 8px; }
+    .page-visual span:nth-child(5) { width: 76%; }
+    .page-caption { display: flex; justify-content: space-between; gap: 6px; margin-top: 9px; font-size: 13px; font-weight: 650; }
+    .page-size { display: block; margin-top: 2px; color: var(--muted); font-size: 12px; font-weight: 400; }
+    .page-status { color: var(--danger); font-size: 12px; font-weight: 700; }
+    .page-controls { display: flex; gap: 5px; margin-top: 7px; }
+    .page-action { min-height: 32px; padding: 4px 7px; border-color: var(--line); font-size: 12px; }
+    .page-action:disabled { opacity: .4; cursor: not-allowed; }
+    .move-grip { margin-right: 5px; color: var(--muted); }
+    .warning {
+      margin-top: 16px; padding: 11px 13px; border-left: 3px solid var(--warning);
+      border-radius: 0 6px 6px 0; background: var(--warning-soft); color: var(--text); font-size: 13px;
+    }
+    .warning strong { display: block; margin-bottom: 2px; color: var(--warning); }
+    .result-preview { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-top: 18px; padding: 13px 0; border-top: 1px solid var(--line); }
+    .result-preview h3 { margin: 0; font-size: 14px; }
+    .result-preview p { margin: 3px 0 0; color: var(--muted); font-size: 13px; }
+    .order-value { flex: none; font-variant-numeric: tabular-nums; font-weight: 700; }
+    .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 14px; padding-top: 15px; border-top: 1px solid var(--line); }
+    .primary { min-height: 42px; padding: 8px 15px; border: 1px solid var(--accent); border-radius: var(--radius-control); background: var(--accent); color: #fff; font-weight: 700; }
+    [data-theme="dark"] .primary { color: #142c40; }
+    .secondary { min-height: 42px; padding: 8px 13px; border: 1px solid var(--line); border-radius: var(--radius-control); background: var(--surface); }
+    .actions-note { color: var(--muted); font-size: 13px; }
+    .screen-state { min-height: 22px; margin: 9px 0 0; color: var(--success); font-size: 13px; }
+    [hidden] { display: none !important; }
+    @media (max-width: 760px) {
+      main { padding-top: 22px; }
+      .workbench { grid-template-columns: 1fr; }
+      .tool-list { display: flex; gap: 4px; overflow-x: auto; }
+      .tool-list h2 { display: none; }
+      .nav-tool { width: auto; flex: none; }
+      .page-grid { grid-template-columns: repeat(2, minmax(112px, 1fr)); }
+    }
+    @media (max-width: 430px) {
+      .local-tag { display: none; }
+      .page-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+      .page-card { padding: 7px; }
+      .page-card.is-selected { padding: 6px; }
+      .result-preview { display: block; }
+      .order-value { display: block; margin-top: 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="app" id="app" data-theme="light">
+    <header class="topbar">
+          <div class="brand"><img class="mark" src="../../src-tauri/icons/officekit-icon.svg" alt=""><span>OfficeKit</span></div>
+      <div class="top-actions"><span class="file-meta">PDF &amp; Documents</span><button class="quiet" id="theme-toggle" type="button" aria-pressed="false">Dark mode</button></div>
+    </header>
+    <main>
+      <p class="crumb">All tools / PDF &amp; Documents</p>
+      <h1>PDF workbench</h1>
+      <p class="lede">Choose a page task, review the new order, and create a separate PDF.</p>
+      <div class="workbench">
+        <nav class="tool-list" aria-label="PDF tools">
+          <h2>PDF tools</h2>
+          <button class="nav-tool" type="button">Merge PDFs</button>
+          <button class="nav-tool" type="button">Split by pages</button>
+          <button class="nav-tool" id="delete-pages-nav" type="button" aria-current="page">Delete pages</button>
+          <button class="nav-tool" id="reorder-pages-nav" type="button">Reorder pages</button>
+          <button class="nav-tool" type="button">Compress PDF</button>
+        </nav>
+        <section class="workspace" aria-labelledby="task-title">
+          <div class="workspace-head">
+            <div><h2 id="task-title">Delete pages</h2><p>Choose pages to remove from the new copy. The selected original stays untouched.</p></div>
+            <span class="local-tag">● Processed on this device</span>
+          </div>
+          <div class="file-row">
+            <div class="file-details"><span class="file-name">Quarterly-report.pdf</span><span class="file-meta">3 pages · 2.4 MB</span></div>
+            <button class="change-file" type="button">Choose another PDF</button>
+          </div>
+          <section id="delete-panel" role="tabpanel" aria-labelledby="delete-pages-nav">
+            <div class="instruction-row"><h3>Select pages to remove</h3><p>Click a page to select or clear it.</p></div>
+            <div class="page-grid" id="delete-grid" aria-label="PDF pages">
+              <button class="page-card" type="button" aria-pressed="false" data-page="1"><span class="page-visual" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span><span class="page-caption"><span>Page 1<span class="page-size">A4 · portrait</span></span><span class="page-status"></span></span></button>
+              <button class="page-card is-selected is-removed" type="button" aria-pressed="true" data-page="2"><span class="page-visual landscape" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span><span class="page-caption"><span>Page 2<span class="page-size">Letter · landscape</span></span><span class="page-status">Will remove</span></span></button>
+              <button class="page-card" type="button" aria-pressed="false" data-page="3"><span class="page-visual short" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span><span class="page-caption"><span>Page 3<span class="page-size">A5 · portrait</span></span><span class="page-status"></span></span></button>
+            </div>
+            <aside class="warning"><strong>Page removal is not secure redaction.</strong> Content may remain in the PDF’s internal structure. Use a verified redaction tool to permanently remove sensitive content.</aside>
+            <div class="result-preview"><div><h3>New PDF preview</h3><p id="delete-summary">2 pages will remain. Your original will not change.</p></div><span class="order-value" id="delete-order">Pages 1, 3</span></div>
+            <div class="actions"><button class="primary" id="delete-action" type="button">Create PDF with 2 pages</button><button class="secondary" type="button">Clear selection</button><span class="actions-note">Output: Quarterly-report-pages-removed.pdf</span></div>
+          </section>
+          <section id="reorder-panel" role="tabpanel" aria-labelledby="reorder-pages-nav" hidden>
+            <div class="instruction-row"><h3>Arrange pages</h3><p>Use the arrows or Alt + ↑ / ↓ on a page.</p></div>
+            <div class="page-grid" id="reorder-grid" aria-label="PDF pages in output order">
+              <article class="page-card" tabindex="0" draggable="true" data-page="1"><span class="page-visual" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span><span class="page-caption"><span><span class="move-grip" aria-hidden="true">⠿</span>Page 1<span class="page-size">A4 · portrait</span></span><span class="page-status"></span></span><span class="page-controls"><button class="page-action" type="button" data-move="up" aria-label="Move page 1 up" disabled>Move up</button><button class="page-action" type="button" data-move="down" aria-label="Move page 1 down">Move down</button></span></article>
+              <article class="page-card" tabindex="0" draggable="true" data-page="2"><span class="page-visual landscape" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span><span class="page-caption"><span><span class="move-grip" aria-hidden="true">⠿</span>Page 2<span class="page-size">Letter · landscape</span></span><span class="page-status"></span></span><span class="page-controls"><button class="page-action" type="button" data-move="up" aria-label="Move page 2 up">Move up</button><button class="page-action" type="button" data-move="down" aria-label="Move page 2 down">Move down</button></span></article>
+              <article class="page-card" tabindex="0" draggable="true" data-page="3"><span class="page-visual short" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span><span class="page-caption"><span><span class="move-grip" aria-hidden="true">⠿</span>Page 3<span class="page-size">A5 · portrait</span></span><span class="page-status"></span></span><span class="page-controls"><button class="page-action" type="button" data-move="up" aria-label="Move page 3 up">Move up</button><button class="page-action" type="button" data-move="down" aria-label="Move page 3 down" disabled>Move down</button></span></article>
+            </div>
+            <div class="result-preview"><div><h3>New PDF preview</h3><p>Your original will not change.</p></div><span class="order-value" id="reorder-order">Output order: 1, 2, 3</span></div>
+            <div class="actions"><button class="primary" id="reorder-action" type="button">Create reordered PDF</button><button class="secondary" id="reset-order" type="button">Reset order</button><span class="actions-note">Output: Quarterly-report-reordered.pdf</span></div>
+          </section>
+          <p class="screen-state" id="status" role="status" aria-live="polite"></p>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script>
+    const app = document.getElementById('app');
+    const taskButtons = [document.getElementById('delete-pages-nav'), document.getElementById('reorder-pages-nav')];
+    const panels = [document.getElementById('delete-panel'), document.getElementById('reorder-panel')];
+    const status = document.getElementById('status');
+    function openTask(index) {
+      taskButtons.forEach((button, current) => {
+        const selected = current === index;
+        if (selected) button.setAttribute('aria-current', 'page');
+        else button.removeAttribute('aria-current');
+        panels[current].hidden = !selected;
+      });
+      document.getElementById('task-title').textContent = index === 0 ? 'Delete pages' : 'Reorder pages';
+      status.textContent = '';
+    }
+    taskButtons.forEach((button, index) => button.addEventListener('click', () => openTask(index)));
+    document.querySelectorAll('#delete-grid .page-card').forEach(card => {
+      card.querySelector('.page-visual').setAttribute('aria-hidden', 'true');
+      card.addEventListener('click', () => {
+        card.classList.toggle('is-selected');
+        card.classList.toggle('is-removed');
+        const selected = card.classList.contains('is-selected');
+        card.setAttribute('aria-pressed', String(selected));
+        card.querySelector('.page-status').textContent = selected ? 'Will remove' : '';
+        updateDeletePreview();
+      });
+    });
+    function updateDeletePreview() {
+      const removed = [...document.querySelectorAll('#delete-grid .is-selected')].map(card => Number(card.dataset.page));
+      const kept = [1, 2, 3].filter(page => !removed.includes(page));
+      document.getElementById('delete-summary').textContent = `${kept.length} page${kept.length === 1 ? '' : 's'} will remain. Your original will not change.`;
+      document.getElementById('delete-order').textContent = kept.length ? `Pages ${kept.join(', ')}` : 'Select at least one page to keep';
+      document.getElementById('delete-action').disabled = kept.length === 0;
+      document.getElementById('delete-action').textContent = kept.length ? `Create PDF with ${kept.length} page${kept.length === 1 ? '' : 's'}` : 'Select a page to keep';
+    }
+    let order = [1, 2, 3];
+    function renderOrder() {
+      const grid = document.getElementById('reorder-grid');
+      order.forEach((page, index) => {
+        const card = grid.querySelector(`[data-page="${page}"]`);
+        grid.append(card);
+        card.querySelector('[data-move="up"]').disabled = index === 0;
+        card.querySelector('[data-move="down"]').disabled = index === order.length - 1;
+        card.querySelector('[data-move="up"]').setAttribute('aria-label', `Move page ${page} up`);
+        card.querySelector('[data-move="down"]').setAttribute('aria-label', `Move page ${page} down`);
+      });
+      document.getElementById('reorder-order').textContent = `Output order: ${order.join(', ')}`;
+    }
+    function move(page, delta) {
+      const index = order.indexOf(page);
+      const target = index + delta;
+      if (target < 0 || target >= order.length) return;
+      [order[index], order[target]] = [order[target], order[index]];
+      renderOrder();
+      document.querySelector(`#reorder-grid [data-page="${page}"]`).focus();
+    }
+    document.querySelectorAll('#reorder-grid [data-move]').forEach(button => button.addEventListener('click', () => {
+      const page = Number(button.closest('[data-page]').dataset.page);
+      move(page, button.dataset.move === 'up' ? -1 : 1);
+    }));
+    document.querySelectorAll('#reorder-grid [data-page]').forEach(card => card.addEventListener('keydown', event => {
+      if ((event.altKey && event.key === 'ArrowUp') || (event.altKey && event.key === 'ArrowDown')) {
+        event.preventDefault();
+        move(Number(card.dataset.page), event.key === 'ArrowUp' ? -1 : 1);
+      }
+    }));
+    document.querySelectorAll('#reorder-grid [data-page]').forEach(card => {
+      card.addEventListener('dragstart', event => {
+        if (event.target.closest('button')) { event.preventDefault(); return; }
+        event.dataTransfer.setData('text/plain', card.dataset.page);
+        event.dataTransfer.effectAllowed = 'move';
+      });
+      card.addEventListener('dragover', event => event.preventDefault());
+      card.addEventListener('drop', event => {
+        event.preventDefault();
+        const moving = Number(event.dataTransfer.getData('text/plain'));
+        const target = Number(card.dataset.page);
+        if (!order.includes(moving) || moving === target) return;
+        order.splice(order.indexOf(moving), 1);
+        order.splice(order.indexOf(target), 0, moving);
+        renderOrder();
+      });
+    });
+    document.querySelector('.actions .secondary').addEventListener('click', () => {
+      document.querySelectorAll('#delete-grid .is-selected').forEach(card => {
+        card.classList.remove('is-selected', 'is-removed');
+        card.setAttribute('aria-pressed', 'false');
+        card.querySelector('.page-status').textContent = '';
+      });
+      updateDeletePreview();
+    });
+    document.getElementById('reset-order').addEventListener('click', () => { order = [1, 2, 3]; renderOrder(); });
+    document.getElementById('delete-action').addEventListener('click', () => { status.textContent = 'Mock only: the app would create and offer the new PDF here.'; });
+    document.getElementById('reorder-action').addEventListener('click', () => { status.textContent = 'Mock only: the app would create and offer the reordered PDF here.'; });
+    document.getElementById('theme-toggle').addEventListener('click', event => {
+      const dark = app.dataset.theme !== 'dark';
+      app.dataset.theme = dark ? 'dark' : 'light';
+      event.currentTarget.setAttribute('aria-pressed', String(dark));
+      event.currentTarget.textContent = dark ? 'Light mode' : 'Dark mode';
+    });
+    renderOrder();
+  </script>
+</body>
+</html>

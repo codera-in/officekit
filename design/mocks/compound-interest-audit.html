@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compound interest result — before and after</title>
+  <link rel="stylesheet" href="../officekit-tokens.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 24px; background: var(--ok-canvas); color: var(--ok-text); font: 15px/1.5 system-ui, sans-serif; }
+    h1 { margin: 0 0 8px; font-size: 24px; }
+    .lead { margin: 0 0 20px; color: var(--ok-muted); }
+    .comparison { display: grid; grid-template-columns: repeat(2, minmax(320px, 1fr)); gap: 16px; max-width: 1040px; margin: auto; }
+    .version { min-width: 0; padding: 16px; border: 1px solid var(--ok-border); border-radius: 10px; background: var(--ok-surface); }
+    .version h2 { margin: 0 0 12px; font-size: 18px; }
+    .field-grid, .metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    label { display: block; margin-bottom: 4px; font-size: 13px; font-weight: 600; }
+    input, select { width: 100%; min-height: 40px; padding: 8px; border: 1px solid var(--ok-border); border-radius: 6px; color: var(--ok-text); background: var(--ok-surface); font: inherit; }
+    .result { margin-top: 14px; padding: 12px; border: 1px solid var(--ok-border); border-radius: 10px; }
+    .metrics > div { padding: 10px; border: 1px solid var(--ok-border); border-radius: 6px; }
+    .muted, small { color: var(--ok-muted); }
+    .hero { margin: 0 0 10px; font-size: 27px; font-weight: 700; font-variant-numeric: tabular-nums; }
+    summary { cursor: pointer; font-weight: 600; }
+    table { width: 100%; margin-top: 10px; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 6px 4px; border-bottom: 1px solid var(--ok-border); text-align: right; }
+    th:first-child, td:first-child { text-align: left; }
+    @media (max-width: 760px) {
+      body { padding: 12px; }
+      .comparison { grid-template-columns: minmax(0, 1fr); }
+      .version { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Compound growth calculator</h1>
+  <p class="lead">Keep the same quick inputs; make the calculation method and returned history inspectable.</p>
+  <main class="comparison">
+    <section class="version" aria-labelledby="before-title">
+      <h2 id="before-title">Before</h2>
+      <div class="field-grid">
+        <div><label>Initial principal</label><input value="$1,000"></div>
+        <div><label>Annual return</label><input value="12%"></div>
+        <div><label>Time period</label><input value="1.1 years"></div>
+        <div><label>Monthly deposit</label><input value="$100"></div>
+      </div>
+      <div class="result">
+        <div class="metrics">
+          <div><small>Future balance</small><br><strong>$2,521.72</strong></div>
+          <div><small>Total invested</small><br><strong>$2,300.00</strong></div>
+          <div><small>Total interest</small><br><strong>$221.72</strong></div>
+        </div>
+        <p class="muted">No compounding frequency, method, or growth history is shown.</p>
+      </div>
+    </section>
+
+    <section class="version" aria-labelledby="after-title">
+      <h2 id="after-title">After</h2>
+      <div class="field-grid">
+        <div><label>Initial principal</label><input value="$1,000" min="0" max="1e12"></div>
+        <div><label>Nominal annual rate</label><input value="12%" min="-100" max="1000"></div>
+        <div><label>Time period (years)</label><input value="1.1" min="0" max="100"></div>
+        <div><label>Monthly deposit</label><input value="$100" min="0" max="1e12"></div>
+        <div><label>Compounding frequency</label><select><option>Quarterly (4 times/year)</option></select></div>
+      </div>
+      <div class="result">
+        <small>Future balance</small>
+        <p class="hero">$2,521.72</p>
+        <div class="metrics">
+          <div><small>Total invested</small><br><strong>$2,300.00</strong></div>
+          <div><small>Total interest</small><br><strong>$221.72</strong></div>
+        </div>
+        <details>
+          <summary>Assumptions and growth history</summary>
+          <p class="muted">Quarterly nominal compounding · equivalent monthly growth · deposits at month-end · final 0.2 month earns interest only.</p>
+          <table>
+            <caption class="muted">Balance at each year and at the final date</caption>
+            <thead><tr><th>Period</th><th>Invested</th><th>Interest</th><th>Balance</th></tr></thead>
+            <tbody><tr><td>Year 1</td><td>$2,200.00</td><td>$193.07</td><td>$2,393.07</td></tr><tr><td>Year 1.1 (final)</td><td>$2,300.00</td><td>$221.72</td><td>$2,521.72</td></tr></tbody>
+          </table>
+        </details>
+        <p class="muted">Save and Export keep the exact inputs, frequency, assumptions and history for this result.</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

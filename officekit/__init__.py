@@ -1,0 +1,1 @@
+"""Shared OfficeKit application code."""

@@ -1,0 +1,53 @@
+#tab-ergonomics { color:var(--ok-text); }
+#tab-ergonomics h1 { font-size:var(--ok-title); font-weight:700; }
+#tab-ergonomics p { color:var(--ok-muted); }
+.ergonomics-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--ok-space-5); }
+.ergonomics-card { padding:var(--ok-space-5); margin-bottom:var(--ok-space-5); background:var(--ok-surface); border-color:var(--ok-line); border-radius:var(--ok-radius-panel); }
+.ergonomics-row,.ergonomics-actions { display:flex; align-items:center; justify-content:space-between; gap:var(--ok-space-3); flex-wrap:wrap; }
+.ergonomics-actions { justify-content:flex-start; }
+.ergonomics-fields { display:flex; flex-wrap:wrap; gap:var(--ok-space-4); padding:var(--ok-space-3) 0; }
+.ergonomics-field { display:grid; gap:var(--ok-space-2); font-size:13px; color:var(--ok-muted); }
+.ergonomics-card .ergonomics-field :is(.input,.select) { box-sizing:border-box; height:40px; min-height:40px; width:100%; min-width:9rem; padding:0 10px; border:1px solid var(--ok-line); border-radius:8px; background:var(--ok-surface); color:var(--ok-text); font-size:14px; }
+.ergonomics-card .ergonomics-fields { display:grid; grid-template-columns:repeat(auto-fit,minmax(10rem,1fr)); gap:var(--ok-space-3) var(--ok-space-4); }
+.ergonomics-card .ergonomics-row { min-height:40px; font-size:14px; color:var(--ok-text); }
+.ergonomics-card .ergonomics-row > span[data-due] { font-size:13px; color:var(--ok-muted); }
+.ergonomics-link { background:none; border:0; padding:0; min-height:0; font:inherit; font-weight:600; color:var(--ok-primary,var(--color-primary)); text-decoration:underline; cursor:pointer; }
+.ergonomics-link:disabled { opacity:.5; cursor:default; }
+#tab-ergonomics > p, #tab-ergonomics form > p { font-size:13px; }
+.ergonomics-overlay { width:100vw; height:100vh; box-sizing:border-box; margin:0; background:transparent !important; color:var(--ok-text); font:var(--ok-text-base)/1.5 var(--ok-font); overflow:hidden; }
+.ergonomics-overlay html { background:transparent; }
+html:has(.ergonomics-overlay) { background:transparent !important; }
+.ergonomics-companion { box-sizing:border-box; width:100%; height:100%; display:flex; align-items:center; justify-content:flex-end; flex-direction:column; gap:var(--ok-space-2); padding:var(--ok-space-3); }
+.ergonomics-companion[hidden] { display:none; }
+.ergonomics-companion[data-corner^=top] { flex-direction:column-reverse; }
+.ergonomics-bubble { box-sizing:border-box; flex:0 1 auto; min-height:0; max-height:calc(100% - 156px); overflow:auto; padding:var(--ok-space-4); background:var(--ok-surface-raised); border-color:var(--ok-line); border-radius:var(--ok-radius-dialog); box-shadow:var(--ok-shadow); width:100%; }
+.ergonomics-bubble { position:relative; }
+.ergonomics-bubble h1 { font-size:var(--ok-text-lg); font-weight:650; padding-right:calc(var(--ok-space-4) * 2); }
+.ergonomics-close { position:fixed; z-index:2; top:var(--ok-space-3); right:var(--ok-space-3); width:32px; height:32px; min-height:0; padding:0; border:0; border-radius:50%; display:grid; place-items:center; font:inherit; font-size:var(--ok-text-lg); line-height:1; color:var(--ok-text); background:var(--ok-line); cursor:pointer; }
+.ergonomics-close:hover, .ergonomics-close:focus-visible { outline:2px solid var(--ok-primary,var(--color-primary)); outline-offset:1px; }
+.ergonomics-close[hidden], .ergonomics-link[hidden] { display:none; }
+.ergonomics-bubble p { margin:var(--ok-space-2) 0; font-size:var(--ok-text-sm); color:var(--ok-muted); }
+#companion-character { display:block; flex:0 0 144px; width:144px; height:144px; }
+.ergonomics-bubble .ergonomics-meeting-countdown { font-size:calc(var(--ok-title) * 1.5); font-weight:700; font-variant-numeric:tabular-nums; color:var(--ok-text); }
+.ergonomics-bubble .ergonomics-cue { margin:var(--ok-space-2) 0 0; font-size:var(--ok-text-base); font-weight:650; color:var(--ok-text); }
+.ergonomics-cue[hidden], .ergonomics-dots[hidden] { display:none; }
+.ergonomics-dots { display:flex; gap:6px; margin:2px 0; }
+.ergonomics-dots i { width:8px; height:8px; border-radius:50%; background:var(--ok-line); }
+.ergonomics-dots i.on { background:var(--ok-primary,var(--color-primary)); }
+.ergonomics-calendars-head { display:flex; justify-content:space-between; align-items:baseline; margin:var(--ok-space-3) 0 var(--ok-space-2); font-size:13px; color:var(--ok-muted); }
+.ergonomics-calendar-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:4px var(--ok-space-4); }
+.ergonomics-calendar { display:flex; align-items:center; border-radius:8px; }
+.ergonomics-calendar:hover { background:var(--ok-line); }
+.ergonomics-calendar label { display:flex; flex:1; min-width:0; align-items:center; gap:10px; min-height:36px; padding:0 8px; font-size:14px; color:var(--ok-text); }
+.ergonomics-calendar label span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.ergonomics-open { flex:none; width:30px; height:30px; min-height:0; margin-right:4px; padding:0; display:grid; place-items:center; border:0; border-radius:8px; background:none; color:var(--ok-primary,var(--color-primary)); font:inherit; cursor:pointer; }
+.ergonomics-open:hover, .ergonomics-open:focus-visible { background:var(--ok-line); outline:2px solid transparent; }
+.ergonomics-calendar-loading[hidden], .ergonomics-calendars-head[hidden] { display:none; }
+.ergonomics-loading-line { display:flex; align-items:center; gap:8px; margin:var(--ok-space-2) 0; font-size:13px; color:var(--ok-muted); }
+.ergonomics-spinner { width:14px; height:14px; flex:none; border-radius:50%; border:2px solid var(--ok-line); border-top-color:var(--ok-primary,var(--color-primary)); animation:ergonomics-spin .9s linear infinite; }
+.ergonomics-calendar-loading i { height:36px; border-radius:8px; background:var(--ok-line); opacity:.5; animation:ergonomics-pulse 1.2s ease-in-out infinite; }
+@keyframes ergonomics-spin { to { transform:rotate(360deg); } }
+@keyframes ergonomics-pulse { 50% { opacity:.25; } }
+@media(prefers-reduced-motion:reduce) { .ergonomics-spinner, .ergonomics-calendar-loading i { animation:none; } }
+@media(max-width:480px) { .ergonomics-calendar-list { grid-template-columns:1fr; } }
+@media(max-width:760px) { .ergonomics-grid { grid-template-columns:1fr; } }

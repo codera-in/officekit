@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JSON Compare · shared actions and correctable errors</title>
+  <link rel="stylesheet" href="../../dist-ui/assets/officekit.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 10px; background: var(--color-base-200, #edf3f6); color: var(--color-base-content, #20313b); }
+    h1 { margin: 0 0 2px; font-size: 21px; }
+    main > p { margin: 0 0 8px; font-size: 13px; }
+    .mock-shell { max-width: 1280px; margin: auto; }
+    .mock-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    .frame { overflow: hidden; background: var(--color-base-100, #fff); }
+    .frame-head, .count { padding: 5px 10px; background: var(--color-base-200, #f1f7f9); }
+    .frame-head h2 { margin: 0; font-size: 15px; }
+    .count { color: var(--color-base-content, #31536a); font-size: 12px; }
+    .screen { min-height: 0; padding: 9px; background: var(--color-base-200, #edf3f6); }
+    .tool-card { max-width: 900px; margin: 0 auto; }
+    .tool-card .card-body { gap: 8px; padding: 10px; }
+    .mode-row, .field-head, .tool-links, .mock-footer, .mock-footer-actions { display: flex; align-items: center; gap: 10px; }
+    .mode-row, .field-head, .mock-footer { justify-content: space-between; }
+    .fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; align-items: start; }
+    .field { display: grid; gap: 7px; min-width: 0; }
+    textarea { width: 100%; min-height: 70px; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; resize: vertical; }
+    .field-head label { font-weight: 650; }
+    .error-copy { color: var(--color-error, #a63742); }
+    .result { padding-top: 6px; border-top: 1px solid var(--color-base-300, #d6e1e7); }
+    .result h3 { margin: 0 0 8px; font-size: 14px; }
+    .mock-footer { min-height: 50px; padding: 6px 12px; border-top: 1px solid var(--color-base-300, #d6e1e7); background: var(--color-base-100, #fff); }
+    .mock-footer-title { color: var(--color-base-content, #425b69); font-size: 13px; font-weight: 650; }
+    .mock-footer-actions { flex-wrap: wrap; justify-content: flex-end; }
+    .mock-footer .btn { min-height: 36px; text-transform: none; }
+    .small { color: var(--color-base-content, #425b69); font-size: 13px; }
+    @media (max-width: 900px) {
+      body { padding: 12px; }
+      .mock-grid, .fields { grid-template-columns: 1fr; }
+      .screen { min-height: 0; padding: 12px; }
+      .mock-footer { align-items: flex-start; flex-direction: column; }
+      .mock-footer-actions { width: 100%; }
+      .mock-footer-actions .btn { flex: 1; }
+    }
+  </style>
+</head>
+<body>
+  <main class="mock-shell">
+    <h1>JSON Compare</h1>
+    <p>The completed result already uses the shared three-action dock. Keep the comparison controls lightweight, give correctable JSON errors local guidance and clear stale output.</p>
+    <div class="mock-grid">
+      <div class="frame card card-border" aria-label="Current JSON Compare result screen">
+        <header class="frame-head"><h2>Before · current result screen</h2></header>
+        <div class="count">Buttons: 3/3 · JSON/Text is segmented; Swap and Clear are text-style input actions</div>
+        <div class="screen">
+          <section class="tool-card card card-border bg-base-100">
+            <div class="card-body">
+              <h2 class="card-title">Compare</h2>
+              <p>Compare JSON by structure, or text line by line. Input stays on this computer and is not saved.</p>
+              <div class="mode-row">
+                <div class="join" role="group" aria-label="Comparison type">
+                  <button class="btn btn-sm join-item" aria-pressed="true">JSON</button>
+                  <button class="btn btn-sm join-item" aria-pressed="false">Text</button>
+                </div>
+                <div class="tool-links"><a class="link ok-text-link">Swap</a><a class="link ok-text-link">Clear</a></div>
+              </div>
+              <div class="fields">
+                <div class="field"><div class="field-head"><label for="before-original">Original</label></div><textarea id="before-original" class="textarea textarea-bordered" readonly>{"a":1,"items":[1,2]}</textarea></div>
+                <div class="field"><div class="field-head"><label for="before-changed">Changed</label></div><textarea id="before-changed" class="textarea textarea-bordered" readonly>{"a":2,"items":[1,3],"b":true}</textarea></div>
+              </div>
+              <div class="result">
+                <h3>3 differences · keys reordered (ignored)</h3>
+                <div class="overflow-x-auto"><table class="table table-sm"><thead><tr><th>Path</th><th>Change</th><th>Original → Changed</th></tr></thead><tbody><tr><td>/a</td><td>Changed</td><td>1 → 2</td></tr><tr><td>/b</td><td>Added</td><td>→ true</td></tr><tr><td>/items/1</td><td>Changed</td><td>2 → 3</td></tr></tbody></table></div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <footer class="mock-footer"><span class="mock-footer-title">Compared locally · 3 differences</span><div class="mock-footer-actions"><button class="btn btn-primary">Compare</button><button class="btn btn-ghost">Copy differences</button><button class="btn btn-ghost">Download JSON</button></div></footer>
+      </div>
+
+      <div class="frame card card-border" aria-label="Proposed malformed JSON recovery screen">
+        <header class="frame-head"><h2>After · correct the input, then compare again</h2></header>
+        <div class="count">Buttons: 1/3 · keep Compare; hide result actions and remove Report bug for local validation</div>
+        <div class="screen">
+          <section class="tool-card card card-border bg-base-100">
+            <div class="card-body">
+              <h2 class="card-title">Compare</h2>
+              <p>Compare JSON by structure, or text line by line. Input stays on this computer and is not saved.</p>
+              <div class="mode-row">
+                <div class="join" role="group" aria-label="Comparison type">
+                  <button class="btn btn-sm join-item" aria-pressed="true">JSON</button>
+                  <button class="btn btn-sm join-item" aria-pressed="false">Text</button>
+                </div>
+                <div class="tool-links"><a class="link ok-text-link">Swap</a><a class="link ok-text-link">Clear</a></div>
+              </div>
+              <div class="fields">
+                <div class="field"><div class="field-head"><label for="after-original">Original</label></div><textarea id="after-original" class="textarea textarea-bordered textarea-error" aria-invalid="true" aria-describedby="json-error">{</textarea><p class="error-copy text-sm" id="json-error" role="alert" data-officekit-no-bug-report="true">This JSON is incomplete. Add a property name and value, then compare again.</p></div>
+                <div class="field"><div class="field-head"><label for="after-changed">Changed</label></div><textarea id="after-changed" class="textarea textarea-bordered">{"a":2,"items":[1,3],"b":true}</textarea></div>
+              </div>
+              <div class="result small">The previous comparison is cleared until both JSON values are valid.</div>
+            </div>
+          </section>
+        </div>
+        <footer class="mock-footer"><span class="mock-footer-title">Original JSON needs a correction.</span><div class="mock-footer-actions"><button class="btn btn-primary">Compare</button></div></footer>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

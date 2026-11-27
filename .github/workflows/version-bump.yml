@@ -1,0 +1,39 @@
+name: Bump version on main
+
+# Every merge to main ships as a new patch version, so the installed build, the update check and the
+# footer always say which build is running. The bump commit is made by this workflow and never
+# triggers another bump or another CI run.
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+concurrency:
+  group: version-bump
+  cancel-in-progress: false
+
+jobs:
+  bump:
+    name: Bump patch version
+    if: ${{ !startsWith(github.event.head_commit.message, 'chore(release):') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v7
+        with:
+          ref: main
+
+      - name: Bump version files
+        id: bump
+        run: echo "version=$(node scripts/bump-version.mjs)" >> "$GITHUB_OUTPUT"
+
+      - name: Commit and push
+        run: |
+          git config user.name "officekit-release[bot]"
+          git config user.email "officekit-release@users.noreply.github.com"
+          git add package.json package-lock.json src-tauri/tauri.conf.json src-tauri/Cargo.toml src-tauri/Cargo.lock index.html dist-ui/index.html
+          git commit -m "chore(release): v${{ steps.bump.outputs.version }} [skip ci]"
+          git push origin main

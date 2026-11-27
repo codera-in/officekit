@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>OfficeKit Quick Controls</title>
+  <link rel="stylesheet" href="assets/officekit.css">
+  <link rel="stylesheet" href="assets/fontawesome/css/fontawesome.min.css">
+  <link rel="stylesheet" href="assets/fontawesome/css/solid.min.css">
+  <style>
+    html, body { width: 100%; min-width: 0; min-height: 100%; margin: 0; overflow: hidden; background: transparent; }
+    body { padding: var(--ok-space-3); font-family: var(--ok-font); }
+    #quick-controls { width: 100%; max-height: calc(100vh - 2 * var(--ok-space-3)); overflow-y: auto; border: 1px solid var(--ok-line); border-radius: var(--ok-radius-dialog); box-shadow: var(--ok-shadow); }
+    .quick-control-row { display: flex; align-items: center; gap: var(--ok-space-3); min-height: var(--ok-control-height-compact); border-radius: var(--ok-radius-panel); padding: var(--ok-space-2) var(--ok-space-3); background: color-mix(in srgb, var(--ok-text) 7%, var(--ok-surface-raised)); }
+    .quick-control-icon { display: grid; width: 36px; height: 36px; flex: none; place-items: center; border-radius: 50%; background: var(--ok-surface-glass); color: var(--ok-text); }
+    .quick-control-copy { display: grid; min-width: 0; flex: 1; gap: var(--ok-space-1); }
+    .quick-control-copy strong { font-size: var(--ok-text-sm); line-height: 1.2; }
+    .quick-control-copy small { color: var(--ok-muted); font-size: var(--ok-text-xs); }
+    .quick-control-row[hidden] { display: none; }
+    .quick-control-row[data-enabled="true"] { background: color-mix(in srgb, var(--ok-success) 24%, var(--ok-surface-raised)); }
+    .quick-control-row[data-enabled="true"] .quick-control-icon { background: var(--ok-accent); color: var(--ok-on-accent); }
+    .quick-control-switch { flex: none; }
+    .quick-group { display: grid; gap: var(--ok-space-1); padding: var(--ok-space-2); border: 1px solid var(--ok-line); border-radius: var(--ok-radius-panel); background: color-mix(in srgb, var(--ok-text) 3%, transparent); }
+    .quick-group .quick-control-row:not(.quick-stat-tile) { min-height: 44px; padding: var(--ok-space-1) var(--ok-space-3); }
+    .quick-group .quick-control-icon { width: 30px; height: 30px; }
+    .quick-group-label { margin: 0; padding: var(--ok-space-1) var(--ok-space-2) 0; color: var(--ok-muted); font-size: var(--ok-text-xs); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+    /* Icon-only tiles: the name stays for tooltips and screen readers but is not drawn. */
+    .quick-stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--ok-space-2); }
+    .quick-stat-tile { min-height: 52px; justify-content: center; padding: 0; border-radius: 14px; cursor: pointer; }
+    .quick-stat-tile { position: relative; }
+    .quick-tile-input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; appearance: none; }
+    .quick-stat-tile .quick-control-icon { width: auto; height: auto; background: none; font-size: 20px; }
+    .quick-stat-tile .quick-control-icon svg { width: 20px; height: 20px; }
+    .quick-stat-tile .quick-control-copy { position: absolute; width: 1px; height: 1px; flex: none; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .quick-stat-tile[data-enabled="true"] { background: var(--ok-text); color: var(--ok-bg, var(--ok-surface)); }
+    .quick-stat-tile[data-enabled="true"] .quick-control-icon { background: none; color: var(--ok-success); }
+    .quick-stat-tile[data-enabled="true"]::after { content: ""; position: absolute; top: 6px; right: 6px; width: 7px; height: 7px; border-radius: 50%; background: var(--ok-success); }
+    .quick-stat-tile:has(input:focus-visible) { outline: 2px solid var(--ok-accent); outline-offset: 2px; }
+    #quick-control-status { min-height: 18px; }
+  </style>
+</head>
+<body>
+  <main id="quick-controls" class="card bg-base-100 text-base-content rounded-3xl">
+    <div class="card-body gap-3 p-4">
+      <header class="flex items-center justify-between px-1">
+        <h1 class="text-sm font-bold">Quick controls</h1>
+        <span id="quick-control-status-indicator" class="badge badge-success badge-xs" aria-label="OfficeKit is running"></span>
+      </header>
+      <button id="quick-controls-disable-all" type="button" class="btn btn-error btn-sm w-full">Disable all</button>
+      <section class="quick-group" aria-labelledby="quick-speech-heading">
+        <h2 id="quick-speech-heading" class="quick-group-label">Speech</h2>
+        <label class="quick-control-row" data-tool="speechCoach" title="Live corrections, improvements and pace while you dictate. They appear in a private Live Workspace that is hidden from screen sharing.">
+          <span class="quick-control-icon" aria-hidden="true"><i class="fa-solid fa-microphone-lines"></i></span><span class="quick-control-copy"><strong>Speech Coach</strong><small data-state>Loading…</small></span><input class="toggle toggle-success toggle-sm quick-control-switch" type="checkbox" aria-label="Enable Speech Coach" aria-describedby="quick-control-desc-speech-coach"><span id="quick-control-desc-speech-coach" class="sr-only">Live corrections, improvements and pace while you dictate. They appear in a private Live Workspace that is hidden from screen sharing.</span>
+        </label>
+        <label class="quick-control-row" data-tool="listenIn" title="Start or stop free-form speaking practice. OfficeKit listens locally and shows live coaching in the floating HUD and the same private Live Workspace.">
+          <span class="quick-control-icon" aria-hidden="true"><i class="fa-solid fa-ear-listen"></i></span><span class="quick-control-copy"><strong>Listen In</strong><small data-state>Loading…</small></span><input class="toggle toggle-success toggle-sm quick-control-switch" type="checkbox" aria-label="Start or stop Listen In solo practice" aria-describedby="quick-control-desc-listen-in"><span id="quick-control-desc-listen-in" class="sr-only">Start or stop free-form speaking practice. OfficeKit listens locally and shows live coaching in the floating HUD and the same private Live Workspace.</span>
+        </label>
+        <label class="quick-control-row" data-tool="speechToText" title="Enable or disable the global speech-to-text shortcut.">
+          <span class="quick-control-icon" aria-hidden="true"><i class="fa-solid fa-microphone"></i></span><span class="quick-control-copy"><strong>Speech to text</strong><small data-state>Loading…</small></span><input class="toggle toggle-success toggle-sm quick-control-switch" type="checkbox" aria-label="Enable Speech to text" aria-describedby="quick-control-desc-speech-to-text"><span id="quick-control-desc-speech-to-text" class="sr-only">Enable or disable the global speech-to-text shortcut.</span>
+        </label>
+        <label class="quick-control-row" data-tool="meetingRecorder" title="Start or stop a local meeting recording. Switching on starts recording immediately.">
+          <span class="quick-control-icon" aria-hidden="true"><i class="fa-solid fa-circle-dot"></i></span><span class="quick-control-copy"><strong>Meeting Recorder</strong><small data-state>Loading…</small></span><input class="toggle toggle-success toggle-sm quick-control-switch" type="checkbox" aria-label="Start or stop Meeting Recorder" aria-describedby="quick-control-desc-meeting-recorder"><span id="quick-control-desc-meeting-recorder" class="sr-only">Start or stop a local meeting recording. Switching on starts recording immediately.</span>
+        </label>
+      </section>
+      <section class="quick-group" aria-labelledby="quick-desktop-heading">
+        <h2 id="quick-desktop-heading" class="quick-group-label">Desktop</h2>
+        <label class="quick-control-row" data-tool="windowManager" title="Enable or disable Window Manager shortcuts; saved bindings are kept.">
+          <span class="quick-control-icon" aria-hidden="true"><i class="fa-solid fa-window-restore"></i></span><span class="quick-control-copy"><strong>Window Manager</strong><small data-state>Loading…</small></span><input class="toggle toggle-success toggle-sm quick-control-switch" type="checkbox" aria-label="Enable Window Manager" aria-describedby="quick-control-desc-window-manager"><span id="quick-control-desc-window-manager" class="sr-only">Enable or disable Window Manager shortcuts; saved bindings are kept.</span>
+        </label>
+        <label class="quick-control-row" data-tool="clipboardHistory" title="Pause or resume saving what you copy; saved items stay.">
+          <span class="quick-control-icon" aria-hidden="true"><i class="fa-solid fa-clipboard"></i></span><span class="quick-control-copy"><strong>Clipboard history</strong><small data-state>Loading…</small></span><input class="toggle toggle-success toggle-sm quick-control-switch" type="checkbox" aria-label="Enable Clipboard history" aria-describedby="quick-control-desc-clipboardhistory"><span id="quick-control-desc-clipboardhistory" class="sr-only">Pause or resume saving what you copy. Items already saved stay.</span>
+        </label>
+        <label class="quick-control-row" data-tool="ergonomics" title="Pause or resume the saved Ergonomics reminder schedule.">
+          <span class="quick-control-icon" aria-hidden="true"><i class="fa-solid fa-person-walking"></i></span><span class="quick-control-copy"><strong>Ergonomics</strong><small data-state>Loading…</small></span><input class="toggle toggle-success toggle-sm quick-control-switch" type="checkbox" aria-label="Enable Ergonomics" aria-describedby="quick-control-desc-ergonomics"><span id="quick-control-desc-ergonomics" class="sr-only">Pause or resume the saved Ergonomics reminder schedule.</span>
+        </label>
+      </section>
+      <section class="quick-group" aria-labelledby="quick-menu-stats-heading">
+        <h2 id="quick-menu-stats-heading" class="quick-group-label">Menu bar stats</h2>
+        <div class="quick-stat-grid">
+          <label class="quick-control-row quick-stat-tile" data-tool="menuCpu" title="Show CPU use in the macOS menu bar.">
+            <span class="quick-control-icon" aria-hidden="true"><i class="fa-solid fa-microchip"></i></span><span class="quick-control-copy"><strong>CPU</strong><small data-state class="sr-only">Loading…</small></span><input class="quick-tile-input" type="checkbox" aria-label="Show CPU in the menu bar" aria-describedby="quick-control-desc-menucpu"><span id="quick-control-desc-menucpu" class="sr-only">Show or hide CPU use in the macOS menu bar.</span>
+          </label>
+          <label class="quick-control-row quick-stat-tile" data-tool="menuGpu" title="Show GPU use in the macOS menu bar.">
+            <span class="quick-control-icon" aria-hidden="true"><i class="fa-solid fa-cube"></i></span><span class="quick-control-copy"><strong>GPU</strong><small data-state class="sr-only">Loading…</small></span><input class="quick-tile-input" type="checkbox" aria-label="Show GPU in the menu bar" aria-describedby="quick-control-desc-menugpu"><span id="quick-control-desc-menugpu" class="sr-only">Show or hide GPU use in the macOS menu bar.</span>
+          </label>
+          <label class="quick-control-row quick-stat-tile" data-tool="menuTemperature" title="Show temperature, fans and power in the macOS menu bar.">
+            <span class="quick-control-icon" aria-hidden="true"><i class="fa-solid fa-temperature-half"></i></span><span class="quick-control-copy"><strong>Temperature</strong><small data-state class="sr-only">Loading…</small></span><input class="quick-tile-input" type="checkbox" aria-label="Show Temperature in the menu bar" aria-describedby="quick-control-desc-menutemperature"><span id="quick-control-desc-menutemperature" class="sr-only">Show or hide temperature, fan speed and power in the macOS menu bar.</span>
+          </label>
+          <label class="quick-control-row quick-stat-tile" data-tool="menuRam" title="Show memory use in the macOS menu bar.">
+            <span class="quick-control-icon" aria-hidden="true"><i class="fa-solid fa-memory"></i></span><span class="quick-control-copy"><strong>RAM</strong><small data-state class="sr-only">Loading…</small></span><input class="quick-tile-input" type="checkbox" aria-label="Show RAM in the menu bar" aria-describedby="quick-control-desc-menuram"><span id="quick-control-desc-menuram" class="sr-only">Show or hide memory use in the macOS menu bar.</span>
+          </label>
+          <label class="quick-control-row quick-stat-tile" data-tool="menuStorage" title="Show disk use in the macOS menu bar.">
+            <span class="quick-control-icon" aria-hidden="true"><i class="fa-solid fa-hard-drive"></i></span><span class="quick-control-copy"><strong>Storage</strong><small data-state class="sr-only">Loading…</small></span><input class="quick-tile-input" type="checkbox" aria-label="Show Storage in the menu bar" aria-describedby="quick-control-desc-menustorage"><span id="quick-control-desc-menustorage" class="sr-only">Show or hide disk use in the macOS menu bar.</span>
+          </label>
+          <label class="quick-control-row quick-stat-tile" data-tool="menuNetwork" title="Show network speed in the macOS menu bar.">
+            <span class="quick-control-icon" aria-hidden="true"><i class="fa-solid fa-network-wired"></i></span><span class="quick-control-copy"><strong>Network</strong><small data-state class="sr-only">Loading…</small></span><input class="quick-tile-input" type="checkbox" aria-label="Show Network in the menu bar" aria-describedby="quick-control-desc-menunetwork"><span id="quick-control-desc-menunetwork" class="sr-only">Show or hide network speed in the macOS menu bar.</span>
+          </label>
+          <label class="quick-control-row quick-stat-tile" data-tool="menuBattery" title="Show battery charge in the macOS menu bar (Macs with a battery).">
+            <span class="quick-control-icon" aria-hidden="true"><i class="fa-solid fa-battery-half"></i></span><span class="quick-control-copy"><strong>Battery</strong><small data-state class="sr-only">Loading…</small></span><input class="quick-tile-input" type="checkbox" aria-label="Show Battery in the menu bar" aria-describedby="quick-control-desc-menubattery"><span id="quick-control-desc-menubattery" class="sr-only">Show or hide battery charge in the macOS menu bar. Macs without a battery show nothing.</span>
+          </label>
+          <label class="quick-control-row quick-stat-tile" data-tool="menuBluetooth" title="Show the battery level of connected Bluetooth devices in the macOS menu bar.">
+            <span class="quick-control-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6.5,7.5 17.5,16.5 12,21.5 12,2.5 17.5,7.5 6.5,16.5"/></svg></span><span class="quick-control-copy"><strong>Bluetooth</strong><small data-state class="sr-only">Loading…</small></span><input class="quick-tile-input" type="checkbox" aria-label="Show Bluetooth in the menu bar" aria-describedby="quick-control-desc-menubluetooth"><span id="quick-control-desc-menubluetooth" class="sr-only">Show or hide connected Bluetooth devices' battery levels in the macOS menu bar.</span>
+          </label>
+        </div>
+      </section>
+      <div class="flex items-center justify-between gap-2 border-t border-base-300 pt-3">
+        <label for="quick-controls-hud-position" class="text-xs">HUD position</label>
+        <select id="quick-controls-hud-position" class="select select-bordered select-xs w-36" aria-label="HUD position">
+          <option value="top_center">Top center</option><option value="top_left">Top left</option><option value="top_right">Top right</option>
+          <option value="bottom_center">Bottom center</option><option value="bottom_left">Bottom left</option><option value="bottom_right">Bottom right</option>
+        </select>
+      </div>
+      <p id="quick-control-status" class="text-xs text-base-content/70" role="status" aria-live="polite">Controls reflect their current OfficeKit state.</p>
+    </div>
+  </main>
+  <script src="assets/quick-controls.js"></script>
+</body>
+</html>

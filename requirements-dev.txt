@@ -1,0 +1,3 @@
+-r requirements.txt
+# Module coverage is a development gate; do not package this into the sidecar.
+coverage==7.16.2

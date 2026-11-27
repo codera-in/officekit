@@ -1,0 +1,8 @@
+diff --git a/sentencepiece/CMakeLists.txt b/sentencepiece/CMakeLists.txt
+index bf95359..42125b7 100644
+--- a/sentencepiece/CMakeLists.txt
++++ b/sentencepiece/CMakeLists.txt
+@@ -26,1 +26,3 @@
+ project(sentencepiece VERSION ${SPM_VERSION} LANGUAGES C CXX)
++set(CMAKE_CXX_STANDARD 20)
++set(CMAKE_CXX_STANDARD_REQUIRED ON)

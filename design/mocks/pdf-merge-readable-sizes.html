@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit · Merge PDFs readable file sizes</title>
+  <link rel="stylesheet" href="../officekit-tokens.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 24px; color: var(--ok-text); background: var(--ok-bg); font: var(--ok-text-base)/1.5 var(--ok-font); }
+    h1 { margin: 0; font-size: 24px; }
+    .intro { margin: 6px 0 22px; color: var(--ok-muted); }
+    .comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 520px)); gap: 18px; justify-content: center; }
+    .frame { overflow: hidden; border: 1px solid var(--ok-line); border-radius: var(--ok-radius-panel); background: var(--ok-surface); box-shadow: var(--ok-shadow); }
+    .mock-label { margin: 0; padding: 9px 14px; color: var(--ok-muted); background: var(--ok-surface-raised); font-size: var(--ok-text-sm); font-weight: 700; }
+    .count { margin: 0; padding: 5px 14px; color: var(--ok-muted); font-size: var(--ok-text-xs); }
+    .main { padding: 14px 16px 18px; }
+    .crumb { color: var(--ok-muted); font-size: var(--ok-text-xs); }
+    h2 { margin: 5px 0 2px; font-size: 21px; }
+    .sub { margin: 0; color: var(--ok-muted); font-size: var(--ok-text-sm); }
+    .drop { display: grid; min-height: 70px; place-content: center; margin: 14px 0 8px; padding: 10px; border: 1px dashed var(--ok-control-line); border-radius: var(--ok-radius-panel); text-align: center; }
+    .drop span { color: var(--ok-muted); font-size: var(--ok-text-xs); }
+    .file { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto auto; gap: 8px; align-items: center; min-height: 48px; border-bottom: 1px solid var(--ok-line); }
+    .pdf { display: grid; width: 28px; height: 30px; place-items: center; border-radius: var(--ok-radius-control); color: var(--ok-accent); background: var(--ok-accent-wash); font-size: 9px; font-weight: 800; }
+    .filename { overflow: hidden; font-size: var(--ok-text-sm); font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+    .size { color: var(--ok-muted); font-size: var(--ok-text-xs); white-space: nowrap; }
+    .row-act { width: 30px; height: 30px; padding: 0; border: 1px solid var(--ok-line); border-radius: var(--ok-radius-control); background: var(--ok-surface); }
+    .summary { margin-top: 12px; padding: 11px; border: 1px solid var(--ok-line); border-radius: var(--ok-radius-panel); background: var(--ok-bg); }
+    .summary strong { display: block; font-size: var(--ok-text-sm); }
+    .summary p { margin: 2px 0 0; color: var(--ok-muted); font-size: var(--ok-text-sm); }
+    .dock { display: flex; justify-content: flex-end; gap: 8px; padding: 10px 14px; border-top: 1px solid var(--ok-line); background: var(--ok-surface-raised); }
+    .btn { min-height: var(--ok-control-height); padding: 0 13px; border: 1px solid var(--ok-line); border-radius: var(--ok-radius-control); color: var(--ok-text); background: var(--ok-surface); font: inherit; font-size: var(--ok-text-sm); font-weight: 650; }
+    .btn-primary { border-color: var(--ok-accent); color: var(--ok-on-accent); background: var(--ok-accent); }
+    .btn-outline { border-color: var(--ok-control-line); }
+    .btn-ghost { border-color: transparent; background: transparent; }
+    @media (max-width: 760px) { body { padding: 14px; } .comparison { grid-template-columns: minmax(0, 520px); } }
+  </style>
+</head>
+<body>
+  <h1>Merge PDFs · readable sizes</h1>
+  <p class="intro">The same small-file case before and after. File order and the two-action result dock stay in place.</p>
+  <div class="comparison">
+    <div class="frame">
+      <p class="mock-label">Before · tiny valid PDFs look empty</p>
+      <p class="count">Buttons: 2/3</p>
+      <main class="main">
+        <div class="crumb">PDF &amp; Documents / Merge PDFs</div>
+        <h2>Merge PDFs</h2>
+        <p class="sub">Combine selected PDFs in the order shown.</p>
+        <div class="drop"><strong>Drop PDF files here</strong><span>or select files from your computer</span></div>
+        <div class="file"><span class="pdf">PDF</span><span class="filename">Quarterly-report.pdf</span><span class="size">0.00 MiB</span><button class="btn btn-ghost row-act" aria-label="Move Quarterly report up">↑</button></div>
+        <div class="file"><span class="pdf">PDF</span><span class="filename">Appendix.pdf</span><span class="size">0.00 MiB</span><button class="btn btn-ghost row-act" aria-label="Move Appendix up">↑</button></div>
+        <div class="summary"><strong>Output preview</strong><p>2 files · pages stay in the order above · merged.pdf</p><p>0.00 MiB · source unchanged</p></div>
+      </main>
+      <footer class="dock" aria-label="PDF merge result actions"><button class="btn btn-outline">Copy summary</button><button class="btn btn-primary">Download</button></footer>
+    </div>
+    <div class="frame">
+      <p class="mock-label">After · bytes stay readable</p>
+      <p class="count">Buttons: 2/3</p>
+      <main class="main">
+        <div class="crumb">PDF &amp; Documents / Merge PDFs</div>
+        <h2>Merge PDFs</h2>
+        <p class="sub">Combine selected PDFs in the order shown.</p>
+        <div class="drop"><strong>Drop PDF files here</strong><span>or select files from your computer</span></div>
+        <div class="file"><span class="pdf">PDF</span><span class="filename">Quarterly-report.pdf</span><span class="size">626 bytes</span><button class="btn btn-ghost row-act" aria-label="Move Quarterly report up">↑</button></div>
+        <div class="file"><span class="pdf">PDF</span><span class="filename">Appendix.pdf</span><span class="size">626 bytes</span><button class="btn btn-ghost row-act" aria-label="Move Appendix up">↑</button></div>
+        <div class="summary"><strong>Output preview</strong><p>2 files · pages stay in the order above · merged.pdf</p><p><b>1.2 KiB</b> · source unchanged</p></div>
+      </main>
+      <footer class="dock" aria-label="PDF merge result actions"><button class="btn btn-outline">Copy summary</button><button class="btn btn-primary">Download</button></footer>
+    </div>
+  </div>
+</body>
+</html>

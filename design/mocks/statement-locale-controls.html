@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit — statement locale controls mock</title>
+  <style>
+    :root{font:14px/1.5 Inter,system-ui,sans-serif;color:#172033;background:#f5f7fb;--brand:#4f46e5;--line:#dfe4ec;--muted:#667085}*{box-sizing:border-box}body{margin:0}.page{max-width:1050px;margin:34px auto;padding:0 22px}.brand{font-weight:800;font-size:20px;color:#1e3a5f}.brand span{color:var(--brand)}h1{font-size:27px;letter-spacing:-.03em;margin:25px 0 4px}p{margin:4px 0;color:var(--muted)}.compare{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 5px 18px #24304a0a}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:750;color:#667085}.upload{border:2px dashed #cbd5e1;border-radius:12px;background:#f8fafc;text-align:center;padding:24px 14px;margin:16px 0}.upload strong{display:block;color:#263449}.upload small{color:var(--muted)}.icon{font-size:25px;color:var(--brand)}.settings{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}.field label{display:block;font-weight:650;font-size:12px;color:#344054;margin-bottom:5px}.field select{width:100%;padding:9px 10px;border:1px solid #cbd5e1;border-radius:9px;background:#fff;color:#1d2939;font:inherit}.hint{font-size:11px;line-height:1.45;color:#667085;margin-top:5px}.status{padding:10px 12px;background:#eef2ff;border-radius:10px;color:#3730a3;font-size:12px}.button{border:0;border-radius:9px;padding:10px 14px;background:var(--brand);color:white;font-weight:700}.note{border-top:1px solid var(--line);padding-top:13px;margin-top:15px;font-size:12px}@media(max-width:720px){.compare{grid-template-columns:1fr}.settings{grid-template-columns:1fr}.page{margin:20px auto;padding:0 12px}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="brand">Office<span>Kit</span></div>
+    <h1>Choose how this statement is read</h1>
+    <p>Make date and number interpretation explicit before extraction. Your file stays on this Mac.</p>
+    <div class="compare">
+      <section class="card" aria-label="Before">
+        <div class="eyebrow">Current screen</div>
+        <h2>Upload a statement</h2>
+        <p>There is no way to tell OfficeKit whether <b>03/04/2026</b> means March 4 or April 3, or whether <b>1,234</b> is one thousand two hundred thirty-four or 1.234.</p>
+        <div class="upload"><div class="icon" aria-hidden="true">⇧</div><strong>Click or drag a bank statement here</strong><small>PDF, image, CSV or TSV</small></div>
+        <div class="status">Extraction starts immediately, using automatic interpretation.</div>
+      </section>
+      <section class="card" aria-label="Proposed after">
+        <div class="eyebrow">Proposed screen</div>
+        <h2>Upload a statement</h2>
+        <p>Choose formats when the source uses regional conventions. Automatic mode uses OfficeKit's documented defaults; set a format to interpret ambiguous amounts and dates explicitly.</p>
+        <div class="settings">
+          <div class="field"><label for="number-locale">Number format</label><select id="number-locale"><option>Automatic</option><option>United States (1,234.56)</option><option>India (12,34,567.89)</option><option>Germany (1.234,56)</option><option>France (1 234,56)</option></select><div class="hint">Controls decimal and grouping separators in transaction amounts.</div></div>
+          <div class="field"><label for="date-order">Date order</label><select id="date-order"><option>Automatic</option><option>Day / Month / Year</option><option>Month / Day / Year</option><option>Year / Month / Day</option></select><div class="hint">In Automatic mode, ambiguous dates like 03/04/2026 remain as written.</div></div>
+        </div>
+        <div class="upload"><div class="icon" aria-hidden="true">⇧</div><strong>Click or drag a bank statement here</strong><small>PDF, image, CSV or TSV</small></div>
+        <div class="status">Using India number format · Day / Month / Year. Amounts and dates will be parsed with these choices.</div>
+        <p class="note">These choices apply only to this extraction. OfficeKit keeps the original file unchanged. Review the extracted rows and reconciliation before exporting.</p>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

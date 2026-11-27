@@ -1,0 +1,29 @@
+# OfficeKit version history, updates and announcements
+
+Version: 1.0.0 · Planning specification, not implemented or visually approved.
+
+## User-facing features
+
+Settings → Updates owns installed version, last successful check, Check for updates, update availability and download/install progress. Help → What's new owns browsable version history with release date, concise added/improved/fixed sections, supported platforms and meaningful limitations. Show a small persistent update badge for an available newer supported version, never an animation or forced alert at every launch. After a successful upgrade, show one dismissible What's new entry for that version; record acknowledgement locally. It opens the same release-note view, not another history system. No modal at startup for routine marketing/features.
+
+A compact communication banner may appear below the app header for an active relevant notice: service incident, necessary compatibility/security advice or a genuinely timely product announcement. Maximum one banner at a time; priority then recency decides. Use a short actionable message, optional Details action and Dismiss. No permanent offline/privacy promotional banner. Avoid countdowns, flashy animation and covering tool content. Reserve layout space when a notice exists before presentation; do not insert/remove a header mid-task in a way that moves controls under the pointer. Apply dismissals after a user action and suppress subsequent redisplay of the same revision. Critical notices may have their own documented dismissal/snooze policy, not arbitrary UI exceptions.
+
+## Data and trust boundaries
+
+ReleaseNote: version, publishedAt, supportedPlatforms, appVersionRange, typed added/improved/fixed items, optional knownIssues, safe documentation links and schemaVersion. Announcement: stable id/revision, severity, short message, optional safe action URL/label, startsAt/expiresAt, platform/app-version range and schemaVersion. Keep messages as plain text or a restricted renderer; no arbitrary server HTML/scripts, dynamic CSS or executable content. Validate payloads; allowlist trusted HTTPS link domains and open external links through the approved native adapter. Never accept an arbitrary server command or install URL from a banner.
+
+Updater uses authenticated signed release metadata/artifacts and supported platform channels; verify versions semantically, signatures, platform/architecture and upgrade policy. A signed installer alone does not prove updater integrity. App-visible What's new records should agree with the installed version and real shipped capability. Beta/channel/prerelease selection is explicit; stable users do not get incompatible builds. Describe checks factually: cached data cannot establish that the app is currently up to date. Don't repeat the current hardcoded update response as evidence.
+
+Publish static public release notes/announcement feeds on OfficeKit infrastructure; no personalized campaign system initially. Bundle notes for the installed version, cache valid fetched data and locally store dismissal/last-seen keys. Public notes/banners must not carry documents, inputs, results, tool usage, license keys or persistent device identifiers. Infrastructure still sees source IPs; disclose service traffic and minimize logs. No impression/click analytics unless separately opted in, and avoid expanding telemetry schema without fresh consent. Licensing notices are not targeted marketing via device identity.
+
+## Network and offline behavior
+
+Provide an explicit Automatically check for updates preference with a clear service-network purpose independent of anonymous analytics. Manual Check for updates is an intentional request. Fetch public notices/release notes only under the disclosed communications-network setting (or manual What's new refresh), with bounded timeouts, cached display, app-open-only polling, proposed maximum once per 24 hours and no background daemon. Do not require optional analytics to obtain security updates. A network error never blocks tools, destroys cached notes or pretends no newer version exists. Show Last checked/cached status, and suppress expired announcements even offline. Handle clock changes with a cautious expiry policy and require fresh validation before security-sensitive update actions.
+
+Local notification state: acknowledged release versions, dismissed announcement id/revision, last checked time, cache validation/expiry and selected channel. App upgrade retains this state and existing tool data. Server cannot remotely erase local results or dictate new permissions through communications. If a notice requests a permission change, route the user to an explicit explanatory consent flow.
+
+## Acceptance and design follow-up
+
+Separate What's new history from calculation/conversion History and internal `docs/VERSION-HISTORY.md`; they have different audiences and records. Prepare approved light/dark mocks for update available, release-note browser, one-line banner, long localized message, incident notice, dismissal and offline cache state before implementation.
+
+Test semantic ordering (including 1.9 versus 1.10), channel/platform eligibility, installed-versus-available notes, signatures/tampering, unsupported architectures, interrupted download/recovery, disk space/permission failure, post-upgrade acknowledgement only once, retention of data/settings, banner start/expiry/revision, dismissal/snooze persistence, one-banner priority, link allowlisting, injection rejection, clock changes, timeout/cache behavior, absent analytics calls without consent and screen-reader/keyboard/theme/zoom behavior. Major update/restart actions respect active jobs; never silently interrupt or lose work. Security rollback policy and downgrades require a documented release decision rather than accepting arbitrary older artifacts.

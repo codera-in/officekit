@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OfficeKit · XLSX worksheet selection</title>
+  <style>
+    :root{font:15px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#172033;background:#f4f6fa}*{box-sizing:border-box}body{margin:0;padding:32px}.wrap{max-width:1040px;margin:auto}.eyebrow{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#5964d8}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}.panel{background:white;border:1px solid #dbe2ee;border-radius:18px;padding:22px;box-shadow:0 8px 30px #182b4a0a}.panel h2{font-size:17px;margin:0 0 6px}.muted{color:#67738a;font-size:13px;margin:0 0 18px}.file{border:1px dashed #aebbd0;border-radius:13px;background:#f8faff;padding:14px;margin:16px 0;font-weight:650}.label{display:block;font-size:13px;font-weight:700;margin:14px 0 6px}.select{width:100%;padding:11px 12px;border:1px solid #c8d2e1;border-radius:10px;background:white;color:#172033;font:inherit}.note{margin:9px 0 16px;padding:10px 12px;background:#f0f3ff;color:#3f4c9f;border-radius:10px;font-size:12px}.formats{display:flex;flex-wrap:wrap;gap:8px}.format{border:1px solid #cbd4e2;border-radius:9px;padding:7px 12px;font-size:12px;font-weight:700}.chosen{border-color:#5145d9;background:#f1efff;color:#4236c7}.cta{display:block;width:100%;margin-top:18px;background:#4c3ed5;color:white;border:0;border-radius:11px;padding:12px;font:inherit;font-weight:700}.status{margin-top:12px;color:#6e7890;font-size:12px}.before .file{margin-top:16px}.warning{padding:12px;border-radius:10px;background:#fff5e6;color:#8b4a05;font-size:12px;margin-top:12px}.states{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.state{border-radius:8px;background:#f0f2f7;color:#566176;padding:7px 10px;font-size:11px}@media(max-width:720px){body{padding:18px}.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <p class="eyebrow">File converter · before and proposed</p>
+    <h1>Choose which worksheet to convert</h1>
+    <p class="muted">Large workbooks often contain several unrelated tables. Make the selected sheet explicit, and keep its display values aligned with the data being converted.</p>
+    <div class="grid">
+      <section class="panel before" aria-label="Current flow">
+        <h2>Current flow</h2>
+        <p class="muted">The converter silently uses the first worksheet. The workbook's active tab can differ, which can misalign formatted identifiers and dates.</p>
+        <div class="file">quarterly-ledger.xlsx · 84 KB</div>
+        <span class="label">Convert to</span>
+        <div class="formats"><span class="format chosen">CSV</span><span class="format">JSON</span><span class="format">TSV</span><span class="format">HTML</span></div>
+        <button class="cta">Convert &amp; Download</button>
+        <div class="warning">No sheet choice or indication of which worksheet will be exported.</div>
+      </section>
+      <section class="panel" aria-label="Proposed flow">
+        <h2>Proposed flow</h2>
+        <p class="muted">Choose a worksheet before choosing an output. The exported table and formatting are read from the same sheet.</p>
+        <div class="file">quarterly-ledger.xlsx · 84 KB</div>
+        <label class="label" for="sheet">Worksheet</label>
+        <select class="select" id="sheet"><option>Transactions</option><option>Balances</option><option>Summary</option></select>
+        <div class="note">Only “Transactions” will be converted. Your source workbook stays unchanged.</div>
+        <span class="label">Convert to</span>
+        <div class="formats"><span class="format chosen">CSV</span><span class="format">JSON</span><span class="format">TSV</span><span class="format">HTML</span></div>
+        <button class="cta">Convert selected worksheet</button>
+        <p class="status">Loading state: “Reading worksheet names…” · Error state: “Could not read worksheets. Re-select the file to try again.”</p>
+      </section>
+    </div>
+    <div class="states"><span class="state">Keyboard-operable select</span><span class="state">No sheet is silently inferred from the active tab</span><span class="state">One selected sheet per export</span><span class="state">Original remains unchanged</span></div>
+  </main>
+</body>
+</html>
