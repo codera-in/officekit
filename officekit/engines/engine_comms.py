@@ -40,6 +40,9 @@ UPDATE_REQUEST_TIMEOUT_SECONDS = 3
 UPDATE_MANIFEST_URL = "OFFICEKIT_RELEASE_MANIFEST_URL"
 OFFICEKIT_DOWNLOAD_URL = "https://officekit.app/download"
 UPDATE_UNAVAILABLE_MESSAGE = "Update information is not available. OfficeKit will keep working offline."
+UPDATE_SHA256_PATTERN = re.compile(r"^[0-9a-fA-F]{64}$")
+# The same ceiling the desktop shell enforces on an installer download (MAX_INSTALLER_BYTES).
+UPDATE_INSTALLER_MAX_BYTES = 1_500_000_000
 RELEASE_VERSION_PATTERN = re.compile(r"^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$")
 
 
@@ -79,6 +82,8 @@ def _unavailable_update_status(current_version: str = APP_CURRENT_VERSION) -> Di
         "update_available": False,
         "release_notes": UPDATE_UNAVAILABLE_MESSAGE,
         "download_url": None,
+        "download_sha256": None,
+        "download_size": None,
     }
 
 TOOL_REGISTRY = [
@@ -564,6 +569,18 @@ class CommsEngine:
             if latest_key < current_key:
                 return _unavailable_update_status(current_version)
 
+            # The in-app download needs both the checksum and the size, or neither: a manifest that
+            # carries only one is treated as having no verifiable installer.
+            sha256 = manifest.get("sha256")
+            size = manifest.get("size")
+            verifiable = (
+                isinstance(sha256, str)
+                and UPDATE_SHA256_PATTERN.fullmatch(sha256) is not None
+                and isinstance(size, int)
+                and not isinstance(size, bool)
+                and 0 < size <= UPDATE_INSTALLER_MAX_BYTES
+            )
+
             update_available = latest_key > current_key
             return {
                 "status": "update_available" if update_available else "up_to_date",
@@ -572,6 +589,8 @@ class CommsEngine:
                 "update_available": update_available,
                 "release_notes": release_notes.strip(),
                 "download_url": download_url,
+                "download_sha256": sha256.lower() if verifiable else None,
+                "download_size": size if verifiable else None,
             }
         except (OSError, UnicodeError, ValueError, TypeError):
             return _unavailable_update_status(current_version)
