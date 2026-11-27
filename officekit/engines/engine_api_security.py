@@ -1,6 +1,7 @@
 """Browser-origin policy for the loopback-only OfficeKit desktop API."""
 
 import hmac
+import secrets
 from collections.abc import Mapping
 from urllib.parse import urlsplit
 
@@ -50,6 +51,31 @@ def trusted_api_origins(environment: Mapping[str, str] | None = None) -> frozens
 def is_trusted_api_origin(origin: str | None, environment: Mapping[str, str] | None = None) -> bool:
     """Allow native clients without Origin and only configured desktop/test origins."""
     return origin is None or origin in trusted_api_origins(environment)
+
+
+DEV_NOAUTH_ENVIRONMENT_KEY = "OFFICEKIT_DEV_NOAUTH"
+DEV_UNLOCK_ENVIRONMENT_KEY = "OFFICEKIT_DEV_UNLOCK"
+TRUSTED_API_HOSTS = ("127.0.0.1", "localhost", "testserver")
+
+
+def resolve_api_auth_token(environment: Mapping[str, str]) -> str | None:
+    """The bearer token the local API expects; `None` only when a developer opted out of auth.
+
+    A missing token used to mean "no authentication". It now fails closed: without a token and
+    without OFFICEKIT_DEV_NOAUTH=1, a random per-process token that nobody knows is used, so every
+    /api/ request is refused instead of being open to any local process.
+    """
+    token = environment.get(API_TOKEN_ENVIRONMENT_KEY)
+    if token is not None:
+        return token
+    if environment.get(DEV_NOAUTH_ENVIRONMENT_KEY) == "1":
+        return None
+    return secrets.token_urlsafe(32)
+
+
+def dev_unlock_enabled(environment: Mapping[str, str]) -> bool:
+    """Source-build switch: OFFICEKIT_DEV_UNLOCK=1 skips the licence gate for local development."""
+    return environment.get(DEV_UNLOCK_ENVIRONMENT_KEY) == "1"
 
 
 def load_sidecar_api_token(environment: Mapping[str, str]) -> str:

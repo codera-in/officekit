@@ -223,8 +223,6 @@ mod license_gate;
 #[cfg(test)]
 mod license_guard_tests;
 mod licensing;
-#[cfg(test)]
-mod test_keys;
 mod meeting_calendar;
 mod menu_stats;
 mod panic_log;
@@ -234,6 +232,8 @@ mod speech_model;
 mod support_ticket;
 mod system_hardware;
 mod system_sensors;
+#[cfg(test)]
+mod test_keys;
 mod window_manager;
 mod window_runtime;
 mod workspace_native;
@@ -5633,10 +5633,15 @@ where
     C: Fn() -> Option<u64> + Send + Sync + 'static,
     F: Fn(tauri::ipc::Invoke<R>) -> bool + Send + Sync + 'static,
 {
+    let dev_unlock =
+        license_gate::dev_unlock_enabled(std::env::var("OFFICEKIT_DEV_UNLOCK").ok().as_deref());
     move |invoke| {
-        if let Err(code) = license_gate::command_guard(&gate, invoke.message.command(), clock()) {
-            invoke.resolver.reject(code);
-            return true;
+        if !dev_unlock {
+            if let Err(code) = license_gate::command_guard(&gate, invoke.message.command(), clock())
+            {
+                invoke.resolver.reject(code);
+                return true;
+            }
         }
         inner(invoke)
     }

@@ -805,6 +805,12 @@ pub fn class_of(command: &str) -> Option<CommandClass> {
         .map(|(_, class)| *class)
 }
 
+/// Source-build switch for contributors: `OFFICEKIT_DEV_UNLOCK=1` skips the licence gate. It is
+/// compiled to `false` in release builds (no `debug_assertions`), so a shipped app ignores it.
+pub fn dev_unlock_enabled(value: Option<&str>) -> bool {
+    cfg!(debug_assertions) && value == Some("1")
+}
+
 /// Decision for one webview invoke: exempt commands pass, paid commands need an Active licence,
 /// and an unclassified command is denied (fail closed).
 pub fn command_guard(
@@ -821,6 +827,15 @@ pub fn command_guard(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn dev_unlock_needs_the_exact_value_1_and_a_debug_build() {
+        assert!(!dev_unlock_enabled(None));
+        for value in ["", "0", "true", " 1", "1 ", "yes"] {
+            assert!(!dev_unlock_enabled(Some(value)), "{value:?}");
+        }
+        assert_eq!(dev_unlock_enabled(Some("1")), cfg!(debug_assertions));
+    }
     use crate::license_client::{LicenseClientError, StoredLicenseReceipt};
     use std::cell::RefCell;
     use std::collections::BTreeSet;

@@ -22,6 +22,7 @@ from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Query
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import Response, HTMLResponse, JSONResponse, FileResponse, StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from pydantic import BaseModel, ConfigDict, Field as PydanticField, StringConstraints, StrictBool, StrictFloat, StrictInt, StrictStr, ValidationError, field_validator, model_validator
 from PIL import Image
 
@@ -36,9 +37,12 @@ from officekit.engines.engine_conversion_errors import ConversionInputError
 from officekit.engines.engine_file_responses import content_disposition_attachment
 from officekit.engines.engine_result_exports import ResultExportEngine
 from officekit.engines.engine_api_security import (
+    TRUSTED_API_HOSTS,
     TRUSTED_DESKTOP_ORIGINS,
+    dev_unlock_enabled,
     is_api_authorization_valid,
     is_trusted_api_origin,
+    resolve_api_auth_token,
     trusted_api_origins,
 )
 from officekit.engines.engine_api_errors import internal_error_payload
@@ -127,7 +131,8 @@ MAX_IMAGE_BATCH_INPUT_BYTES = MAX_API_UPLOAD_BYTES
 MAX_IMAGE_BATCH_FILES = 50
 MAX_PDF_MERGE_FILES = 20
 WorkspaceFileName = Annotated[str, StringConstraints(min_length=1, max_length=1024, strict=True)]
-API_AUTH_TOKEN = os.environ.get("OFFICEKIT_API_TOKEN")
+API_AUTH_TOKEN = resolve_api_auth_token(os.environ)
+DEV_UNLOCK = dev_unlock_enabled(os.environ)
 RELEASE_PROFILE = load_release_profile()
 _APP_VERSION_PATTERN = re.compile(r"\d{1,4}\.\d{1,5}\.\d{1,6}")
 
@@ -270,7 +275,8 @@ async def require_live_entitlement(request: Request, call_next):
     """Licence gate; defined before authentication so it runs after it. Fails closed on unknown routes."""
     path = request.url.path
     if (
-        path.startswith("/api/")
+        not DEV_UNLOCK
+        and path.startswith("/api/")
         and request.method != "OPTIONS"
         and not is_gate_exempt(path, request.method)
         and not is_free_route(path, request.method)
@@ -298,6 +304,9 @@ async def authenticate_officekit_api(request: Request, call_next):
         )
     return await call_next(request)
 
+
+# Refuse a Host header that is not the loopback address, so a DNS-rebinding page cannot reach the API.
+app.add_middleware(TrustedHostMiddleware, allowed_hosts=list(TRUSTED_API_HOSTS))
 
 # Registered after the function middlewares above so CORS is the OUTERMOST layer (Starlette makes
 # the last-added middleware outermost). The webview is cross-origin to the loopback sidecar, so the

@@ -1,6 +1,12 @@
 """Shared fixtures for the Python test suite."""
 
+import os
+
 import pytest
+
+# The suite drives the app in process with no desktop shell, so it opts out of the bearer token
+# (a missing token otherwise fails closed). Set before app.py is imported.
+os.environ.setdefault("OFFICEKIT_DEV_NOAUTH", "1")
 
 from officekit.engines.engine_license_gate import GATE_STATE
 
