@@ -32,7 +32,7 @@ XlsxWriter==3.2.9
 reportlab[shaping]==5.0.1
 opentelemetry-api==1.45.0
 packaging==26.3
-pandas==3.0.6
+pandas==3.1.1
 pdfminer.six==20260107
 pdfplumber==0.11.10
 pikepdf==10.16.0
