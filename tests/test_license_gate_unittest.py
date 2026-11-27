@@ -693,6 +693,18 @@ def test_a_live_entitlement_opens_paid_routes(client, locked):
     assert client.get("/api/system/info").status_code == 200
 
 
+def test_dev_unlock_opens_paid_routes_without_an_entitlement(client, locked, monkeypatch):
+    assert client.get("/api/system/info").status_code == 403
+    monkeypatch.setattr(api, "DEV_UNLOCK", True)
+    assert client.get("/api/system/info").status_code == 200
+
+
+def test_dev_unlock_does_not_skip_authentication(client, locked, monkeypatch):
+    monkeypatch.setattr(api, "DEV_UNLOCK", True)
+    monkeypatch.setattr(api, "API_AUTH_TOKEN", API_TOKEN)
+    assert client.get("/api/system/info").status_code == 401
+
+
 def test_an_expired_entitlement_closes_the_gate_again(client, locked):
     clock = FakeClock()
     locked._clock = clock

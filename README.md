@@ -103,8 +103,9 @@ Run the optional local performance suite with `python scripts/benchmark_suite.py
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-uvicorn app:app --host 127.0.0.1 --port 8000
+OFFICEKIT_DEV_NOAUTH=1 OFFICEKIT_DEV_UNLOCK=1 uvicorn app:app --host 127.0.0.1 --port 8000
 ```
+The two variables are for local development only: the first turns off the API token, the second skips the licence gate (see [BUILDING.md](BUILDING.md)).
 Open [http://127.0.0.1:8000](http://127.0.0.1:8000) in your web browser.
 
 ### 2. Run Desktop Window:

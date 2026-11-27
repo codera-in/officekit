@@ -41,6 +41,20 @@ A build made without release keys is a **development build**. Its licence keyrin
 licence, and it does not contact the licensing service to activate one. Which tools the licence gate covers is listed
 in `src-tauri/src/license_gate.rs`. The licensing service itself is not part of this repository.
 
+Without a licence only the free tools (Calculators, Converters, Developer) open. To work on any other tool, start the
+app with the development switch:
+
+```bash
+OFFICEKIT_DEV_UNLOCK=1 npm run dev
+```
+
+- `OFFICEKIT_DEV_UNLOCK=1` skips the licence gate in the desktop shell and in the local API. It only has an effect in a
+  debug build (`npm run dev`); the Rust shell ignores it in a release build.
+- Running the local API on its own (`uvicorn app:app`) needs `OFFICEKIT_DEV_NOAUTH=1` as well. Without an
+  `OFFICEKIT_API_TOKEN` the API refuses every `/api/` request, and the desktop shell always sets a token itself.
+  Example: `OFFICEKIT_DEV_NOAUTH=1 OFFICEKIT_DEV_UNLOCK=1 uvicorn app:app --host 127.0.0.1 --port 8000`.
+- The API accepts only `127.0.0.1` and `localhost` in the `Host` header, so open it by one of those names.
+
 ## Run the tests
 
 Order matters on a clean checkout:

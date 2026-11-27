@@ -169,13 +169,12 @@ class ApiContractTests(unittest.TestCase):
 
         self.assertEqual(documented, implemented_routes(app_source))
 
-    def test_target_hosted_licensing_routes_are_separate_from_implemented_inventory(self):
+    def test_hosted_licensing_routes_are_not_part_of_the_implemented_inventory(self):
         contract = (ROOT / "API-CONTRACT.md").read_text(encoding="utf-8")
-        target = contract.split("## Target hosted licensing API — not implemented", 1)[1]
+        hosted = contract.split("## Hosted licensing API", 1)[1]
         documented = documented_implemented_routes(contract)
 
-        self.assertIn("not current local `app.py` routes", " ".join(target.split()))
-        self.assertIn("POST /v1/license-activation-challenges", target)
+        self.assertIn("operated privately", " ".join(hosted.split()))
         self.assertNotIn(("POST", "/v1/license-activation-challenges"), documented)
         self.assertNotIn(("POST", "/v1/license-activations"), documented)
 

@@ -38,6 +38,11 @@ file is fine) and wait for a maintainer to approve it. Two rules the project hol
 
 See [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md).
 
+## Working on paid tools without a licence
+
+You do not need a licence or any backend. Run `OFFICEKIT_DEV_UNLOCK=1 npm run dev` to open every tool in a debug build
+(details in [BUILDING.md](BUILDING.md)). Tests build their own signed test entitlements and need no switch.
+
 ## What CI does
 
 Every pull request runs `.github/workflows/ci.yml` on GitHub-hosted macOS with no secrets. A first-time contributor's

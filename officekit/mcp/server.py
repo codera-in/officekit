@@ -6,6 +6,7 @@ is needed). The app is imported lazily so `initialize` and `tools/list` stay ins
 
 import asyncio
 import json
+import os
 import re
 import sys
 from email.message import Message
@@ -64,6 +65,14 @@ def tool_definitions(groups) -> list[dict]:
     return tools
 
 
+def _load_app():
+    """Import the FastAPI app for in-process use. There is no socket here, so no API token is needed."""
+    os.environ.setdefault("OFFICEKIT_DEV_NOAUTH", "1")
+    from app import app
+
+    return app
+
+
 class OfficeKitMcpServer:
     def __init__(self, environment, policy: PathPolicy | None = None, client=None):
         assert_no_sensitive_actions()
@@ -74,10 +83,9 @@ class OfficeKitMcpServer:
     async def _http(self):
         if self._client is None:
             import httpx
-            from app import app
 
             self._client = httpx.AsyncClient(
-                transport=httpx.ASGITransport(app=app), base_url="http://officekit.invalid", timeout=600,
+                transport=httpx.ASGITransport(app=_load_app()), base_url="http://127.0.0.1", timeout=600,
             )
         return self._client
 
@@ -124,9 +132,7 @@ class OfficeKitMcpServer:
             return f"Uses {files}. {action.hint}"
         if action.kind == "none":
             return "No parameters."
-        from app import app
-
-        spec = app.openapi()
+        spec = _load_app().openapi()
         operation = spec["paths"][action.path][action.method.lower()]
         if action.kind == "query":
             return json.dumps({p["name"]: _summarize(p["schema"]) for p in operation.get("parameters", [])})
