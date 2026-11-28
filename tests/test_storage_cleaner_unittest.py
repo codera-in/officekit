@@ -640,6 +640,49 @@ def test_codex_claude_roots_and_downloads_node_modules_filter(tmp_path):
     assert str(runner_modules / 'index.js') not in candidate_paths
 
 
+def test_antigravity_gemini_cursor_windsurf_history_is_reviewed_and_work_is_never_offered(tmp_path):
+    home = tmp_path / 'home'
+    offered = {
+        '.gemini/antigravity/brain/session/plan.md': 'Antigravity',
+        '.gemini/antigravity/conversations/chat.pb': 'Antigravity',
+        '.gemini/antigravity/cache/blob': 'Antigravity',
+        '.gemini/antigravity/crashes/crash.dmp': 'Antigravity',
+        '.gemini/antigravity/log/agent.log': 'Antigravity',
+        '.gemini/antigravity/scratch/note.txt': 'Antigravity',
+        '.gemini/tmp/abc123/shell.log': 'Gemini',
+        '.cursor/projects/p/history.json': 'Cursor',
+        '.windsurf/cache/blob': 'Windsurf',
+        'Library/Application Support/Antigravity/Cache/Cache_Data/f_1': 'Antigravity',
+        'Library/Application Support/Antigravity/CachedData/abc/js': 'Antigravity',
+        'Library/Application Support/Cursor/Cache/Cache_Data/f_1': 'Cursor',
+        'Library/Application Support/Windsurf/CachedData/abc/js': 'Windsurf',
+    }
+    never = [
+        '.gemini/oauth_creds.json',
+        '.gemini/settings.json',
+        '.gemini/google_account_id',
+        '.gemini/antigravity/worktrees/repo/src/main.py',
+        '.gemini/antigravity/knowledge/notes.md',
+        '.gemini/antigravity/skills/s/SKILL.md',
+        '.gemini/antigravity/installation_id',
+        '.cursor/mcp.json',
+        'Library/Application Support/Antigravity/User/settings.json',
+    ]
+    for relative in list(offered) + never:
+        target = home / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text('x')
+        os.utime(str(target), (1000000000, 1000000000))
+    service = StorageCleaner(native_token='secret', home=str(home), roots=[str(home)], platform='darwin', clock=lambda: 2000000000)
+    candidates = {c['path']: c for c in completed(service)['report']['candidates']}
+    for relative, tool in offered.items():
+        found = candidates.get(str(home / relative))
+        assert found is not None, relative
+        assert tool in found['reason'], (relative, found['reason'])
+    for relative in never:
+        assert str(home / relative) not in candidates, relative
+
+
 def test_open_paths_batches_one_call_and_fails_closed(tmp_path, monkeypatch):
     first, second = str(tmp_path / 'a'), str(tmp_path / 'b')
     result = type('Result', (), {'returncode': 0, 'stderr': b'', 'stdout': f'p1\nf3\nn{first}\n'.encode()})()

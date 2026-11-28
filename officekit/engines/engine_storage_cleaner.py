@@ -231,6 +231,20 @@ DOCUMENTS = {'.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.txt', 
 PROJECT_MARKERS = {'package.json', 'pyproject.toml', 'Cargo.toml', 'pom.xml', 'build.gradle', 'go.mod'}
 
 
+# AI assistant folders reviewed as cache or history. Credentials, settings, skills, knowledge and git
+# worktrees sit next to these folders and are deliberately not listed: only what is named here is offered.
+_VSCODE_CACHE_FOLDERS = ('Cache', 'CachedData', 'Code Cache', 'GPUCache', 'logs')
+ASSISTANT_FOLDERS = {
+    'Antigravity': ['.gemini/antigravity/' + name for name in ('brain', 'conversations', 'cache', 'crashes', 'log', 'scratch')]
+                   + ['Library/Application Support/Antigravity/' + name for name in _VSCODE_CACHE_FOLDERS],
+    'Gemini': ['.gemini/tmp', '.gemini/logs'],
+    'Cursor': ['.cursor/projects', '.cursor/cache']
+              + ['Library/Application Support/Cursor/' + name for name in _VSCODE_CACHE_FOLDERS],
+    'Windsurf': ['.windsurf/cache']
+                + ['Library/Application Support/Windsurf/' + name for name in _VSCODE_CACHE_FOLDERS],
+}
+
+
 class StorageCleaner:
     def __init__(self, native_token=None, roots=None, home=None, platform=None, clock=time.time,
                  max_entries=250000, max_seconds=120, executor=None, ledger=None):
@@ -324,9 +338,19 @@ class StorageCleaner:
                          'Library/Caches/claude-cli-nodejs',
                          'Library/Caches/com.anthropic.claudefordesktop',
                          'Library/Caches/Codex']
+            for folders in ASSISTANT_FOLDERS.values():
+                relative += folders
         if self.platform == 'win32':
             relative += ['AppData/Local/Temp', 'AppData/Local/pip/Cache', 'AppData/Local/npm-cache']
         return [os.path.join(self.home, part) for part in relative]
+
+    def _assistant_label(self, path):
+        """The AI assistant that owns this file, or None. Matches only the folders in ASSISTANT_FOLDERS."""
+        path = self._display_path(path)
+        for label, folders in ASSISTANT_FOLDERS.items():
+            if any(path.startswith(os.path.join(self.home, folder) + os.sep) for folder in folders):
+                return label
+        return None
 
     def _classification(self, path, developer=False):
         path = self._display_path(path)
@@ -436,6 +460,8 @@ class StorageCleaner:
                                         reason = 'Claude cache/history file'
                                     elif codex:
                                         reason = 'Codex cache/session file'
+                                    elif self._assistant_label(child.path):
+                                        reason = self._assistant_label(child.path) + ' cache/history file'
                                     elif downloads:
                                         reason = 'Old download'
                                     elif generated:
@@ -564,7 +590,7 @@ class StorageCleaner:
         quiet = value.st_mtime < self.clock() - 7 * 86400
         eligible = self.platform == 'darwin' and owned and home_path and quiet and value.st_nlink == 1
         impact = ('Personal download; review before moving.' if category == 'downloads'
-                  else 'May remove cached project snapshots or conversation history; close the application before cleaning.' if ('Claude' in reason or 'Codex' in reason)
+                  else 'May remove cached project snapshots or conversation history; close the application before cleaning.' if reason.endswith(('cache/history file', 'cache/session file'))
                   else 'May require a rebuild or cache download; close the owning application first.')
         return {'id': str(uuid.uuid4()), 'name': os.path.basename(path), 'path': path, 'category': category,
                 'sizeBytes': value.st_size, 'modifiedAt': value.st_mtime,
